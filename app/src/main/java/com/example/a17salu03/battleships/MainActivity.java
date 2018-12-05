@@ -10,6 +10,5 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getActionBar().setTitle("Hola señoita");
-        ((hej) getActionBar().getDisplayOptions());
-    }
+     }
 }
