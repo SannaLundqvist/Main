@@ -15,25 +15,7 @@ public class GridActivity extends Activity implements
         AdapterView.OnItemClickListener {
 
     private ImageView selection;
-    private static final Integer[] items = { R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile,  
-            R.drawable.water_tile, R.drawable.water_tile,
-            R.drawable.water_tile, R.drawable.water_tile };
+    private static final Integer[] items = new Integer[50];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +25,7 @@ public class GridActivity extends Activity implements
         GridView grid = findViewById(R.id.grid);
         // grid.setAdapter(new ArrayAdapter<Integer>(this, R.layout.cell,
         // items));
-        grid.setAdapter(new CustomGridAdapter(this, 50));
+        grid.setAdapter(new CustomGridAdapter(this, 70));
         grid.setOnItemClickListener(this);
 
     }
@@ -67,17 +49,17 @@ public class GridActivity extends Activity implements
 
     public class CustomGridAdapter extends BaseAdapter {
         private Activity mContext;
-
         // Keep all Images in array
-        public Integer[] mThumbIds;
+        public Integer[] mThumbIds = new Integer[70];
 
         // Constructor
         public CustomGridAdapter(GridActivity gridActivity, int size) {
             this.mContext = gridActivity;
-
             for (int i = 0; i < size; i++){
                 this.mThumbIds[i] = R.drawable.water_tile;
             }
+
+
         }
 
         @Override
