@@ -1,8 +1,12 @@
 package com.example.a17salu03.battleships;
 
 import android.app.Activity;
+import android.app.AppComponentFactory;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,7 +25,7 @@ public class GridActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
-        ImageView selection = findViewById(R.id.selection);
+    //    ImageView selection = findViewById(R.id.selection);
         GridView grid = findViewById(R.id.grid);
         // grid.setAdapter(new ArrayAdapter<Integer>(this, R.layout.cell,
         // items));
@@ -29,19 +33,29 @@ public class GridActivity extends Activity implements
         grid.setOnItemClickListener(this);
 
     }
+/*
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_grid, container, false);
+    }*/
+/*
+    @Override
+    public void onStart() {
+        super.onStart();
+        View view = getView();
+        if (view != null) {
 
-    // @Override
-    // public boolean onCreateOptionsMenu(Menu menu) {
-    // // Inflate the menu; this adds items to the action bar if it is present.
-    // getMenuInflater().inflate(R.menu.grid, menu);
-    // return true;
-    // }
+        }
+    }*/
+
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
         // TODO Auto-generated method stub
-        Toast.makeText(GridActivity.this, "Clicked position is" + arg2,
-                Toast.LENGTH_LONG).show();
+        Toast.makeText(GridActivity.this,
+                "Clicked position is " + arg2,
+                Toast.LENGTH_SHORT).show();
         //Selection.setImageResource(items[arg2]);
     }
 
