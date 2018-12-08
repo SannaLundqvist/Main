@@ -18,18 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".Gameboard"
-            android:screenOrientation="landscape">
 
-        </activity>
         <activity android:name=".GridActivity"
             android:screenOrientation="landscape">
 
         </activity>
-=======
+
         <activity android:name=".BoardActivity"/>
->>>>>>> develope
+
     </application>
 
 </manifest>

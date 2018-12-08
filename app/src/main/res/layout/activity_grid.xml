@@ -1,38 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-<<<<<<< HEAD
-
-    tools:context=".GridActivity" >
-
-    <ImageView
-        android:id="@+id/selection"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-=======
     tools:context=".GridFragment" >
->>>>>>> develope
 
     <GridView
         android:id="@+id/grid"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-<<<<<<< HEAD
-        android:columnWidth="25dp"
-        android:gravity="center"
-        android:horizontalSpacing="2dp"
-        android:numColumns="auto_fit"
-=======
         android:columnWidth="0dp"
         android:layout_weight="1"
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:numColumns="8"
->>>>>>> develope
         android:stretchMode="columnWidth"
         android:verticalSpacing="1dp" >
     </GridView>
