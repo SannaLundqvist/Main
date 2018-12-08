@@ -43,7 +43,7 @@ public class GridActivity extends Activity implements
         GridView grid = findViewById(R.id.grid);
         // grid.setAdapter(new ArrayAdapter<Integer>(this, R.layout.cell,
         // items));
-        grid.setAdapter(new CustomGridAdapter(this, items));
+        grid.setAdapter(new CustomGridAdapter(this, 50));
         grid.setOnItemClickListener(this);
 
     }
@@ -72,9 +72,12 @@ public class GridActivity extends Activity implements
         public Integer[] mThumbIds;
 
         // Constructor
-        public CustomGridAdapter(GridActivity gridActivity, Integer[] items) {
+        public CustomGridAdapter(GridActivity gridActivity, int size) {
             this.mContext = gridActivity;
-            this.mThumbIds = items;
+
+            for (int i = 0; i < size; i++){
+                this.mThumbIds[i] = R.drawable.water_tile;
+            }
         }
 
         @Override
