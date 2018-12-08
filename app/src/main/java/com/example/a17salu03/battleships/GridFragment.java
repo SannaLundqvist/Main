@@ -49,7 +49,6 @@ public class GridFragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        // TODO Auto-generated method stub
 
         Toast.makeText(getContext(),
                 "Clicked position is " + arg2,
