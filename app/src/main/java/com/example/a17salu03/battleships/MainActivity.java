@@ -19,7 +19,11 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                 Intent intent = new Intent(MainActivity.this, GridActivity.class);
+=======
+                Intent intent = new Intent(MainActivity.this, BoardActivity.class);
+>>>>>>> develope
                 startActivity(intent);
             }
         });
