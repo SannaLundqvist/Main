@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<GridView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/LinearLayout1"
+    android:id="@+id/grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:columnWidth="0dp"
+    android:gravity="center"
+    android:horizontalSpacing="0dp"
+    android:numColumns="8"
+    android:stretchMode="spacingWidthUniform"
+    android:verticalSpacing="1dp"
     tools:context=".GridFragment" >
+</GridView>
 
-    <GridView
-        android:id="@+id/grid"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:columnWidth="0dp"
-        android:gravity="center"
-        android:horizontalSpacing="1dp"
-        android:numColumns="8"
-        android:stretchMode="spacingWidthUniform"
-        android:verticalSpacing="3dp">
-    </GridView>
 
-</LinearLayout>
+
