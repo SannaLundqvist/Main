@@ -24,12 +24,12 @@ public class BoardActivity extends AppCompatActivity {
         playerft.commit();
 
 
-
+/*
         GridFragment OpponentGrid = new GridFragment();
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
         opponentft.replace(R.id.fragment_container_opponent, OpponentGrid);
         opponentft.addToBackStack(null);
         opponentft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        opponentft.commit();
+        opponentft.commit(); */
     }
 }
