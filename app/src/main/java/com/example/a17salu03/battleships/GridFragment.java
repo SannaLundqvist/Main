@@ -2,8 +2,13 @@ package com.example.a17salu03.battleships;
 
 
 import android.content.Context;
+import android.content.res.Resources;
+
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,11 +56,11 @@ public class GridFragment extends Fragment implements
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-   //     String selectedItem = (String) parent.getItemAtPosition(position);
+        //     String selectedItem = (String) parent.getItemAtPosition(position);
 
-    //    ImageView iv = (ImageView) parent.getItemAtPosition(position);
-        ImageView iv = (ImageView) parent.getSelectedItem();
-        iv.setImageResource(R.drawable.ic_launcher_background); // <- här ska det vara tänkt att bilden skall bytas ut
+        //    ImageView iv = (ImageView) parent.getItemAtPosition(position);
+  //      ImageView iv = (ImageView) parent.getSelectedItem();
+  //      iv.setImageResource(R.drawable.ic_launcher_background); // <- här ska det vara tänkt att bilden skall bytas ut
 
    /*     View view = cga.getView(position, null, null);
         ImageView imageView = (ImageView) view;
@@ -72,16 +77,16 @@ public class GridFragment extends Fragment implements
         private Context mContext;
         private int size;
         // Keep all Images in array
-   //     public Integer[] mThumbIds = new Integer[64];
+        //     public Integer[] mThumbIds = new Integer[64];
         private Integer waterImage = R.drawable.water_tile;
 
         // Constructor
         public CustomGridAdapter(Fragment gridActivity, int size) {
             this.mContext = gridActivity.getActivity();
             this.size = size;
-        //    for (int i = 0; i < size; i++){
-        //        this.mThumbIds[i] = R.drawable.water_tile;
-        //    }
+            //    for (int i = 0; i < size; i++){
+            //        this.mThumbIds[i] = R.drawable.water_tile;
+            //    }
 
 
         }
@@ -107,7 +112,7 @@ public class GridFragment extends Fragment implements
             if (v != null){
                v = v.findViewById(R.id.tile2);
             Integer e = getView().findViewWithTag("R.id.tile"); */
-          //  generatedID++;
+            //  generatedID++;
             return 5;
         }
 
@@ -119,11 +124,11 @@ public class GridFragment extends Fragment implements
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             ImageView imageView = new ImageView(mContext);
-       //     imageView.setId(generateID(position));
-       //     Log.v("rhh", imageView.getId() + "");
+            //     imageView.setId(generateID(position));
+            //     Log.v("rhh", imageView.getId() + "");
             imageView.setImageResource(waterImage);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setLayoutParams(new GridView.LayoutParams(105, 105));  // <- här säts det till en statisk storlek, activity_grid hör också till detta problem
+    //        imageView.setLayoutParams(new GridView.LayoutParams(105, 105));  // <- här säts det till en statisk storlek, activity_grid hör också till detta problem
             return imageView;
         }
 
