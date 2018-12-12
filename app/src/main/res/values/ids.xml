@@ -2,7 +2,6 @@
 <resources>
     <string name="app_id">299351143808</string>
 
-
     <item type="id" name="tile0" />
     <item type="id" name="tile1" />
     <item type="id" name="tile2" />
@@ -67,8 +66,5 @@
     <item type="id" name="tile61" />
     <item type="id" name="tile62" />
     <item type="id" name="tile63" />
-
-
-
 
 </resources>
