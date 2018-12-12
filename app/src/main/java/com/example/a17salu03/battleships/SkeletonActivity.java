@@ -110,7 +110,7 @@ public class SkeletonActivity extends Activity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_main2);
 
     // Create the Google API Client with access to Games
     // Create the client used to sign in.
@@ -122,38 +122,7 @@ public class SkeletonActivity extends Activity implements
 
     mDataView = findViewById(R.id.data_view);
     mTurnTextView = findViewById(R.id.turn_counter_view);
-    checkPlaceholderIds();
-  }
 
-  // Check the sample to ensure all placeholder ids are are updated with real-world values.
-  // This is strictly for the purpose of the samples; you don't need this in a production
-  // application.
-  private void checkPlaceholderIds() {
-    StringBuilder problems = new StringBuilder();
-
-    if (getPackageName().startsWith("com.google.")) {
-      problems.append("- Package name start with com.google.*\n");
-    }
-
-    for (Integer id : new Integer[]{R.string.app_id}) {
-
-      String value = getString(id);
-
-      if (value.startsWith("YOUR_")) {
-        // needs replacing
-        problems.append("- Placeholders(YOUR_*) in ids.xml need updating\n");
-        break;
-      }
-    }
-
-    if (problems.length() > 0) {
-      problems.insert(0, "The following problems were found:\n\n");
-
-      problems.append("\nThese problems may prevent the app from working properly.");
-      problems.append("\n\nSee the TODO window in Android Studio for more information");
-      (new AlertDialog.Builder(this)).setMessage(problems.toString())
-          .setNeutralButton(android.R.string.ok, null).create().show();
-    }
   }
 
   @Override
