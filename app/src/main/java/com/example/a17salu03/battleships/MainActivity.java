@@ -15,11 +15,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button startButton = (Button) findViewById(R.id.quick_game);
+        Button testButton = findViewById(R.id.how_to_play);
   //      Button aboutButton = (Button) findViewById(R.id.aboutButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, BoardActivity.class);
+
+                startActivity(intent);
+            }
+        });
+
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SkeletonActivity.class);
 
                 startActivity(intent);
             }
