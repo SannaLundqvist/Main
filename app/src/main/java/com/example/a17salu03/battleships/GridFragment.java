@@ -2,14 +2,9 @@ package com.example.a17salu03.battleships;
 
 
 import android.content.Context;
-import android.content.res.Resources;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +13,22 @@ import android.widget.BaseAdapter;
 
 import android.widget.GridLayout;
 
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GridFragment extends Fragment implements
         AdapterView.OnItemClickListener {
 
     private CustomGridAdapter cga;
     private int generatedID = 0;
+    private View thisView;
+    public Integer layoutBorder = R.drawable.layout_border;
+    private static List<View> clickedViews = new ArrayList<>();
+    private View lastClickedTile = null;
+    private int lastClickedTileCounter = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,9 +48,11 @@ public class GridFragment extends Fragment implements
         super.onStart();
         View view = getView();
         if (view != null) {
-            GridLayout gridLayout = view.findViewById(R.id.grid);
+            thisView = view;
+            GridLayout gridLayout = thisView.findViewById(R.id.grid);
 
             gridLayout.removeAllViews();
+
 
 
             int column = 7;
@@ -66,19 +69,71 @@ public class GridFragment extends Fragment implements
                 }
                 ImageView imageView = new ImageView(this.getActivity());
                 imageView.setImageResource(R.drawable.water_tile);
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+           //     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 GridLayout.LayoutParams param = new GridLayout.LayoutParams();
-                param.height = GridLayout.LayoutParams.WRAP_CONTENT;
-                param.width = GridLayout.LayoutParams.WRAP_CONTENT;
+           //     param.height = GridLayout.LayoutParams.WRAP_CONTENT;
+           //     param.width = GridLayout.LayoutParams.WRAP_CONTENT;
                 param.rightMargin = 5;
                 param.topMargin = 5;
-     //           param.columnSpec = GridLayout.spec(c);
-     //           param.rowSpec = GridLayout.spec(r);
-                imageView.setLayoutParams (param);
+                param.columnSpec = GridLayout.spec(c);
+                param.rowSpec = GridLayout.spec(r);
+                imageView.setLayoutParams(param);
                 gridLayout.addView(imageView);
+
+                imageView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View view){
+            /*            boolean isClicked = false;
+                        for (View v : clickedViews){
+                            if (view.equals(v)){
+                                isClicked = true;
+                                break;
+                            }
+                        }*/
+                        ImageView imageView = (ImageView) view;
+                        if (lastClickedTile == null) {
+                            imageView.setImageResource(R.drawable.water_tile_border);
+                        } else if (!lastClickedTile.equals(view))    {
+                            ImageView lastClickedImage = (ImageView) lastClickedTile;
+                            imageView.setImageResource(R.drawable.water_tile_border);
+                            lastClickedImage.setImageResource(R.drawable.water_tile);
+                            lastClickedTileCounter = 0;
+                        } else if (lastClickedTile.equals(view)){
+                            if ((lastClickedTileCounter % 2) == 0) {
+                                imageView.setImageResource(R.drawable.water_tile);
+                                lastClickedTileCounter++;
+                            } else {
+                                imageView.setImageResource(R.drawable.water_tile_border);
+                                lastClickedTileCounter++;
+                            }
+
+                        }
+                        lastClickedTile = view;
+            /*            if (isClicked) {
+                            imageView.setImageResource(R.drawable.water_tile);
+                            Toast.makeText(getContext(),
+                                    "Clicked",
+                                    Toast.LENGTH_SHORT).show();
+                            clickedViews.remove(view);
+                        } else {
+
+                            Toast.makeText(getContext(),
+                                    "Not clicked",
+                                    Toast.LENGTH_SHORT).show();
+                            clickedViews.add(view);
+                        }*/
+
+
+
+                    }
+                });
             }
         }
     }
+
+
+
 
 
     @Override

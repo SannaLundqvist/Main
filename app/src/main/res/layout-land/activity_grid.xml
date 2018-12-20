@@ -5,6 +5,8 @@
     android:id="@+id/grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:rowCount="7"
+    android:columnCount="7"
     tools:context=".GridFragment" >
 <!--    android:horizontalSpacing="1dp"
     android:verticalSpacing="1dp"
