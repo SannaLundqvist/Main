@@ -115,15 +115,11 @@ public class SkeletonActivity extends Activity implements
     // Create the Google API Client with access to Games
     // Create the client used to sign in.
 
-    GoogleSignInOptions gso = new GoogleSignInOptions
+     GoogleSignInOptions gso = new GoogleSignInOptions
             .Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
             .requestEmail()
             .build();
-
-  /*  GoogleSignInOptions gso = new GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build();*/
+     
     mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
 

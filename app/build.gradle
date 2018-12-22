@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-  /*  signingConfigs {
-        release {
-            storeFile 'battlekey.jks'
-            storePassword 'SannaMattias'
-            keyAlias 'battlekey'
-            keyPassword 'SannaMattias'
-        }
-    }*/
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.a17salu03.battleships"
