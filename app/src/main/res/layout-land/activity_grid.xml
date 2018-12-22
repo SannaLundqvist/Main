@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<LinearLayout
-=======
-<GridView
->>>>>>> develope
+<GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/grid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnWidth="0dp"
-    android:gravity="center"
-    android:horizontalSpacing="0dp"
-    android:numColumns="8"
-    android:stretchMode="spacingWidthUniform"
-    android:verticalSpacing="1dp"
+    android:rowCount="7"
+    android:columnCount="7"
     tools:context=".GridFragment" >
-</GridView>
+<!--    android:horizontalSpacing="1dp"
+    android:verticalSpacing="1dp"
+    android:numColumns="7" -->
+
+</GridLayout >
 
 
 
