@@ -23,4 +23,5 @@
     <string name="error_get_inbox_intent">There was a problem getting the inbox intent!</string>
     <string name="error_get_select_opponents">There was a problem getting the select opponents intent!</string>
     <string name="turn_label">Turn %1$d</string>
+    <string name="place_your_ships">Place your ships</string>
 </resources>

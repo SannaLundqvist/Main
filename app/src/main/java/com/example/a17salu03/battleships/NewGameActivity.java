@@ -6,24 +6,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+public class NewGameActivity extends AppCompatActivity {@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
 
-public class MainActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Button startButton = (Button) findViewById(R.id.quick_game);
-        Button testButton = findViewById(R.id.how_to_play);
-  //      Button aboutButton = (Button) findViewById(R.id.aboutButton);
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, BoardActivity.class);
-                startActivity(intent);
-            }
-        });
+    Button startButton = (Button) findViewById(R.id.quick_game);
+    Button testButton = findViewById(R.id.how_to_play);
+    //      Button aboutButton = (Button) findViewById(R.id.aboutButton);
+    startButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(NewGameActivity.this, BoardActivity.class);
+            startActivity(intent);
+        }
+    });
 
         /*
         testButton.setOnClickListener(new View.OnClickListener() {
@@ -35,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         });
 */
 
- }
+}
 }
 
 /*

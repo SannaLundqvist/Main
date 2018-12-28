@@ -1,184 +1,74 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/start_img"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingBottom="10dp"
+    tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/login_layout"
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:visibility="visible" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="20dp"
+        android:shadowColor="#ffffff"
+        android:shadowRadius="2"
+        android:shadowDx="4"
+        android:shadowDy="4"
+        android:textColor="#ff0000"
+        android:text="@string/app_name"
+        android:textSize="60sp" />
+    <!--     android:textColor="#ffff00"
+  -->
 
-        <!-- sign-in button -->
+    <Button
+        android:id="@+id/sign_out"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:text="@string/sign_out"/>
+    <Button
+        android:id="@+id/start_match"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:text="@string/start_match"/>
+    <Button
+        android:id="@+id/check_games"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:text="@string/check_games"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/welcome_to_our_skeleton_app_" />
+    <Button
+        android:id="@+id/quick_game"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:text="@string/quick_game"/>
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_button"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content" >
-        </com.google.android.gms.common.SignInButton>
-    </LinearLayout>
+    <Button
+        android:id="@+id/invite_friend"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:text="@string/invite_friend"/>
 
-    <LinearLayout
-        android:id="@+id/gameplay_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
-        tools:context=".SkeletonActivity" >
+    <Button
+        android:id="@+id/how_to_play"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="5dp"
+        android:text="@string/how_to_play"/>
 
-        <TextView
-            android:id="@+id/instructions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/match_instructions"
-            android:width="300dp" />
-
-        <TextView
-            android:id="@+id/turn_counter_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/turn_counter"
-            android:width="300dp" />
-
-        <EditText
-            android:id="@+id/data_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="#FFFFFFFF"
-            android:gravity="center"
-            android:inputType="textEmailAddress|textEmailSubject"
-            android:maxLines="1"
-            android:text="@string/hello_world" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/doneButton"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:onClick="onDoneClicked"
-                android:text="@string/done"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/cancelButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onCancelClicked"
-                android:text="@string/cancel"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/leaveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onLeaveClicked"
-                android:text="@string/leave"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/finishButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onFinishClicked"
-                android:text="@string/finish"
-                tools:ignore="ButtonStyle" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/matchup_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:visibility="gone"
-        tools:context=".SkeletonActivity" >
-
-        <LinearLayout
-            android:id="@+id/secret_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical"
-            android:visibility="visible"
-            tools:context=".SkeletonActivity"
-            tools:ignore="UselessParent" >
-
-            <TextView
-                android:id="@+id/name_field"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="" />
-
-            <Button
-                android:id="@+id/sign_out_button"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_out" />
-
-            <Button
-                android:id="@+id/startMatchButton"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:onClick="onStartMatchClicked"
-                android:text="@string/start_match" />
-
-            <Button
-                android:id="@+id/checkGamesButton"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:onClick="onCheckGamesClicked"
-                android:text="@string/check_games" />
-
-            <Button
-                android:id="@+id/quickMatchButon"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:onClick="onQuickMatchClicked"
-                android:text="@string/quick_match" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/progressLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#AAAAAAAA"
-        android:visibility="gone" >
-
-        <ProgressBar
-            android:id="@+id/progress_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</LinearLayout>

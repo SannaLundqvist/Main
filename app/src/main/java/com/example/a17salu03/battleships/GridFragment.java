@@ -1,8 +1,8 @@
 package com.example.a17salu03.battleships;
 
 
+import android.app.Activity;
 import android.content.Context;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-
 import android.widget.GridLayout;
-
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,6 +27,9 @@ public class GridFragment extends Fragment implements
     private static List<View> clickedViews = new ArrayList<>();
     private View lastClickedTile = null;
     private int lastClickedTileCounter = 0;
+
+    //För att kunna skicka tillbaka vid vald ruta med gemensam metod.
+    private OnItemClickedListener mCallback = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -137,17 +138,16 @@ public class GridFragment extends Fragment implements
 
 
     @Override
-<<<<<<< HEAD
-    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-=======
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //skicka tillbaka till den activity som äger dig
+        mCallback.onItemClicked(position);
+
 
         //     String selectedItem = (String) parent.getItemAtPosition(position);
 
         //    ImageView iv = (ImageView) parent.getItemAtPosition(position);
   //      ImageView iv = (ImageView) parent.getSelectedItem();
   //      iv.setImageResource(R.drawable.ic_launcher_background); // <- här ska det vara tänkt att bilden skall bytas ut
->>>>>>> develope
 
    /*     View view = cga.getView(position, null, null);
         ImageView imageView = (ImageView) view;
@@ -156,6 +156,16 @@ public class GridFragment extends Fragment implements
                 "Clicked position is " + position,
                 Toast.LENGTH_SHORT).show();
         //Selection.setImageResource(items[arg2]);
+    }
+
+    //måste köras från activitien för att kunna skicka tillbaka informationen till rätt activity
+    public void setOnItemClickedListener(Activity activity){
+        mCallback = (OnItemClickedListener) activity;
+    }
+
+    //Interface som avtivityn som håller i dig måste implementera för att kunna skicka information mellan Frag -> Acti
+    public interface OnItemClickedListener{
+        public void onItemClicked(int position);
     }
 
     // Here is your custom Adapter
