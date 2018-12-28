@@ -27,10 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".BoardActivity"/>
-<<<<<<< HEAD
-=======
         <activity android:name=".SkeletonActivity"/>
->>>>>>> develope
 
     </application>
 
