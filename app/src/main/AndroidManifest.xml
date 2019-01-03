@@ -28,7 +28,9 @@
         </activity>
         <activity android:name=".BoardActivity"/>
 
-        <activity android:name=".SkeletonActivity"/>
+        <activity android:name=".StartActivity"/>
+
+        <activity android:name=".PlaceShipsActivity"/>
 
     </application>
 

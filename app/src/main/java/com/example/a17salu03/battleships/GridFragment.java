@@ -133,7 +133,9 @@ public class GridFragment extends Fragment implements
     }
 
 
-
+    public interface OnItemClickedListener{
+        public void onItemClicked(int position);
+    }
 
 
     @Override

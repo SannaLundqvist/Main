@@ -399,6 +399,7 @@ public class SkeletonActivity extends Activity implements
 
   // Switch to gameplay view.
   public void setGameplayUI() {
+
     isDoingTurn = true;
     setViewVisibility();
     mDataView.setText(mTurnData.data);
