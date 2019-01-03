@@ -402,7 +402,6 @@ public class StartActivity extends Activity implements
     public void setGameplayUI() {
         isDoingTurn = true;
 
-
         //bytt ut setViewVisibility() mot byta activities
 
         if(mTurnData.turnCounter < 2){
@@ -672,6 +671,8 @@ public class StartActivity extends Activity implements
     // UI.
     public void startMatch(TurnBasedMatch match) {
         mTurnData = new SkeletonTurn();
+        //Här byt Activity till PlsaceShips
+        //maatch till
         // Some basic turn data
         mTurnData.data = "First turn";
 
