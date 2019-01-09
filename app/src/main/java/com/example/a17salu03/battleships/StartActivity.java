@@ -95,6 +95,8 @@ public class StartActivity extends Activity implements
     private static final int RC_SIGN_IN = 9001;
     final static int RC_SELECT_PLAYERS = 10000;
     final static int RC_LOOK_AT_MATCHES = 10001;
+    public static final int PLACED_SHIPS = 2001;
+
 
     // Should I be showing the turn API?
     public boolean isDoingTurn = false;
@@ -406,7 +408,7 @@ public class StartActivity extends Activity implements
 
         if(mTurnData.turnCounter < 2){
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, PLACED_SHIPS);
         }else{
             Intent intent = new Intent(StartActivity.this, BoardActivity.class);
             startActivity(intent);
@@ -660,6 +662,11 @@ public class StartActivity extends Activity implements
                     })
                     .addOnFailureListener(createFailureListener("There was a problem creating a match!"));
             showSpinner();
+        }else if (requestCode == PLACED_SHIPS) {
+            super.onActivityResult(requestCode, requestCode, intent);
+            Toast.makeText(getBaseContext(), "hej", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, BoardActivity.class);
+            startActivity(i);
         }
     }
 

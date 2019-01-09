@@ -1,5 +1,6 @@
 package com.example.a17salu03.battleships;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -82,9 +83,13 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //skicka tillbaka informationen till StartActivity
-                //kanske behövs låsas innan man valt position minst en gång, eller testas
-                //isShipAtPosition skickas vidare
+                txt_4r.setText("done!");
+
+                Intent intent = new Intent();
+                intent.putExtra("test", "test");
+                setResult(StartActivity.PLACED_SHIPS, intent);
+                finish();
+
             }
         });
 
