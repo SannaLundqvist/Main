@@ -96,6 +96,7 @@ public class StartActivity extends Activity implements
     final static int RC_SELECT_PLAYERS = 10000;
     final static int RC_LOOK_AT_MATCHES = 10001;
     public static final int PLACED_SHIPS = 2001;
+    public static final int SHOOTING = 2002;
 
 
     // Should I be showing the turn API?
@@ -376,7 +377,7 @@ public class StartActivity extends Activity implements
         mTurnData.turnCounter += 1;
         //här lägger man till sitt data som skickas mellan spelare
         mTurnData.data = position + "";
-        Toast.makeText(getBaseContext(), "take turn, 7?" + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "take turn, 2? " + position, Toast.LENGTH_SHORT).show();
 
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId)
@@ -452,14 +453,16 @@ public class StartActivity extends Activity implements
 
         if(mTurnData.turnCounter < 2){
 
+
             Toast.makeText(getBaseContext(), "The data recived is: " + mTurnData.data, Toast.LENGTH_LONG).show();
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
             startActivityForResult(intent, PLACED_SHIPS);
+
         }else{
             Intent intent = new Intent(StartActivity.this, BoardActivity.class);
             intent.putExtra("sentData", mTurnData.data);
             Toast.makeText(getBaseContext(), "The data recived is: " + mTurnData.data, Toast.LENGTH_LONG).show();
-            startActivity(intent);
+            startActivityForResult(intent, SHOOTING);
         }
 
 
@@ -715,7 +718,7 @@ public class StartActivity extends Activity implements
             super.onActivityResult(requestCode, requestCode, intent);
             if(resultCode == RESULT_OK){
                 if(intent.getIntArrayExtra("shipArray")[0] == 7)
-                    Toast.makeText(getBaseContext(), "first element = 7", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getBaseContext(), "first element = 7", Toast.LENGTH_SHORT).show();
 
                 takeTurn(intent.getIntArrayExtra("shipArray")[0]);
             }
@@ -725,6 +728,15 @@ public class StartActivity extends Activity implements
             //takeTurn();
             //Intent i = new Intent(this, BoardActivity.class);
             //startActivity(i);
+        }else if (requestCode == SHOOTING) {
+            super.onActivityResult(requestCode, requestCode, intent);
+            if (resultCode == RESULT_OK) {
+                if (intent.getIntExtra("position", 0) == 2)
+                    Toast.makeText(getBaseContext(), "position is 2", Toast.LENGTH_SHORT).show();
+
+                    takeTurn(intent.getIntExtra("position", 0));
+            } else
+                Toast.makeText(getBaseContext(), "There was a problem placing your ships", Toast.LENGTH_SHORT).show();
         }
     }
 

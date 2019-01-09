@@ -67,7 +67,7 @@ public class GridFragment extends Fragment implements
                     c = 0;
                     r++;
                 }
-                ImageView imageView = new ImageView(this.getActivity());
+                final ImageView imageView = new ImageView(this.getActivity());
                 imageView.setImageResource(R.drawable.water_tile);
 
            //     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -84,6 +84,8 @@ public class GridFragment extends Fragment implements
                 imageView.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
+                        OnItemClickedListener onItemClickedListener = (OnItemClickedListener) getActivity();
+                        onItemClickedListener.onItemClicked(2);
             /*            boolean isClicked = false;
                         for (View v : clickedViews){
                             if (view.equals(v)){
