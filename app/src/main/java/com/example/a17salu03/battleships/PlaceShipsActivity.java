@@ -84,10 +84,12 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             @Override
             public void onClick(View v) {
                 txt_4r.setText("done!");
+                int[] intarray = new int[]{7,0,1};
+
 
                 Intent intent = new Intent();
-                intent.putExtra("test", "test");
-                setResult(StartActivity.PLACED_SHIPS, intent);
+                intent.putExtra("shipArray", intarray);
+                setResult(RESULT_OK, intent);
                 finish();
 
             }
