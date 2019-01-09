@@ -36,6 +36,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                 if(position >= 0){
                     Intent intent = new Intent();
                     intent.putExtra("position", position);
+                    position = -1;
                     setResult(RESULT_OK, intent);
                     finish();
                 }else{

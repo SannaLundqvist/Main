@@ -391,14 +391,15 @@ public class StartActivity extends Activity implements
 
         mTurnData = null;
     }
-    public void takeTurnPlaceShips(int[] ships) {
+    public void takeTurnPlaceShips(int ships) {
         showSpinner();
 
         String nextParticipantId = getNextParticipantId();
         // Create the next turn
         mTurnData.turnCounter += 1;
         //här lägger man till sitt data som skickas mellan spelare
-        mTurnData.data = mDataView.getText().toString();
+        mTurnData.data = ships + "";
+        Toast.makeText(getBaseContext(), "take turn, 7? " + ships, Toast.LENGTH_SHORT).show();
 
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId)
@@ -720,7 +721,7 @@ public class StartActivity extends Activity implements
                 if(intent.getIntArrayExtra("shipArray")[0] == 7)
                     //Toast.makeText(getBaseContext(), "first element = 7", Toast.LENGTH_SHORT).show();
 
-                takeTurn(intent.getIntArrayExtra("shipArray")[0]);
+                takeTurnPlaceShips(intent.getIntArrayExtra("shipArray")[0]);
             }
             else
                 Toast.makeText(getBaseContext(), "There was a problem placing your ships", Toast.LENGTH_SHORT).show();
