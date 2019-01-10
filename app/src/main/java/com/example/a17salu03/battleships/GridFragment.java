@@ -14,7 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,8 @@ import java.util.List;
 public class GridFragment extends Fragment implements
         AdapterView.OnItemClickListener {
 
+    private int[] board = {0, 0 ,0 ,0 ,1, 0, 0 ,0 ,1, 0 ,0 ,2};
+    private int tileID = 0;
     private CustomGridAdapter cga;
     private int generatedID = 0;
     private View thisView;
@@ -29,6 +30,7 @@ public class GridFragment extends Fragment implements
     private static List<View> clickedViews = new ArrayList<>();
     private View lastClickedTile = null;
     private int lastClickedTileCounter = 0;
+    private boolean isClickableTiles = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +55,6 @@ public class GridFragment extends Fragment implements
 
             gridLayout.removeAllViews();
 
-
-
             int column = 7;
             int row = 7;
             int total = column * row;
@@ -67,10 +67,16 @@ public class GridFragment extends Fragment implements
                     c = 0;
                     r++;
                 }
-                final ImageView imageView = new ImageView(this.getActivity());
-                imageView.setImageResource(R.drawable.water_tile);
 
-           //     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                Tile tile;
+                if (isClickableTiles){
+                    tile = new ClickableTile(tileID, view);
+                } else{
+                    tile = new Tile(tileID, view);
+                }
+
+                tileID++;
+                ImageView imageView = tile.getTileImage();
                 GridLayout.LayoutParams param = new GridLayout.LayoutParams();
            //     param.height = GridLayout.LayoutParams.WRAP_CONTENT;
            //     param.width = GridLayout.LayoutParams.WRAP_CONTENT;
@@ -81,7 +87,7 @@ public class GridFragment extends Fragment implements
                 imageView.setLayoutParams(param);
                 gridLayout.addView(imageView);
 
-                imageView.setOnClickListener(new View.OnClickListener(){
+        /*        imageView.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View view){
                         OnItemClickedListener onItemClickedListener = (OnItemClickedListener) getActivity();
@@ -93,7 +99,8 @@ public class GridFragment extends Fragment implements
                                 break;
                             }
                         }*/
-                        ImageView imageView = (ImageView) view;
+
+             /*           ImageView imageView = (ImageView) view;
                         if (lastClickedTile == null) {
                             imageView.setImageResource(R.drawable.water_tile_border);
                         } else if (!lastClickedTile.equals(view))    {
@@ -126,14 +133,24 @@ public class GridFragment extends Fragment implements
                             clickedViews.add(view);
                         }*/
 
-
+/*
 
                     }
-                });
+                }); */
             }
         }
     }
+    public void setClickableTiles(boolean answer){
+        isClickableTiles = answer;
+    }
 
+    public int getTile(int tileID){
+        return board[tileID];
+    }
+
+    public int[] getBoard(){
+        return board;
+    }
 
     public interface OnItemClickedListener{
         public void onItemClicked(int position);
@@ -152,9 +169,9 @@ public class GridFragment extends Fragment implements
    /*     View view = cga.getView(position, null, null);
         ImageView imageView = (ImageView) view;
         imageView.setImageResource(R.drawable.x); */
-        Toast.makeText(getContext(),
+    /*    Toast.makeText(getContext(),
                 "Clicked position is " + position,
-                Toast.LENGTH_SHORT).show();
+                Toast.LENGTH_SHORT).show(); */
         //Selection.setImageResource(items[arg2]);
     }
 

@@ -1,7 +1,7 @@
 package com.example.a17salu03.battleships;
 
+
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,10 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class PlaceShipsActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener {
 
+    private int shipToBePlaced;
+    private boolean isReadyToPlace = false;
     private int selectedPosition;
     private boolean[] isShipAtPosition;
     private Button doneBtn = null;
@@ -31,6 +32,14 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
 
+        GridFragment playerGrid = new GridFragment();
+        playerGrid.setClickableTiles(true);
+        FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
+        playerft.replace(R.id.fragment_container_player, playerGrid);
+        playerft.addToBackStack(null);
+        playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        playerft.commit();
+
         doneBtn = findViewById(R.id.done);
         img_2r = findViewById(R.id.ship_2r_draw);
         img_3r = findViewById(R.id.ship_3r_draw);
@@ -46,6 +55,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             public void onClick(View v) {
                 int shipsLeft0 = Integer.parseInt(txt_2r.getText().toString());
                 if(shipsLeft0 > 0){
+                    isReadyToPlace = true;
                     shipNbr = 0;
                     shipsLeft0 --;
                     txt_2r.setText(shipsLeft0 + "");
@@ -92,15 +102,14 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
                 setResult(RESULT_OK, intent);
                 finish();
 
+                //skicka tillbaka informationen till StartActivity
+                //kanske behövs låsas innan man valt position minst en gång, eller testas
+                //isShipAtPosition skickas vidare
+                isReadyToPlace = false;
             }
         });
 
-        GridFragment playerGrid = new GridFragment();
-        FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
-        playerft.replace(R.id.fragment_container_player, playerGrid);
-        playerft.addToBackStack(null);
-        playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        playerft.commit();
+
 
 
     }

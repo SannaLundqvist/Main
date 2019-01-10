@@ -46,14 +46,14 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
             }
         });
 
-/*
-        GridFragment OpponentGrid = new GridFragment();
+
+        GridFragment opponentGrid = new GridFragment();
+        opponentGrid.setClickableTiles(true);
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
-        opponentft.replace(R.id.fragment_container_opponent, OpponentGrid);
+        opponentft.replace(R.id.fragment_container_opponent, opponentGrid);
         opponentft.addToBackStack(null);
         opponentft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        opponentft.commit(); */
-
+        opponentft.commit();
     }
 
     public void onBigClick(View view){
