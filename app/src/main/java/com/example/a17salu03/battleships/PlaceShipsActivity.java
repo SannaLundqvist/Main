@@ -72,9 +72,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
                 int shipsLeft0 = Integer.parseInt(txt_2r.getText().toString());
                 if(shipsLeft0 > 0){
                     generateShipID(2);
-                    shipNbr = 0;
-                    shipsLeft0 --;
-                    txt_2r.setText(shipsLeft0 + "");
+
                 }else{
                     //Toast.makeText(this, R.string.placed_all_ships, Toast.LENGTH_SHORT);
                 }
@@ -86,9 +84,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
                 int shipsLeft1 = Integer.parseInt(txt_3r.getText().toString());
                 if(shipsLeft1 > 0){
                     generateShipID(3);
-                    shipNbr = 1;
-                    shipsLeft1 --;
-                    txt_2r.setText(shipsLeft1 + "");
                 }else{
                     //Toast.makeText(this, R.string.placed_all_ships, Toast.LENGTH_SHORT);
                 }
@@ -100,9 +95,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
                 int shipsLeft2 = Integer.parseInt(txt_4r.getText().toString());
                 if(shipsLeft2 > 0){
                     generateShipID(4);
-                    shipNbr = 2;
-                    shipsLeft2 --;
-                    txt_4r.setText(shipsLeft2 + "");
                 }else{
                     //Toast.makeText(this, R.string.placed_all_ships, Toast.LENGTH_SHORT);
                 }
@@ -162,6 +154,22 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
                         boardState[clickedTile] + " got chosen, solklart",
                         Toast.LENGTH_SHORT).show();
                 usedTiles.add(clickedTile);
+
+
+                if (selectedShipID >= 1 && selectedShipID <= 3){
+                    int shipsLeft = Integer.parseInt(txt_2r.getText().toString());
+                    shipsLeft--;
+                    txt_2r.setText(shipsLeft + "");
+                } else if (selectedShipID >= 4 && selectedShipID <= 5){
+                    int shipsLeft = Integer.parseInt(txt_3r.getText().toString());
+                    shipsLeft--;
+                    txt_3r.setText(shipsLeft + "");
+                } else if (selectedShipID >= 6){
+                    int shipsLeft = Integer.parseInt(txt_4r.getText().toString());
+                    shipsLeft--;
+                    txt_4r.setText(shipsLeft + "");
+                }
+                selectedShipID = 0;
             }
 
         }
