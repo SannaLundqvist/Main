@@ -11,7 +11,7 @@ public class ClickableTile extends Tile{
     private View lastClickedTile = null;
     private int lastClickedTileCounter = 0;
 
-    public ClickableTile(int ID, View view){
+    public ClickableTile(int[][] ID, View view){
         super(ID, view);
 
         tileImage.setOnClickListener(new View.OnClickListener(){

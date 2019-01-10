@@ -22,7 +22,8 @@ public class GridFragment extends Fragment implements
         AdapterView.OnItemClickListener {
 
     private int[] board = {0, 0 ,0 ,0 ,1, 0, 0 ,0 ,1, 0 ,0 ,2};
-    private int tileID = 0;
+    private int[][] tileID = new int[6][6];
+ //   private int tileID = 0;
     private CustomGridAdapter cga;
     private int generatedID = 0;
     private View thisView;
@@ -68,14 +69,16 @@ public class GridFragment extends Fragment implements
                     r++;
                 }
 
+                tileID[c][r] = 0;
+
                 Tile tile;
                 if (isClickableTiles){
-                    tile = new ClickableTile(tileID, view);
+                    tile = new ClickableTile(tileID[c][r], view);
                 } else{
                     tile = new Tile(tileID, view);
                 }
 
-                tileID++;
+           //     tileID++;
                 ImageView imageView = tile.getTileImage();
                 GridLayout.LayoutParams param = new GridLayout.LayoutParams();
            //     param.height = GridLayout.LayoutParams.WRAP_CONTENT;

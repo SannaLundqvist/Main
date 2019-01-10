@@ -94,8 +94,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             @Override
             public void onClick(View v) {
                 txt_4r.setText("done!");
-                int[] intarray = new int[]{7,0,1};
-
+                int[] intarray = {7,0,1};
 
                 Intent intent = new Intent();
                 intent.putExtra("shipArray", intarray);
