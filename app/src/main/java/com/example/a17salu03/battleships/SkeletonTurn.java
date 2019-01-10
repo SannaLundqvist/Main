@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Basic turn data. It's just a blank data string and a turn number counter.
@@ -34,10 +36,18 @@ public class SkeletonTurn {
   public static final String TAG = "EBTurn";
 
   public String data = "";
-  public int[][] myShips = null;
+  public static int[] myShips = null;
+  public static int[] yourShips = null;
   public int turnCounter;
 
   public SkeletonTurn() {
+      myShips = new int[49];
+      for (int i = 0 ; i < 49 ; i ++){
+          if(i % 2 == 0)
+              myShips[i] = 0;
+          else
+              myShips[i] = 1;
+      }
   }
 
   // This is the byte array we will write out to the TBMP API.
@@ -47,15 +57,33 @@ public class SkeletonTurn {
     try {
       retVal.put("data", data);
       retVal.put("turnCounter", turnCounter);
-      //retVal.put(myShips);
 
     } catch (JSONException e) {
       Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
     }
 
+/*
+    String st = new String();
+    for (int i = 0 ; i < myShips.length ; i ++){
+        st.toCharArray()
+    }
+
+    st += retVal.toString();
+*/
     String st = retVal.toString();
 
     Log.d(TAG, "==== PERSISTING\n" + st);
+
+      byte[] one = st.getBytes(Charset.forName("UTF-8");
+      byte[] two = Arrays.bymyShips.;
+      byte[] combined = new byte[one.length + two.length];
+
+      System.arraycopy(one,0,combined,0         ,one.length);
+      System.arraycopy(two,0,combined,one.length,two.length);
+
+      byte[] retArray = st.getBytes(Charset.forName("UTF-8"));
+      byte[] shipsByteArray = new byte[49];
+      retArray.
 
     return st.getBytes(Charset.forName("UTF-8"));
   }
@@ -79,6 +107,8 @@ public class SkeletonTurn {
     Log.d(TAG, "====UNPERSIST \n" + st);
 
     SkeletonTurn retVal = new SkeletonTurn();
+    String ships = st.substring(0, 48*2 + 2);
+    st = st.substring(49);
 
     try {
       JSONObject obj = new JSONObject(st);
@@ -93,7 +123,19 @@ public class SkeletonTurn {
     } catch (JSONException e) {
       Log.e("SkeletonTurn", "There was an issue parsing JSON!", e);
     }
+    yourShips = stringToIntArray(ships);
 
     return retVal;
   }
+  private static int[] stringToIntArray(String numbers){
+
+        char []list = numbers.toCharArray();
+        int[] num = new int[49];
+
+        for (int i = 0; i < numbers.length(); i++) {
+            num[i] = Integer.parseInt(String.valueOf(list[i]));
+        }
+        return  num;
+    }
 }
+

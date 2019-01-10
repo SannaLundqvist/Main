@@ -106,6 +106,7 @@ public class StartActivity extends Activity implements
     // taken an action on the match, such as takeTurn()
     public SkeletonTurn mTurnData;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -368,7 +369,6 @@ public class StartActivity extends Activity implements
         mTurnData.turnCounter += 1;
         //här lägger man till sitt data som skickas mellan spelare
         mTurnData.data = position + "";
-        Toast.makeText(getBaseContext(), "take turn, 2? " + position, Toast.LENGTH_SHORT).show();
 
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId)
@@ -382,7 +382,7 @@ public class StartActivity extends Activity implements
 
         mTurnData = null;
     }
-    public void takeTurnPlaceShips(int[][] ships) {
+    public void takeTurnPlaceShips(int[] ships) {
         showSpinner();
 
         String nextParticipantId = getNextParticipantId();
@@ -462,7 +462,6 @@ public class StartActivity extends Activity implements
     // Switch to gameplay view.
     public void setGameplayUI() {
         isDoingTurn = true;
-
 
         if(mTurnData.turnCounter < 2){
             Toast.makeText(getBaseContext(), "The data recived is: " + mTurnData.data, Toast.LENGTH_LONG).show();
@@ -727,7 +726,7 @@ public class StartActivity extends Activity implements
             if(resultCode == RESULT_OK){
 
                 Bundle b = intent.getBundleExtra("shipArray");
-                takeTurnPlaceShips ((int[][]) b.getSerializable("shipArray"));
+                takeTurnPlaceShips ((int[]) b.getSerializable("shipArray"));
 
             }
             else
