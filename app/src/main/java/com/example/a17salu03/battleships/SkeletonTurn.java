@@ -18,6 +18,7 @@ package com.example.a17salu03.battleships;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -36,13 +37,13 @@ public class SkeletonTurn {
   public static final String TAG = "EBTurn";
 
   public String data = "";
-  public static int[] myShips = null;
-  public static int[] yourShips = null;
+  public int[] myShips = null;
+  public static int[] opponentsShips = null;
   public int turnCounter;
 
   public SkeletonTurn() {
       myShips = new int[49];
-      for (int i = 0 ; i < 49 ; i ++){
+      for (int i = 0 ; i < myShips.length ; i ++){
           if(i % 2 == 0)
               myShips[i] = 0;
           else
@@ -53,14 +54,18 @@ public class SkeletonTurn {
   // This is the byte array we will write out to the TBMP API.
   public byte[] persist() {
     JSONObject retVal = new JSONObject();
+    JSONArray ships = new JSONArray();
 
+      for (int i = 0 ; i < myShips.length ; i ++){
+          ships.put(myShips[i]);
+      }
     try {
-      retVal.put("data", data);
-      retVal.put("turnCounter", turnCounter);
-
-    } catch (JSONException e) {
-      Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
-    }
+          retVal.put("data", data);
+          retVal.put("turnCounter", turnCounter);
+          retVal.put("ships", ships);
+      } catch (JSONException e) {
+          Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
+      }
 
 /*
     String st = new String();
@@ -73,17 +78,6 @@ public class SkeletonTurn {
     String st = retVal.toString();
 
     Log.d(TAG, "==== PERSISTING\n" + st);
-
-      byte[] one = st.getBytes(Charset.forName("UTF-8");
-      byte[] two = Arrays.bymyShips.;
-      byte[] combined = new byte[one.length + two.length];
-
-      System.arraycopy(one,0,combined,0         ,one.length);
-      System.arraycopy(two,0,combined,one.length,two.length);
-
-      byte[] retArray = st.getBytes(Charset.forName("UTF-8"));
-      byte[] shipsByteArray = new byte[49];
-      retArray.
 
     return st.getBytes(Charset.forName("UTF-8"));
   }
@@ -107,8 +101,6 @@ public class SkeletonTurn {
     Log.d(TAG, "====UNPERSIST \n" + st);
 
     SkeletonTurn retVal = new SkeletonTurn();
-    String ships = st.substring(0, 48*2 + 2);
-    st = st.substring(49);
 
     try {
       JSONObject obj = new JSONObject(st);
@@ -119,23 +111,25 @@ public class SkeletonTurn {
       if (obj.has("turnCounter")) {
         retVal.turnCounter = obj.getInt("turnCounter");
       }
+      if(obj.has("ships")){
+          JSONArray array = obj.getJSONArray("ships");
+
+          if (array == null)
+              Log.e("SkeletonTurn", "There was an issue getting JSONArray!");
+
+          int[] numbers = new int[array.length()];
+
+          for (int i = 0; i < array.length(); ++i) {
+              numbers[i] = array.optInt(i);
+          }
+          opponentsShips = numbers;
+      }
 
     } catch (JSONException e) {
       Log.e("SkeletonTurn", "There was an issue parsing JSON!", e);
     }
-    yourShips = stringToIntArray(ships);
 
     return retVal;
   }
-  private static int[] stringToIntArray(String numbers){
-
-        char []list = numbers.toCharArray();
-        int[] num = new int[49];
-
-        for (int i = 0; i < numbers.length(); i++) {
-            num[i] = Integer.parseInt(String.valueOf(list[i]));
-        }
-        return  num;
-    }
 }
 
