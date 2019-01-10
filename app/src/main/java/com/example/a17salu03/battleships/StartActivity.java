@@ -74,7 +74,7 @@ import java.util.ArrayList;
 public class StartActivity extends Activity implements
         View.OnClickListener {
 
-    public static final String TAG = "SkeletonActivity";
+    public static final String TAG = "StartActivity";
 
     // Client used to sign in with Google APIs
     private GoogleSignInClient mGoogleSignInClient = null;
@@ -84,10 +84,6 @@ public class StartActivity extends Activity implements
 
     // Client used to interact with the Invitation system.
     private InvitationsClient mInvitationsClient = null;
-
-    // Local convenience pointers
-    public TextView mDataView;
-    public TextView mTurnTextView;
 
     private AlertDialog mAlertDialog;
 
@@ -130,9 +126,6 @@ public class StartActivity extends Activity implements
         // Setup signin and signout buttons
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-
-        mDataView = findViewById(R.id.data_view);
-        mTurnTextView = findViewById(R.id.turn_counter_view);
 
     }
 
@@ -354,8 +347,6 @@ public class StartActivity extends Activity implements
         String nextParticipantId = getNextParticipantId();
         // Create the next turn
         mTurnData.turnCounter += 1;
-        //här lägger man till sitt data som skickas mellan spelare
-        mTurnData.data = mDataView.getText().toString();
 
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId)
@@ -424,6 +415,28 @@ public class StartActivity extends Activity implements
             findViewById(R.id.login_layout).setVisibility(View.VISIBLE);
             findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             findViewById(R.id.matchup_layout).setVisibility(View.GONE);
+
+            if (mAlertDialog != null) {
+                mAlertDialog.dismiss();
+            }
+            return;
+        }
+        ((TextView) findViewById(R.id.name_field)).setText(mDisplayName);
+        findViewById(R.id.login_layout).setVisibility(View.GONE);
+
+        //if (isDoingTurn) {
+         //   findViewById(R.id.matchup_layout).setVisibility(View.GONE);
+         //   findViewById(R.id.gameplay_layout).setVisibility(View.VISIBLE);
+       // } else {
+            findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
+       // }
+        /*
+        boolean isSignedIn = mTurnBasedMultiplayerClient != null;
+
+        if (!isSignedIn) {
+            findViewById(R.id.login_layout).setVisibility(View.VISIBLE);
+            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+            findViewById(R.id.matchup_layout).setVisibility(View.GONE);
             findViewById(R.id.gameplay_layout).setVisibility(View.GONE);
 
             if (mAlertDialog != null) {
@@ -443,18 +456,15 @@ public class StartActivity extends Activity implements
             findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
             findViewById(R.id.gameplay_layout).setVisibility(View.GONE);
         }
+        */
     }
 
     // Switch to gameplay view.
     public void setGameplayUI() {
         isDoingTurn = true;
 
-        //bytt ut setViewVisibility() mot byta activities
-
 
         if(mTurnData.turnCounter < 2){
-
-
             Toast.makeText(getBaseContext(), "The data recived is: " + mTurnData.data, Toast.LENGTH_LONG).show();
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
             startActivityForResult(intent, PLACED_SHIPS);
@@ -465,12 +475,8 @@ public class StartActivity extends Activity implements
             Toast.makeText(getBaseContext(), "The data recived is: " + mTurnData.data, Toast.LENGTH_LONG).show();
             startActivityForResult(intent, SHOOTING);
         }
-
-
-
-        //kanske borde dessa två flyttas upp ovanför byte av activity...
-        mDataView.setText(mTurnData.data);
-        mTurnTextView.setText(getString(R.string.turn_label, mTurnData.turnCounter));
+        setViewVisibility();
+        dismissSpinner();
     }
 
     // Helpful dialogs

@@ -135,4 +135,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             lenght --;
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

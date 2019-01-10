@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/start_img">
 
     <LinearLayout
         android:id="@+id/login_layout"
@@ -20,93 +22,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_to_our_skeleton_app_" />
+            android:paddingBottom="70dp"
+            android:layout_gravity="top"
+            android:shadowColor="#ffffff"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="2"
+            android:text="@string/app_name"
+            android:textColor="#ff0000"
+            android:textSize="70sp" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="200dp"
+            android:paddingBottom="130dp"
             android:layout_height="wrap_content" >
         </com.google.android.gms.common.SignInButton>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/gameplay_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
-        tools:context=".SkeletonActivity" >
-
-        <TextView
-            android:id="@+id/instructions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/match_instructions"
-            android:width="300dp" />
-
-        <TextView
-            android:id="@+id/turn_counter_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/turn_counter"
-            android:width="300dp" />
-
-        <EditText
-            android:id="@+id/data_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="#FFFFFFFF"
-            android:gravity="center"
-            android:inputType="textEmailAddress|textEmailSubject"
-            android:maxLines="1"
-            android:text="@string/hello_world" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/doneButton"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:onClick="onDoneClicked"
-                android:text="@string/done"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/cancelButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onCancelClicked"
-                android:text="@string/cancel"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/leaveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onLeaveClicked"
-                android:text="@string/leave"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/finishButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onFinishClicked"
-                android:text="@string/finish"
-                tools:ignore="ButtonStyle" />
-        </LinearLayout>
     </LinearLayout>
 
     <RelativeLayout
