@@ -38,7 +38,7 @@ public class SkeletonTurn {
 
   public String data = "";
   public int[] myShips = null;
-  public static int[] opponentsShips = null;
+  public int[] opponentsShips = null;
   public int turnCounter;
 
   public SkeletonTurn() {
@@ -54,27 +54,25 @@ public class SkeletonTurn {
   // This is the byte array we will write out to the TBMP API.
   public byte[] persist() {
     JSONObject retVal = new JSONObject();
-    JSONArray ships = new JSONArray();
 
-      for (int i = 0 ; i < myShips.length ; i ++){
-          ships.put(myShips[i]);
-      }
     try {
           retVal.put("data", data);
           retVal.put("turnCounter", turnCounter);
-          retVal.put("ships", ships);
+
       } catch (JSONException e) {
           Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
       }
-
-/*
-    String st = new String();
-    for (int i = 0 ; i < myShips.length ; i ++){
-        st.toCharArray()
-    }
-
-    st += retVal.toString();
-*/
+      if(turnCounter < 3){
+          JSONArray ships = new JSONArray();
+          for (int i = 0 ; i < myShips.length ; i ++){
+              ships.put(myShips[i]);
+          }
+          try {
+              retVal.put("ships", ships);
+          }catch (JSONException e){
+              Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
+          }
+      }
     String st = retVal.toString();
 
     Log.d(TAG, "==== PERSISTING\n" + st);
@@ -122,7 +120,7 @@ public class SkeletonTurn {
           for (int i = 0; i < array.length(); ++i) {
               numbers[i] = array.optInt(i);
           }
-          opponentsShips = numbers;
+          retVal.opponentsShips = numbers;
       }
 
     } catch (JSONException e) {
