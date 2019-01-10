@@ -4,30 +4,28 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class Tile {
-    private ImageView tileImage;
-    private int tileID;
+    protected ImageView tileImage;
+    protected int tileID;
     private View view;
+    private static ArrayList<Tile> tiles = new ArrayList<Tile>();
+
+    public Tile(){
+
+    }
 
     public Tile(int ID, View view){
         tileID = ID;
         this.view = view;
         tileImage = new ImageView(view.getContext());
         tileImage.setImageResource(R.drawable.water_tile);
-
-        tileImage.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),
-                        tileID + " got clicked",
-                        Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        //     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
+        tiles.add(this);
 
     }
+
+
 
     public ImageView getTileImage(){
         return tileImage;

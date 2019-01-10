@@ -14,7 +14,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +30,7 @@ public class GridFragment extends Fragment implements
     private static List<View> clickedViews = new ArrayList<>();
     private View lastClickedTile = null;
     private int lastClickedTileCounter = 0;
+    private boolean isClickableTiles = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,13 @@ public class GridFragment extends Fragment implements
                     c = 0;
                     r++;
                 }
-                Tile tile = new Tile(tileID, view);
+                Tile tile;
+                if (isClickableTiles){
+                    tile = new ClickableTile(tileID, view);
+                } else{
+                    tile = new Tile(tileID, view);
+                }
+
                 tileID++;
                 ImageView imageView = tile.getTileImage();
                 GridLayout.LayoutParams param = new GridLayout.LayoutParams();
@@ -132,6 +138,9 @@ public class GridFragment extends Fragment implements
                 }); */
             }
         }
+    }
+    public void setClickableTiles(boolean answer){
+        isClickableTiles = answer;
     }
 
     public int getTile(int tileID){
