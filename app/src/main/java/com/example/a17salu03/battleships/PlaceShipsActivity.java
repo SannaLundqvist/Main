@@ -15,10 +15,15 @@ import java.util.ArrayList;
 
 public class PlaceShipsActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener {
 
-    private  GridFragment playerGrid;
+    private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
+    private int[] boardState = new int[49];
     private int shipToBePlaced;
-    private boolean isReadyToPlace = false;
+    private int selectedShipID;
+
+    private int ship2ID = 1;
+    private int ship3ID = 4;
+    private int ship4ID = 6;
     private int selectedPosition;
     private boolean[] isShipAtPosition;
     private Button placeBtn = null;
@@ -46,6 +51,10 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
 
+        for (int i = 0; i < boardState.length; i++){
+            boardState[i] = 0;
+        }
+
         placeBtn = findViewById(R.id.place);
         doneBtn = findViewById(R.id.done);
         img_2r = findViewById(R.id.ship_2r_draw);
@@ -62,7 +71,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             public void onClick(View v) {
                 int shipsLeft0 = Integer.parseInt(txt_2r.getText().toString());
                 if(shipsLeft0 > 0){
-                    isReadyToPlace = true;
+                    generateShipID(2);
                     shipNbr = 0;
                     shipsLeft0 --;
                     txt_2r.setText(shipsLeft0 + "");
@@ -76,6 +85,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             public void onClick(View v) {
                 int shipsLeft1 = Integer.parseInt(txt_3r.getText().toString());
                 if(shipsLeft1 > 0){
+                    generateShipID(3);
                     shipNbr = 1;
                     shipsLeft1 --;
                     txt_2r.setText(shipsLeft1 + "");
@@ -89,6 +99,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             public void onClick(View v) {
                 int shipsLeft2 = Integer.parseInt(txt_4r.getText().toString());
                 if(shipsLeft2 > 0){
+                    generateShipID(4);
                     shipNbr = 2;
                     shipsLeft2 --;
                     txt_4r.setText(shipsLeft2 + "");
@@ -111,7 +122,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
                 //skicka tillbaka informationen till StartActivity
                 //kanske behövs låsas innan man valt position minst en gång, eller testas
                 //isShipAtPosition skickas vidare
-                isReadyToPlace = false;
+
             }
         });
 
@@ -119,23 +130,40 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
 
 
     }
-
+    private void generateShipID(int shipSize){
+        switch (shipSize){
+            case 2:
+                selectedShipID = ship2ID;
+                break;
+            case 3:
+                selectedShipID = ship3ID;
+                break;
+            case 4:
+                selectedShipID = ship4ID;
+                break;
+        }
+    }
 
     public void onPlaceClicked(View view){
        Integer clickedTile = Integer.valueOf(playerGrid.getClickedTile());
-        if (clickedTile != null){
+
+        if (clickedTile != null && selectedShipID != 0){
             boolean isTileVacant = true;
             for (int v : usedTiles){
-                if (playerGrid.getClickedTile() == v){
+                if (clickedTile == v){
                     isTileVacant = false;
                     break;
                 }
             }
             if (isTileVacant){
+                boardState[clickedTile] = selectedShipID;
+
                 Toast.makeText(getBaseContext(),
-                        playerGrid.getClickedTile() + " got chosen, solklart",
+                        boardState[clickedTile] + " got chosen, solklart",
                         Toast.LENGTH_SHORT).show();
+                usedTiles.add(clickedTile);
             }
+
         }
 
 

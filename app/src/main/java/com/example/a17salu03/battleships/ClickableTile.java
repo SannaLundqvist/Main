@@ -18,9 +18,9 @@ public class ClickableTile extends Tile{
             @Override
             public void onClick(View view) {
                 gridFragment.setClickedTile(tileID);
-     /*           Toast.makeText(view.getContext(),
+                Toast.makeText(view.getContext(),
                           tileID + " got clicked",
-                        Toast.LENGTH_SHORT).show(); */
+                        Toast.LENGTH_SHORT).show();
 
                 ImageView imageView = (ImageView) view;
                 if (lastClickedTile == null) {

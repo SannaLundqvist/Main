@@ -51,6 +51,7 @@ public class GridFragment extends Fragment implements
         View view = getView();
         if (view != null) {
             thisView = view;
+            tileID = 0;
             GridLayout gridLayout = thisView.findViewById(R.id.grid);
 
             gridLayout.removeAllViews();
@@ -146,11 +147,8 @@ public class GridFragment extends Fragment implements
         return clickedTile;
     }
 
-    public void setClickedTile(int tileID){
+    public void setClickedTile(int tileID) {
         clickedTile = tileID;
-        Toast.makeText(getContext(),
-                clickedTile + " got chosen",
-                Toast.LENGTH_SHORT).show();
     }
 
     public void setClickableTiles(boolean answer){
