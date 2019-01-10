@@ -9,13 +9,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class PlaceShipsActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener {
 
+    private  GridFragment playerGrid;
+    private ArrayList<Integer> usedTiles = new ArrayList<>();
     private int shipToBePlaced;
     private boolean isReadyToPlace = false;
     private int selectedPosition;
     private boolean[] isShipAtPosition;
+    private Button placeBtn = null;
     private Button doneBtn = null;
     private ImageView img_2r = null;
     private ImageView img_3r = null;
@@ -40,6 +46,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
 
+        placeBtn = findViewById(R.id.place);
         doneBtn = findViewById(R.id.done);
         img_2r = findViewById(R.id.ship_2r_draw);
         img_3r = findViewById(R.id.ship_3r_draw);
@@ -108,6 +115,28 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             }
         });
 
+
+
+
+    }
+
+
+    public void onPlaceClicked(View view){
+       Integer clickedTile = Integer.valueOf(playerGrid.getClickedTile());
+        if (clickedTile != null){
+            boolean isTileVacant = true;
+            for (int v : usedTiles){
+                if (playerGrid.getClickedTile() == v){
+                    isTileVacant = false;
+                    break;
+                }
+            }
+            if (isTileVacant){
+                Toast.makeText(view.getContext(),
+                        playerGrid.getClickedTile() + " got chosen",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
 
 
 

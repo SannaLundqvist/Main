@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Tile {
     protected ImageView tileImage;
-    protected int[][] tileID;
+    protected int tileID;
     private View view;
     private static ArrayList<Tile> tiles = new ArrayList<Tile>();
 
@@ -16,7 +16,7 @@ public class Tile {
 
     }
 
-    public Tile(int[][] ID, View view){
+    public Tile(int ID, View view){
         tileID = ID;
         this.view = view;
         tileImage = new ImageView(view.getContext());
@@ -29,7 +29,7 @@ public class Tile {
         return tileImage;
     }
 
-    public int[][] getTileID(){
+    public int getTileID(){
         return tileID;
     }
 
