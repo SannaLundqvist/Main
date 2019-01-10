@@ -382,16 +382,15 @@ public class StartActivity extends Activity implements
 
         mTurnData = null;
     }
-    public void takeTurnPlaceShips(int ships) {
+    public void takeTurnPlaceShips(int[][] ships) {
         showSpinner();
 
         String nextParticipantId = getNextParticipantId();
         // Create the next turn
         mTurnData.turnCounter += 1;
         //här lägger man till sitt data som skickas mellan spelare
-        mTurnData.data = ships + "";
-        Toast.makeText(getBaseContext(), "take turn, 7? " + ships, Toast.LENGTH_SHORT).show();
-
+        //borttaget
+        mTurnData.myShips = ships;
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId)
                 .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
@@ -402,7 +401,8 @@ public class StartActivity extends Activity implements
                 })
                 .addOnFailureListener(createFailureListener("There was a problem taking a turn!"));
 
-        mTurnData = null;
+        //mTurnData = null;
+
     }
 
     // Sign-in, Sign out behavior
@@ -721,13 +721,14 @@ public class StartActivity extends Activity implements
                     })
                     .addOnFailureListener(createFailureListener("There was a problem creating a match!"));
             showSpinner();
+
         }else if (requestCode == PLACED_SHIPS) {
             super.onActivityResult(requestCode, requestCode, intent);
             if(resultCode == RESULT_OK){
-                if(intent.getIntArrayExtra("shipArray")[0] == 7)
-                    //Toast.makeText(getBaseContext(), "first element = 7", Toast.LENGTH_SHORT).show();
 
-                takeTurnPlaceShips(intent.getIntArrayExtra("shipArray")[0]);
+                Bundle b = intent.getBundleExtra("shipArray");
+                takeTurnPlaceShips ((int[][]) b.getSerializable("shipArray"));
+
             }
             else
                 Toast.makeText(getBaseContext(), "There was a problem placing your ships", Toast.LENGTH_SHORT).show();
@@ -736,6 +737,7 @@ public class StartActivity extends Activity implements
             //Intent i = new Intent(this, BoardActivity.class);
             //startActivity(i);
         }else if (requestCode == SHOOTING) {
+
             super.onActivityResult(requestCode, requestCode, intent);
             if (resultCode == RESULT_OK) {
                 if (intent.getIntExtra("position", 0) == 2)

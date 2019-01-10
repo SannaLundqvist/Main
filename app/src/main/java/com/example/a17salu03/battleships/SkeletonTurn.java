@@ -34,6 +34,7 @@ public class SkeletonTurn {
   public static final String TAG = "EBTurn";
 
   public String data = "";
+  public int[][] myShips = null;
   public int turnCounter;
 
   public SkeletonTurn() {
@@ -46,6 +47,7 @@ public class SkeletonTurn {
     try {
       retVal.put("data", data);
       retVal.put("turnCounter", turnCounter);
+      //retVal.put(myShips);
 
     } catch (JSONException e) {
       Log.e("SkeletonTurn", "There was an issue writing JSON!", e);

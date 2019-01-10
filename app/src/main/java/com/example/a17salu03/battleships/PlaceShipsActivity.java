@@ -48,8 +48,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
         txt_3r = findViewById(R.id.ship_3r_text);
         txt_4r = findViewById(R.id.ship_4r_text);
 
-        isShipAtPosition = new boolean[49];
-
         img_2r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,17 +92,16 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
             @Override
             public void onClick(View v) {
                 txt_4r.setText("done!");
-                int[] intarray = new int[]{7,0,1};
+                int[][] intarray = new int[6][6];
+                intarray[0][0] = 8;
 
-
+                Bundle b = new Bundle();
+                b.putSerializable("shipArray", intarray);
                 Intent intent = new Intent();
-                intent.putExtra("shipArray", intarray);
+                intent.putExtra("shipArray", b);
                 setResult(RESULT_OK, intent);
                 finish();
 
-                //skicka tillbaka informationen till StartActivity
-                //kanske behövs låsas innan man valt position minst en gång, eller testas
-                //isShipAtPosition skickas vidare
                 isReadyToPlace = false;
             }
         });

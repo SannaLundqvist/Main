@@ -32,7 +32,7 @@
 
         <FrameLayout
             android:id="@+id/fragment_container_player"
-            android:layout_width="17dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:background="@drawable/layout_border"
