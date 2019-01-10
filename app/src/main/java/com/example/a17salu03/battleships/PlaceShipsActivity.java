@@ -38,7 +38,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
 
-        GridFragment playerGrid = new GridFragment();
+        playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
@@ -132,8 +132,8 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
                 }
             }
             if (isTileVacant){
-                Toast.makeText(view.getContext(),
-                        playerGrid.getClickedTile() + " got chosen",
+                Toast.makeText(getBaseContext(),
+                        playerGrid.getClickedTile() + " got chosen, solklart",
                         Toast.LENGTH_SHORT).show();
             }
         }
