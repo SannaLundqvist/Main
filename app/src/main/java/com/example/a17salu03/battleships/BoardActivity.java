@@ -46,7 +46,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                     setResult(RESULT_OK, intent);
                     finish();
                 }else{
-                    Toast.makeText(getBaseContext(), "Choose a block to shoot at", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext() , "Choose a block to shoot at", Toast.LENGTH_SHORT).show();
                 }
 
             }

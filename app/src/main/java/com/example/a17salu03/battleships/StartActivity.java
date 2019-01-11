@@ -245,6 +245,7 @@ public class StartActivity extends Activity implements
                     @Override
                     public void onSuccess(Intent intent) {
                         startActivityForResult(intent, RC_LOOK_AT_MATCHES);
+
                     }
                 })
                 .addOnFailureListener(createFailureListener(getString(R.string.error_get_inbox_intent)));
@@ -384,8 +385,10 @@ public class StartActivity extends Activity implements
         showSpinner();
 
         String nextParticipantId = getNextParticipantId();
+
         // Create the next turn
-        mTurnData.turnCounter += 1;
+        mTurnData.turnCounter += 0;
+        Toast.makeText(this, "turnCOunt" + mTurnData.turnCounter, Toast.LENGTH_LONG);
         //här lägger man till sitt data som skickas mellan spelare
         //borttaget
         mTurnData.myShips = ships;
