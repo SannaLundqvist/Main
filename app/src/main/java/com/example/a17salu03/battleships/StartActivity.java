@@ -722,8 +722,7 @@ public class StartActivity extends Activity implements
             super.onActivityResult(requestCode, requestCode, intent);
             if(resultCode == RESULT_OK){
 
-                Bundle b = intent.getBundleExtra("shipArray");
-                takeTurnPlaceShips ((int[]) b.getSerializable("shipArray"));
+                takeTurnPlaceShips (intent.getIntArrayExtra("boardState"));
 
             }
             else
