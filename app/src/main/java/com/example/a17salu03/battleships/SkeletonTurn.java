@@ -38,10 +38,11 @@ public class SkeletonTurn {
 
     public int[] myShips = null;
     public int[] opponentsShips = null;
-    public int firePosition = -1;
+    public int firePosition;
     public int turnCounter;
 
     public SkeletonTurn() {
+        /*
         myShips = new int[49];
         for (int i = 0; i < myShips.length; i++) {
             if (i % 2 == 0)
@@ -49,6 +50,14 @@ public class SkeletonTurn {
             else
                 myShips[i] = 1;
         }
+        opponentsShips = new int[49];
+        for (int i = 0; i < opponentsShips.length; i++) {
+            if (i % 2 == 0)
+                opponentsShips[i] = 1;
+            else
+                opponentsShips[i] = 0;
+        }
+        */
     }
 
     // This is the byte array we will write out to the TBMP API.

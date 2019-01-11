@@ -20,7 +20,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-        opponentsShips = savedInstanceState.getIntArray("opponentsShips");
+        opponentsShips = getIntent().getIntArrayExtra("opponentsShips");
 
         fireBtn = findViewById(R.id.fire);
 

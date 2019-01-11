@@ -738,9 +738,7 @@ public class StartActivity extends Activity implements
 
             super.onActivityResult(requestCode, requestCode, intent);
             if (resultCode == RESULT_OK) {
-                if (intent.getIntExtra("position", 0) == 2)
 
-                    takeTurn(intent.getIntExtra("position", 0));
             } else
                 Toast.makeText(getBaseContext(), "There was a problem placing your ships", Toast.LENGTH_SHORT).show();
         }
