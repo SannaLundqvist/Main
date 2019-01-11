@@ -91,6 +91,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements GridFragmen
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 txt_4r.setText("done!");
                 int[] intarray = new int[49];
                 intarray[0] = 8;
