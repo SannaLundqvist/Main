@@ -7,26 +7,20 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ClickableTile extends Tile{
-    private static ArrayList<View> clickedViews = new ArrayList<>();
-    private View lastClickedTile = null;
-    private int lastClickedTileCounter = 0;
+    private static View lastClickedTile = null;
+    private static int lastClickedTileCounter = 0;
 
-    public ClickableTile(int ID, View view){
+    public ClickableTile(int ID, View view, final GridFragment gridFragment){
         super(ID, view);
+
 
         tileImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                gridFragment.setClickedTile(tileID);
                 Toast.makeText(view.getContext(),
-                        tileID + " got clicked",
+                          tileID + " got clicked",
                         Toast.LENGTH_SHORT).show();
-                boolean isClicked = false;
-                for (View v : clickedViews){
-                    if (view.equals(v)){
-                        isClicked = true;
-                        break;
-                    }
-                }
 
                 ImageView imageView = (ImageView) view;
                 if (lastClickedTile == null) {
@@ -47,20 +41,6 @@ public class ClickableTile extends Tile{
 
                 }
                 lastClickedTile = view;
-                       if (isClicked) {
-                            imageView.setImageResource(R.drawable.water_tile);
-                            Toast.makeText(view.getContext(),
-                                    "Clicked",
-                                    Toast.LENGTH_SHORT).show();
-                            clickedViews.remove(view);
-                        } else {
-
-                            Toast.makeText(view.getContext(),
-                                    "Not clicked",
-                                    Toast.LENGTH_SHORT).show();
-                            clickedViews.add(view);
-                        }
-
 
             }
         });

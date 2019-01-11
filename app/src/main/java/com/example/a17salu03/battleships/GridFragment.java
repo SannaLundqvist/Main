@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +23,13 @@ public class GridFragment extends Fragment implements
         AdapterView.OnItemClickListener {
 
     private int[] board = {0, 0 ,0 ,0 ,1, 0, 0 ,0 ,1, 0 ,0 ,2};
+
+
     private int tileID = 0;
-    private CustomGridAdapter cga;
-    private int generatedID = 0;
+    private int clickedTile;
     private View thisView;
-    public Integer layoutBorder = R.drawable.layout_border;
-    private static List<View> clickedViews = new ArrayList<>();
-    private View lastClickedTile = null;
-    private int lastClickedTileCounter = 0;
+      public Integer layoutBorder = R.drawable.layout_border;
+
     private boolean isClickableTiles = false;
 
     @Override
@@ -51,6 +51,7 @@ public class GridFragment extends Fragment implements
         View view = getView();
         if (view != null) {
             thisView = view;
+            tileID = 0;
             GridLayout gridLayout = thisView.findViewById(R.id.grid);
 
             gridLayout.removeAllViews();
@@ -70,7 +71,7 @@ public class GridFragment extends Fragment implements
 
                 Tile tile;
                 if (isClickableTiles){
-                    tile = new ClickableTile(tileID, view);
+                    tile = new ClickableTile(tileID, view, this);
                 } else{
                     tile = new Tile(tileID, view);
                 }
@@ -140,6 +141,14 @@ public class GridFragment extends Fragment implements
             }
         }
     }
+    public int getClickedTile(){
+        return clickedTile;
+    }
+
+    public void setClickedTile(int tileID) {
+        clickedTile = tileID;
+    }
+
     public void setClickableTiles(boolean answer){
         isClickableTiles = answer;
     }

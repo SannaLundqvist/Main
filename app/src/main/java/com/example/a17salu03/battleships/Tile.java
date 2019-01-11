@@ -25,8 +25,6 @@ public class Tile {
 
     }
 
-
-
     public ImageView getTileImage(){
         return tileImage;
     }
