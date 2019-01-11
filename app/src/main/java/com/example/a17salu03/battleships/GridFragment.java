@@ -69,8 +69,6 @@ public class GridFragment extends Fragment implements
                     r++;
                 }
 
-
-
                 Tile tile;
                 if (isClickableTiles){
                     tile = new ClickableTile(tileID, view, this);
