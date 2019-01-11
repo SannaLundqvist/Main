@@ -24,11 +24,11 @@ public class GridFragment extends Fragment implements
 
     private int[] board = {0, 0 ,0 ,0 ,1, 0, 0 ,0 ,1, 0 ,0 ,2};
 
-
+    private ArrayList<Tile> tiles = new ArrayList<>();
     private int tileID = 0;
     private int clickedTile;
     private View thisView;
-      public Integer layoutBorder = R.drawable.layout_border;
+    public Integer layoutBorder = R.drawable.layout_border;
 
     private boolean isClickableTiles = false;
 
@@ -75,12 +75,13 @@ public class GridFragment extends Fragment implements
                 } else{
                     tile = new Tile(tileID, view);
                 }
+                tiles.add(tile);
 
                 tileID++;
                 ImageView imageView = tile.getTileImage();
                 GridLayout.LayoutParams param = new GridLayout.LayoutParams();
-           //     param.height = GridLayout.LayoutParams.WRAP_CONTENT;
-           //     param.width = GridLayout.LayoutParams.WRAP_CONTENT;
+                //     param.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                //     param.width = GridLayout.LayoutParams.WRAP_CONTENT;
                 param.rightMargin = 5;
                 param.topMargin = 5;
                 param.columnSpec = GridLayout.spec(c);
@@ -141,6 +142,10 @@ public class GridFragment extends Fragment implements
             }
         }
     }
+    public Tile getTileAtPosition(int position){
+        return tiles.get(position);
+    }
+
     public int getClickedTile(){
         return clickedTile;
     }
@@ -172,8 +177,8 @@ public class GridFragment extends Fragment implements
         //     String selectedItem = (String) parent.getItemAtPosition(position);
 
         //    ImageView iv = (ImageView) parent.getItemAtPosition(position);
-  //      ImageView iv = (ImageView) parent.getSelectedItem();
-  //      iv.setImageResource(R.drawable.ic_launcher_background); // <- här ska det vara tänkt att bilden skall bytas ut
+        //      ImageView iv = (ImageView) parent.getSelectedItem();
+        //      iv.setImageResource(R.drawable.ic_launcher_background); // <- här ska det vara tänkt att bilden skall bytas ut
 
    /*     View view = cga.getView(position, null, null);
         ImageView imageView = (ImageView) view;
@@ -191,7 +196,6 @@ public class GridFragment extends Fragment implements
         private int size = 49;
         // Keep all Images in array
         //     public Integer[] mThumbIds = new Integer[64];
-        //Här trodde jag att man kunde ändra bilden? Where tho?
         private Integer waterImage = R.drawable.water_tile;
 
         // Constructor
@@ -241,7 +245,7 @@ public class GridFragment extends Fragment implements
             //     Log.v("rhh", imageView.getId() + "");
             imageView.setImageResource(waterImage);
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-    //        imageView.setLayoutParams(new GridView.LayoutParams(105, 105));  // <- här säts det till en statisk storlek, activity_grid hör också till detta problem
+            //        imageView.setLayoutParams(new GridView.LayoutParams(105, 105));  // <- här säts det till en statisk storlek, activity_grid hör också till detta problem
             return imageView;
         }
 

@@ -1,5 +1,6 @@
 package com.example.a17salu03.battleships;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -27,6 +28,11 @@ public class Tile {
 
     public ImageView getTileImage(){
         return tileImage;
+    }
+
+    public void setTileImage(int imageView){
+        tileImage.setImageResource(imageView);
+
     }
 
     public int getTileID(){
