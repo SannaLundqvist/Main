@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener{
+    private int[] opponentsShips = null;
     private Button fireBtn = null;
     private int position;
 
@@ -18,6 +19,8 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
+
+        opponentsShips = savedInstanceState.getIntArray("opponentsShips");
 
         fireBtn = findViewById(R.id.fire);
 
@@ -34,9 +37,12 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
             @Override
             public void onClick(View v) {
                 if(position >= 0){
+                    if((opponentsShips[position] > 0) && (opponentsShips[position] < 10)){
+                        opponentsShips[position] = opponentsShips[position] + 10;
+                        //hitCounter ++;
+                    }
                     Intent intent = new Intent();
-                    intent.putExtra("position", position);
-                    position = -1;
+                    intent.putExtra("opponentsShips", opponentsShips);
                     setResult(RESULT_OK, intent);
                     finish();
                 }else{

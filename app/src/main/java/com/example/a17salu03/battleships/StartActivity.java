@@ -367,8 +367,6 @@ public class StartActivity extends Activity implements
         String nextParticipantId = getNextParticipantId();
         // Create the next turn
         mTurnData.turnCounter += 1;
-        //här lägger man till sitt data som skickas mellan spelare
-        mTurnData.data = position + "";
 
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId)
@@ -463,15 +461,14 @@ public class StartActivity extends Activity implements
     public void setGameplayUI() {
         isDoingTurn = true;
 
+        //eftersom turnCounter fungerar borde inte helt skiten bli crap på startActivityForResult
         if(mTurnData.turnCounter < 2){
-            Toast.makeText(getBaseContext(), "The data recived is: " + mTurnData.data, Toast.LENGTH_LONG).show();
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
             startActivityForResult(intent, PLACED_SHIPS);
 
         }else{
             Intent intent = new Intent(StartActivity.this, BoardActivity.class);
-            intent.putExtra("sentData", mTurnData.data);
-            Toast.makeText(getBaseContext(), "The data recived is: " + mTurnData.data, Toast.LENGTH_LONG).show();
+            intent.putExtra("opponentsShips", mTurnData.opponentsShips);
             startActivityForResult(intent, SHOOTING);
         }
         setViewVisibility();
@@ -740,7 +737,6 @@ public class StartActivity extends Activity implements
             super.onActivityResult(requestCode, requestCode, intent);
             if (resultCode == RESULT_OK) {
                 if (intent.getIntExtra("position", 0) == 2)
-                    Toast.makeText(getBaseContext(), "position is 2", Toast.LENGTH_SHORT).show();
 
                     takeTurn(intent.getIntExtra("position", 0));
             } else
@@ -756,10 +752,6 @@ public class StartActivity extends Activity implements
     // UI.
     public void startMatch(TurnBasedMatch match) {
         mTurnData = new SkeletonTurn();
-        //Här byt Activity till PlsaceShips
-        //maatch till
-        // Some basic turn data
-        mTurnData.data = "First turn";
 
         mMatch = match;
 

@@ -36,9 +36,9 @@ public class SkeletonTurn {
 
     public static final String TAG = "EBTurn";
 
-    public String data = "";
     public int[] myShips = null;
     public int[] opponentsShips = null;
+    public int firePosition = -1;
     public int turnCounter;
 
     public SkeletonTurn() {
@@ -77,9 +77,15 @@ public class SkeletonTurn {
                 Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
             }
         }
-        
+        if(firePosition >= 0){
+            try {
+                retVal.put("firePosition", firePosition);
+            } catch (JSONException e) {
+                Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
+            }
+        }
+
         try {
-            retVal.put("data", data);
             retVal.put("turnCounter", turnCounter);
 
         } catch (JSONException e) {
@@ -116,9 +122,6 @@ public class SkeletonTurn {
         try {
             JSONObject obj = new JSONObject(st);
 
-            if (obj.has("data")) {
-                retVal.data = obj.getString("data");
-            }
             if (obj.has("turnCounter")) {
                 retVal.turnCounter = obj.getInt("turnCounter");
             }
@@ -147,6 +150,9 @@ public class SkeletonTurn {
                     numbers[i] = array.optInt(i);
                 }
                 retVal.myShips = numbers;
+            }
+            if(obj.has("firePosition")){
+                retVal.firePosition = obj.getInt("firePosition");
             }
 
         } catch (JSONException e) {
