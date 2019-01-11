@@ -54,14 +54,29 @@ public class SkeletonTurn {
   // This is the byte array we will write out to the TBMP API.
   public byte[] persist() {
     JSONObject retVal = new JSONObject();
+    JSONArray mine = new JSONArray();
+      for (int i = 0 ; i < myShips.length ; i ++){
+          mine.put(myShips[i]);
+      }
+      JSONArray opponents = new JSONArray();
+      for (int i = 0 ; i < opponentsShips.length ; i ++){
+          opponents.put(opponentsShips[i]);
+      }
 
     try {
           retVal.put("data", data);
           retVal.put("turnCounter", turnCounter);
+          retVal.put("myShips", mine);
+          retVal.put("opponentsShips", opponents);
 
       } catch (JSONException e) {
           Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
       }
+
+
+
+      /*
+      Detta är ifall vi bara skickar skepp när vi pacear dom
       if(turnCounter < 3){
           JSONArray ships = new JSONArray();
           for (int i = 0 ; i < myShips.length ; i ++){
@@ -73,6 +88,9 @@ public class SkeletonTurn {
               Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
           }
       }
+      */
+
+
     String st = retVal.toString();
 
     Log.d(TAG, "==== PERSISTING\n" + st);
@@ -109,8 +127,8 @@ public class SkeletonTurn {
       if (obj.has("turnCounter")) {
         retVal.turnCounter = obj.getInt("turnCounter");
       }
-      if(obj.has("ships")){
-          JSONArray array = obj.getJSONArray("ships");
+      if(obj.has("myShips")){
+          JSONArray array = obj.getJSONArray("myShips");
 
           if (array == null)
               Log.e("SkeletonTurn", "There was an issue getting JSONArray!");
@@ -122,6 +140,19 @@ public class SkeletonTurn {
           }
           retVal.opponentsShips = numbers;
       }
+        if(obj.has("opponentsShips")){
+            JSONArray array = obj.getJSONArray("opponentsShips");
+
+            if (array == null)
+                Log.e("SkeletonTurn", "There was an issue getting JSONArray!");
+
+            int[] numbers = new int[array.length()];
+
+            for (int i = 0; i < array.length(); ++i) {
+                numbers[i] = array.optInt(i);
+            }
+            retVal.myShips = numbers;
+        }
 
     } catch (JSONException e) {
       Log.e("SkeletonTurn", "There was an issue parsing JSON!", e);
