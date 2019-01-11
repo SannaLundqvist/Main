@@ -191,6 +191,7 @@ public class GridFragment extends Fragment implements
         private int size = 49;
         // Keep all Images in array
         //     public Integer[] mThumbIds = new Integer[64];
+        //Här trodde jag att man kunde ändra bilden? Where tho?
         private Integer waterImage = R.drawable.water_tile;
 
         // Constructor
