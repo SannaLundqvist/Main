@@ -57,7 +57,7 @@
                     android:id="@+id/ship_1r_draw"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/skepp_2r" />
+                    app:srcCompat="@drawable/skepp_1r" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
                     android:id="@+id/ship_2r_draw"
                     android:layout_width="120dp"
                     android:layout_height="60dp"
-                    app:srcCompat="@drawable/skepp_3r" />
+                    app:srcCompat="@drawable/skepp_2r" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -110,7 +110,7 @@
                     android:id="@+id/ship_3r_draw"
                     android:layout_width="120dp"
                     android:layout_height="62dp"
-                    app:srcCompat="@drawable/skepp_4r" />
+                    app:srcCompat="@drawable/skepp_3r" />
 
                 <TextView
                     android:layout_width="wrap_content"

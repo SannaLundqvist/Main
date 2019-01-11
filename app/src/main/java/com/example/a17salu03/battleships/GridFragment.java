@@ -24,7 +24,7 @@ public class GridFragment extends Fragment implements
 
     private int[] board = {0, 0 ,0 ,0 ,1, 0, 0 ,0 ,1, 0 ,0 ,2};
 
-
+    private ArrayList<Tile> tiles = new ArrayList<>();
     private int tileID = 0;
     private int clickedTile;
     private View thisView;
@@ -75,6 +75,7 @@ public class GridFragment extends Fragment implements
                 } else{
                     tile = new Tile(tileID, view);
                 }
+                tiles.add(tile);
 
                 tileID++;
                 ImageView imageView = tile.getTileImage();
@@ -141,6 +142,10 @@ public class GridFragment extends Fragment implements
             }
         }
     }
+    public Tile getTileAtPosition(int position){
+        return tiles.get(position);
+    }
+
     public int getClickedTile(){
         return clickedTile;
     }

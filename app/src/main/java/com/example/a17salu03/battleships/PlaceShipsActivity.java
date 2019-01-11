@@ -191,6 +191,8 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private boolean placeShipAtPosition(int startPosition, int lenght, boolean isHorizontal){
         if (lenght == 1){
             boardState[startPosition] = selectedShipID;
+            Tile tile = playerGrid.getTileAtPosition(startPosition);
+            tile.setTileImage(R.drawable.water_tile_border);
             usedTiles.add(startPosition);
             return true;
         } else if (lenght == 2){
