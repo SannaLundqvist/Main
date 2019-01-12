@@ -58,7 +58,7 @@ public class Tile {
                 break;
         }
 
-        tileImage.setImageResource(R.drawable.water_tile);
+        //tileImage.setImageResource(R.drawable.water_tile);
         tiles.add(this);
 
     }

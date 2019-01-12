@@ -107,11 +107,11 @@ public class GridFragment extends Fragment implements
     }
     private int getTileAppenence(int pos){
         int ship = ships[pos];
-        if((ship > 0) && (ship < 9)){
+        if((ship >= 0) && (ship < 9)){
             return Tile.TILE_TYPE_WATER;
         }else if((ship > 10) && (ship <= 13)){
             return  Tile.TILE_TYPE_SHIP_SMALL;
-        }else if(between(14, 15, pos)) {
+        }else if(between(14, 15, ship)) {
             if (!(pos % 7 == 0)) {
                 if (between(14, 15, ships[pos - 1])) {
                     return Tile.TILE_TYPE_SHIP_MEDIUM_R;

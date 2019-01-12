@@ -31,6 +31,7 @@ public class ClickableTile extends Tile{
                     ImageView imageView = (ImageView) view;
 
 
+
                     if (lastClickedTile == null) {
                         imageView.setImageResource(R.drawable.water_tile_border);
                     } else if (!lastClickedTile.equals(view)) {
@@ -48,6 +49,7 @@ public class ClickableTile extends Tile{
                         }
                     }
                     lastClickedTile = view;
+
 
                 }
 
