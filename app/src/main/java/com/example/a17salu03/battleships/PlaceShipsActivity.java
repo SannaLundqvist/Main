@@ -136,12 +136,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
         if (clickedTile != null && selectedShipID != 0){
             if (isVacant(clickedTile)){
-                boardState[clickedTile] = selectedShipID;
-
-                Toast.makeText(getBaseContext(),
-                        boardState[clickedTile] + " got chosen, solklart",
-                        Toast.LENGTH_SHORT).show();
-
 
 
                 if (selectedShipID >= 1 && selectedShipID <= 3 && placeShipAtPosition(clickedTile, 1, true)){
@@ -192,9 +186,9 @@ public class PlaceShipsActivity extends AppCompatActivity {
         if (lenght == 1){
             boardState[startPosition] = selectedShipID;
             Tile tile = playerGrid.getTileAtPosition(startPosition);
-            tile.setTileImage(R.drawable.skepp_1r);
-            tile.getTileImage().setAdjustViewBounds(true);
-            tile.getTileImage().setScaleType(ImageView.ScaleType.CENTER_CROP);
+     //       tile.setTileImage(R.drawable.skepp_1r);
+            tile.getTileImage().setVisibility(View.INVISIBLE);
+
             usedTiles.add(startPosition);
             return true;
         } else if (lenght == 2){
@@ -203,12 +197,23 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 boardState[startPosition] = selectedShipID;
                 usedTiles.add(startPosition - 1);
                 usedTiles.add(startPosition);
+                Tile tile;
+                for (int i = startPosition - 1; i <= startPosition; i++){
+                       tile = playerGrid.getTileAtPosition(i);
+                       tile.getTileImage().setVisibility(View.INVISIBLE);
+                }
                 return true;
             } else if ( isVacant(startPosition + 1)){
                 boardState[startPosition] = selectedShipID;
                 boardState[startPosition + 1] = selectedShipID;
                 usedTiles.add(startPosition);
                 usedTiles.add(startPosition + 1);
+
+                Tile tile;
+                for (int i = startPosition; i <= startPosition + 1; i++){
+                    tile = playerGrid.getTileAtPosition(i);
+                    tile.getTileImage().setVisibility(View.INVISIBLE);
+                }
                 return true;
             }
         } else if (lenght == 3){
@@ -219,6 +224,12 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 usedTiles.add(startPosition - 2);
                 usedTiles.add(startPosition - 1);
                 usedTiles.add(startPosition);
+
+                Tile tile;
+                for (int i = startPosition - 2; i <= startPosition; i++){
+                    tile = playerGrid.getTileAtPosition(i);
+                    tile.getTileImage().setVisibility(View.INVISIBLE);
+                }
                 return true;
             } else if (isVacant(startPosition - 1) && isVacant(startPosition + 1)){
                 boardState[startPosition - 1] = selectedShipID;
@@ -227,9 +238,17 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 usedTiles.add(startPosition - 1);
                 usedTiles.add(startPosition);
                 usedTiles.add(startPosition + 1);
+
+                Tile tile;
+                for (int i = startPosition - 1; i <=  + 1; i++){
+                    tile = playerGrid.getTileAtPosition(i);
+                    tile.getTileImage().setVisibility(View.INVISIBLE);
+                }
                 return true;
             }
         }
+
+
         return false;
 
       /*  while(lenght > 0){

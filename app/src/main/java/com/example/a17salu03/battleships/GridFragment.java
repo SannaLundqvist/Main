@@ -86,7 +86,8 @@ public class GridFragment extends Fragment implements
                 GridLayout.LayoutParams param = new GridLayout.LayoutParams();
                 param.height = GridLayout.LayoutParams.WRAP_CONTENT;
                 param.width = GridLayout.LayoutParams.WRAP_CONTENT;
-
+                param.rightMargin = 5;
+                param.topMargin = 5;
                 param.columnSpec = GridLayout.spec(c);
                 param.rowSpec = GridLayout.spec(r);
                 imageView.setLayoutParams(param);

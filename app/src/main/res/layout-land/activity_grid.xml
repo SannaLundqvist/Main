@@ -7,8 +7,6 @@
     android:layout_height="match_parent"
     android:rowCount="7"
     android:columnCount="8"
-    android:horizontalSpacing="3dp"
-    android:verticalSpacing="3dp"
     tools:context=".GridFragment" >
 <!--    android:horizontalSpacing="1dp"
     android:verticalSpacing="1dp"
