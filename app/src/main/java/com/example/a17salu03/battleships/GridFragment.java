@@ -72,9 +72,15 @@ public class GridFragment extends Fragment implements
                 Tile tile;
                 if (isClickableTiles){
 
-                    tile = new ClickableTile(tileID, view, this, getTileAppenence(i));
+                    if(ships != null)
+                        tile = new ClickableTile(tileID, view, this, getTileAppenence(i));
+                    else
+                        tile = new ClickableTile(tileID, view, this, Tile.TILE_TYPE_WATER);
                 } else{
-                    tile = new Tile(tileID, view, getTileAppenence(i));
+                    if(ships != null)
+                        tile = new Tile(tileID, view, getTileAppenence(i));
+                    else
+                        tile = new Tile(tileID, view, Tile.TILE_TYPE_WATER);
                 }
                 tiles.add(tile);
 
