@@ -17,8 +17,8 @@ public class ClickableTile extends Tile{
 
     private View view;
 
-    public ClickableTile(int ID, View view, final GridFragment gridFragment){
-        super(ID, view);
+    public ClickableTile(int ID, View view, final GridFragment gridFragment, int tileApperence){
+        super(ID, view, tileApperence);
         this.view = view;
 
         tileImage.setOnClickListener(new View.OnClickListener(){

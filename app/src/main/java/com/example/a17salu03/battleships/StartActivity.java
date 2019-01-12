@@ -419,7 +419,7 @@ public class StartActivity extends Activity implements
         String nextParticipantId = getNextParticipantId();
 
         // Create the next turn
-        mTurnData.turnCounter += 0;
+        mTurnData.turnCounter += 1;
         Toast.makeText(this, "turnCOunt" + mTurnData.turnCounter, Toast.LENGTH_LONG);
         //här lägger man till sitt data som skickas mellan spelare
         //borttaget

@@ -25,7 +25,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
         opponentsShips = getIntent().getIntArrayExtra("opponentsShips");
 
-
         fireBtn = findViewById(R.id.fire);
 
         playerGrid = new GridFragment();
@@ -37,6 +36,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
         opponentGrid = new GridFragment();
         opponentGrid.setClickableTiles(true);
+        opponentGrid.setShipArray(opponentsShips);
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);
         opponentft.addToBackStack(null);
@@ -50,40 +50,44 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         if (clickedTile >= 0) {
             if (isHit(clickedTile)) {
                 opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
-                Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG);
+                Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
                 hasWon = checkIfWon();
             } else {
-                Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT);
+                Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT).show();
                 hasWon = false;
             }
 
             Intent intent = new Intent();
             intent.putExtra("opponentsShips", opponentsShips);
             intent.putExtra("hasWon", hasWon);
+            setResult(RESULT_OK, intent);
+            finish();
 
         }
     }
 
-        public void onBigClick (View view){
-            ImageView imageView = (ImageView) view;
-            imageView.setBackgroundResource(R.drawable.red_border);
-            Toast.makeText(getApplicationContext(), "onItemClick", Toast.LENGTH_LONG).show();
-        }
+    public void onBigClick(View view) {
+        ImageView imageView = (ImageView) view;
+        imageView.setBackgroundResource(R.drawable.red_border);
+        Toast.makeText(getApplicationContext(), "onItemClick", Toast.LENGTH_LONG).show();
+    }
 
-        @Override
-        public void onItemClicked ( int position){
-            this.position = position;
-            Toast.makeText(getBaseContext(), "fakePosition: " + position, Toast.LENGTH_LONG).show();
+    @Override
+    public void onItemClicked(int position) {
+        this.position = position;
+        Toast.makeText(getBaseContext(), "fakePosition: " + position, Toast.LENGTH_LONG).show();
+    }
+
+    private boolean checkIfWon() {
+        for (int i = 0; i < opponentsShips.length; i++) {
+            if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
+                return false;
         }
-        private boolean checkIfWon () {
-            for (int i = 0; i < opponentsShips.length; i++) {
-                if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
-                    return false;
-            }
-            return true;
-        }
-        private boolean isHit ( int tile){
-            boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));
-            return theHit;
-        }
+        return true;
+    }
+
+    private boolean isHit(int tile) {
+        boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));
+        return theHit;
+    }
 }

@@ -29,6 +29,7 @@ public class GridFragment extends Fragment implements
     private int tileID = 0;
     private int clickedTile;
     private View thisView;
+    private int[] ships;
     public Integer layoutBorder = R.drawable.layout_border;
 
     private boolean isClickableTiles = false;
@@ -36,8 +37,6 @@ public class GridFragment extends Fragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -72,9 +71,10 @@ public class GridFragment extends Fragment implements
 
                 Tile tile;
                 if (isClickableTiles){
-                    tile = new ClickableTile(tileID, view, this);
+
+                    tile = new ClickableTile(tileID, view, this, getTileAppenence(i));
                 } else{
-                    tile = new Tile(tileID, view);
+                    tile = new Tile(tileID, view, getTileAppenence(i));
                 }
                 tiles.add(tile);
 
@@ -88,7 +88,7 @@ public class GridFragment extends Fragment implements
 
                 param.height = GridLayout.LayoutParams.WRAP_CONTENT;
                 param.width = GridLayout.LayoutParams.WRAP_CONTENT;
-                
+
                 param.rightMargin = 5;
                 param.topMargin = 5;
                 param.columnSpec = GridLayout.spec(c);
@@ -96,61 +96,47 @@ public class GridFragment extends Fragment implements
                 imageView.setLayoutParams(param);
                 gridLayout.addView(imageView);
 
-
-
-
-        /*        imageView.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view){
-                        OnItemClickedListener onItemClickedListener = (OnItemClickedListener) getActivity();
-                        onItemClickedListener.onItemClicked(2);
-            /*            boolean isClicked = false;
-                        for (View v : clickedViews){
-                            if (view.equals(v)){
-                                isClicked = true;
-                                break;
-                            }
-                        }*/
-
-             /*           ImageView imageView = (ImageView) view;
-                        if (lastClickedTile == null) {
-                            imageView.setImageResource(R.drawable.water_tile_border);
-                        } else if (!lastClickedTile.equals(view))    {
-                            ImageView lastClickedImage = (ImageView) lastClickedTile;
-                            imageView.setImageResource(R.drawable.water_tile_border);
-                            lastClickedImage.setImageResource(R.drawable.water_tile);
-                            lastClickedTileCounter = 0;
-                        } else if (lastClickedTile.equals(view)){
-                            if ((lastClickedTileCounter % 2) == 0) {
-                                imageView.setImageResource(R.drawable.water_tile);
-                                lastClickedTileCounter++;
-                            } else {
-                                imageView.setImageResource(R.drawable.water_tile_border);
-                                lastClickedTileCounter++;
-                            }
-
-                        }
-                        lastClickedTile = view;
-            /*            if (isClicked) {
-                            imageView.setImageResource(R.drawable.water_tile);
-                            Toast.makeText(getContext(),
-                                    "Clicked",
-                                    Toast.LENGTH_SHORT).show();
-                            clickedViews.remove(view);
-                        } else {
-
-                            Toast.makeText(getContext(),
-                                    "Not clicked",
-                                    Toast.LENGTH_SHORT).show();
-                            clickedViews.add(view);
-                        }*/
-
-/*
-
-                    }
-                }); */
             }
         }
+    }
+    private int getTileAppenence(int pos){
+        int ship = ships[pos];
+        if((ship > 0) && (ship < 9)){
+            return Tile.TILE_TYPE_WATER;
+        }else if((ship > 10) && (ship <= 13)){
+            return  Tile.TILE_TYPE_SHIP_SMALL;
+        }else if(between(14, 15, pos)) {
+            if (!(pos % 7 == 0)) {
+                if (between(14, 15, ships[pos - 1])) {
+                    return Tile.TILE_TYPE_SHIP_MEDIUM_R;
+                }
+            }
+            if (!(pos % 7 == 6))
+                if (between(14, 15, ships[pos + 1])) {
+                    return Tile.TILE_TYPE_SHIP_MEDIUM_L;
+                }
+            return Tile.TILE_TYPE_HIT;
+        }
+        else{
+            if(!between(0, 1,(pos + 2) % 7)) {
+                if ((ships[pos + 2] > 15) && (ships[pos + 1] > 15)) {
+                    return Tile.TILE_TYPE_SHIP_LARGE_R;
+                }
+            }
+            if(((pos + 1) % 7 == 6) || ((pos - 1) % 7 == 0)){
+                if((ships[pos + 1] > 15) && (ships[pos - 1] > 15)){
+                    return Tile.TILE_TYPE_SHIP_LARGE_M;
+                }
+            }
+            if(!between(5, 6, (pos - 2) % 7 )){
+                if((ships[pos - 1] > 15) && (ships[pos - 2] > 15))
+                    return  Tile.TILE_TYPE_SHIP_LARGE_L;
+            }
+            return Tile.TILE_TYPE_HIT;
+        }
+    }
+    private boolean between(int small, int large, int value){
+        return (value >= small) && (value <= large);
     }
     public Tile getTileAtPosition(int position){
         return tiles.get(position);
@@ -178,6 +164,9 @@ public class GridFragment extends Fragment implements
 
     public interface OnItemClickedListener{
         public void onItemClicked(int position);
+    }
+    public void setShipArray(int[] ships){
+        this.ships = ships;
     }
 
 
