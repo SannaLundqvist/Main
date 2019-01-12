@@ -127,6 +127,15 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/rotate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:onClick="onRotateClicked"
+                android:text="Horizontal" />
+
+            <Button
                 android:id="@+id/place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
