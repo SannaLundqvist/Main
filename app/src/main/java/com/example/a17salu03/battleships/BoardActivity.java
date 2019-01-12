@@ -28,6 +28,14 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         fireBtn = findViewById(R.id.fire);
 
         playerGrid = new GridFragment();
+        playerGrid.setShipArray(new int[]{0,11,0,12,13,0,0,
+                14,14,0,0,0,0,0,
+                0,0,0,15,15,0,0,
+                0,11,0,0,0,0,0,
+                0,0,0,16,16,16,0,
+                0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0
+        });
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.addToBackStack(null);

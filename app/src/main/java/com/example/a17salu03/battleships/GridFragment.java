@@ -128,13 +128,13 @@ public class GridFragment extends Fragment implements
             if(!between(0, 1,(pos + 2) % 7)) {
                 try {
                     if ((ships[pos + 2] > 15) && (ships[pos + 1] > 15)) {
-                        return Tile.TILE_TYPE_SHIP_LARGE_R;
+                        return Tile.TILE_TYPE_SHIP_LARGE_L;
                     }
                 }catch (IndexOutOfBoundsException e){
                     Log.e("GridFragment", e.toString());
                 }
             }
-            if(((pos + 1) % 7 == 6) || ((pos - 1) % 7 == 0)){
+            if(!(((pos + 1) % 7) == 6) || (((pos - 1) % 7) == 0)){
                 try {
                     if ((ships[pos + 1] > 15) && (ships[pos - 1] > 15)) {
                         return Tile.TILE_TYPE_SHIP_LARGE_M;
@@ -146,7 +146,7 @@ public class GridFragment extends Fragment implements
             if(!between(5, 6, (pos - 2) % 7 )){
                 try {
                     if ((ships[pos - 1] > 15) && (ships[pos - 2] > 15))
-                        return Tile.TILE_TYPE_SHIP_LARGE_L;
+                        return Tile.TILE_TYPE_SHIP_LARGE_R;
                 }catch (IndexOutOfBoundsException e){
                     Log.e("GridFragment", e.toString());
                 }
