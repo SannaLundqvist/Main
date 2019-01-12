@@ -240,7 +240,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 usedTiles.add(startPosition + 1);
 
                 Tile tile;
-                for (int i = startPosition - 1; i <=  + 1; i++){
+                for (int i = startPosition - 1; i <= startPosition + 1; i++){
                     tile = playerGrid.getTileAtPosition(i);
                     tile.getTileImage().setVisibility(View.INVISIBLE);
                 }
