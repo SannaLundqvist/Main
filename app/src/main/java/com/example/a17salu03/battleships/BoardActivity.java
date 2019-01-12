@@ -50,18 +50,24 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         if (clickedTile >= 0) {
             if (isHit(clickedTile)) {
                 opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
+<<<<<<< HEAD
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
                 hasWon = checkIfWon();
             } else {
                 Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT).show();
+=======
+                Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG);
+                hasWon = checkIfWon();
+            } else {
+                Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT);
+>>>>>>> parent of c1609aa... Updated PlaceShipsActivity.java
                 hasWon = false;
             }
 
             Intent intent = new Intent();
             intent.putExtra("opponentsShips", opponentsShips);
             intent.putExtra("hasWon", hasWon);
-            setResult(RESULT_OK, intent);
-            finish();
+
         }
     }
 
