@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -125,18 +126,30 @@ public class GridFragment extends Fragment implements
         }
         else{
             if(!between(0, 1,(pos + 2) % 7)) {
-                if ((ships[pos + 2] > 15) && (ships[pos + 1] > 15)) {
-                    return Tile.TILE_TYPE_SHIP_LARGE_R;
+                try {
+                    if ((ships[pos + 2] > 15) && (ships[pos + 1] > 15)) {
+                        return Tile.TILE_TYPE_SHIP_LARGE_R;
+                    }
+                }catch (IndexOutOfBoundsException e){
+                    Log.e("GridFragment", e.toString());
                 }
             }
             if(((pos + 1) % 7 == 6) || ((pos - 1) % 7 == 0)){
-                if((ships[pos + 1] > 15) && (ships[pos - 1] > 15)){
-                    return Tile.TILE_TYPE_SHIP_LARGE_M;
+                try {
+                    if ((ships[pos + 1] > 15) && (ships[pos - 1] > 15)) {
+                        return Tile.TILE_TYPE_SHIP_LARGE_M;
+                    }
+                }catch (IndexOutOfBoundsException e){
+                    Log.e("GridFragment", e.toString());
                 }
             }
             if(!between(5, 6, (pos - 2) % 7 )){
-                if((ships[pos - 1] > 15) && (ships[pos - 2] > 15))
-                    return  Tile.TILE_TYPE_SHIP_LARGE_L;
+                try {
+                    if ((ships[pos - 1] > 15) && (ships[pos - 2] > 15))
+                        return Tile.TILE_TYPE_SHIP_LARGE_L;
+                }catch (IndexOutOfBoundsException e){
+                    Log.e("GridFragment", e.toString());
+                }
             }
             return Tile.TILE_TYPE_HIT;
         }
