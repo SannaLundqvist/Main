@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener{
     private int[] opponentsShips;
     private Button fireBtn = null;
-    private GridFragment playerGrid;
+    private GridFragment opponentGrid;
     private boolean hasWon;
     private int position;
 
@@ -22,19 +22,19 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-        //opponentsShips =  getIntent().getIntArrayExtra("opponentsShips");
+        opponentsShips =  getIntent().getIntArrayExtra("opponentsShips");
 
 
         fireBtn = findViewById(R.id.fire);
 
-        playerGrid = new GridFragment();
+        GridFragment playerGrid = new GridFragment();
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.addToBackStack(null);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
 
-        GridFragment opponentGrid = new GridFragment();
+        opponentGrid = new GridFragment();
         opponentGrid.setClickableTiles(true);
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);
@@ -44,21 +44,17 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     }
 
     public void onFireClick(View view){
-        opponentsShips = new int[]{1,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0};
-        int clickedTile = playerGrid.getClickedTile();
+
+        int clickedTile = opponentGrid.getClickedTile();
         if(clickedTile >= 0){
             if(isHit(clickedTile)){
                 opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
-                Toast.makeText(this, "You have destroyed a part of a ship..", Toast.LENGTH_LONG);
+                Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG);
                 hasWon = checkIfWon();
-            }else
+            }else{
+                Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT);
                 hasWon = false;
+            }
 
             Intent intent = new Intent();
             intent.putExtra("opponentsShips", opponentsShips);

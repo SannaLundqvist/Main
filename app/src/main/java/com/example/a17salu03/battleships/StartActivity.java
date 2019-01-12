@@ -1019,7 +1019,7 @@ public class StartActivity extends Activity implements
                 showErrorMessage(R.string.match_error_locally_modified);
                 break;
             default:
-                showErrorMessage(R.string.unexpected_status);
+                showErrorMessage(R.string.win);
                 Log.d(TAG, "Did not have warning or string to deal with: "
                         + statusCode);
         }

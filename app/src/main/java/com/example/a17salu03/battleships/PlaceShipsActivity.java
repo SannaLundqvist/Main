@@ -193,12 +193,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private void placeShipAtPosition(int startPosition, int lenght, boolean isHorizontal){
         if (lenght == 1){
             boardState[startPosition] = selectedShipID;
-            Tile tile = playerGrid.getTileAtPosition(startPosition);
-            tile.setTileImage(R.drawable.skepp_4r_hc);
-            usedTiles.add(startPosition);
-            Tile tile2 = playerGrid.getTileAtPosition(startPosition - 1);
-            tile2.setTileImage(R.drawable.skepp_4r_cm);
-            usedTiles.add(startPosition -1);
         } else if (lenght == 2){
             if (startPosition % 7 == 6 && isVacant(startPosition - 1)){
                 boardState[startPosition - 1] = selectedShipID;

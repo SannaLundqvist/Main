@@ -39,7 +39,7 @@ public class SkeletonTurn {
     public int[] myShips = null;
     public int[] opponentsShips = null;
     public int firePosition;
-    public int turnCounter = 2;
+    public int turnCounter;
 
     public SkeletonTurn() {
         /*

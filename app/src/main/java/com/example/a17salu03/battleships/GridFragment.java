@@ -173,6 +173,7 @@ public class GridFragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        clickedTile = position;
 
         //     String selectedItem = (String) parent.getItemAtPosition(position);
 
