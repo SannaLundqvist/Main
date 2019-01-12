@@ -10,11 +10,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener{
+public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener {
     private int[] opponentsShips;
     private Button fireBtn = null;
     private GridFragment opponentGrid;
     private boolean hasWon;
+    private GridFragment playerGrid;
     private int position;
 
     @Override
@@ -22,12 +23,12 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-        opponentsShips =  getIntent().getIntArrayExtra("opponentsShips");
+        opponentsShips = getIntent().getIntArrayExtra("opponentsShips");
 
 
         fireBtn = findViewById(R.id.fire);
 
-        GridFragment playerGrid = new GridFragment();
+        playerGrid = new GridFragment();
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.addToBackStack(null);
@@ -43,15 +44,15 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentft.commit();
     }
 
-    public void onFireClick(View view){
+    public void onFireClick(View view) {
 
         int clickedTile = opponentGrid.getClickedTile();
-        if(clickedTile >= 0){
-            if(isHit(clickedTile)){
+        if (clickedTile >= 0) {
+            if (isHit(clickedTile)) {
                 opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG);
                 hasWon = checkIfWon();
-            }else{
+            } else {
                 Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT);
                 hasWon = false;
             }
@@ -59,33 +60,30 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
             Intent intent = new Intent();
             intent.putExtra("opponentsShips", opponentsShips);
             intent.putExtra("hasWon", hasWon);
-            setResult(RESULT_OK, intent);
-            finish();
-        }else{
-            Toast.makeText(getBaseContext(), "Choose a block to shoot at", Toast.LENGTH_SHORT).show();
+
         }
     }
 
-    public void onBigClick(View view){
-        ImageView imageView = (ImageView) view;
-        imageView.setBackgroundResource(R.drawable.red_border);
-        Toast.makeText(getApplicationContext(), "onItemClick", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onItemClicked(int position) {
-        this.position = position;
-        Toast.makeText(getBaseContext(), "fakePosition: " + position, Toast.LENGTH_LONG).show();
-    }
-    private boolean checkIfWon(){
-        for (int i = 0 ; i < opponentsShips.length ; i ++){
-            if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
-                return false;
+        public void onBigClick (View view){
+            ImageView imageView = (ImageView) view;
+            imageView.setBackgroundResource(R.drawable.red_border);
+            Toast.makeText(getApplicationContext(), "onItemClick", Toast.LENGTH_LONG).show();
         }
-        return true;
-    }
-    private boolean isHit(int tile){
-        boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));
-        return theHit;
-    }
+
+        @Override
+        public void onItemClicked ( int position){
+            this.position = position;
+            Toast.makeText(getBaseContext(), "fakePosition: " + position, Toast.LENGTH_LONG).show();
+        }
+        private boolean checkIfWon () {
+            for (int i = 0; i < opponentsShips.length; i++) {
+                if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
+                    return false;
+            }
+            return true;
+        }
+        private boolean isHit ( int tile){
+            boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));
+            return theHit;
+        }
 }
