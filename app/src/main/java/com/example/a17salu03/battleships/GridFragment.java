@@ -3,6 +3,7 @@ package com.example.a17salu03.battleships;
 
 import android.content.Context;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -76,18 +77,23 @@ public class GridFragment extends Fragment implements
                     tile = new Tile(tileID, view);
                 }
                 tiles.add(tile);
-
+// https://stackoverflow.com/questions/37174955/fit-image-into-grid-view
                 tileID++;
+
                 ImageView imageView = tile.getTileImage();
+                imageView.setAdjustViewBounds(true);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 GridLayout.LayoutParams param = new GridLayout.LayoutParams();
-           //     param.height = GridLayout.LayoutParams.WRAP_CONTENT;
-           //     param.width = GridLayout.LayoutParams.WRAP_CONTENT;
-                param.rightMargin = 5;
-                param.topMargin = 5;
+                param.height = GridLayout.LayoutParams.WRAP_CONTENT;
+                param.width = GridLayout.LayoutParams.WRAP_CONTENT;
+
                 param.columnSpec = GridLayout.spec(c);
                 param.rowSpec = GridLayout.spec(r);
                 imageView.setLayoutParams(param);
                 gridLayout.addView(imageView);
+
+
+
 
         /*        imageView.setOnClickListener(new View.OnClickListener(){
                     @Override
