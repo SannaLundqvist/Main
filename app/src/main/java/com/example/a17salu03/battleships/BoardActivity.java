@@ -62,7 +62,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
             intent.putExtra("hasWon", hasWon);
             setResult(RESULT_OK, intent);
             finish();
-
         }
     }
 
