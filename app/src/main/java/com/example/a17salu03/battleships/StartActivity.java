@@ -42,6 +42,7 @@ import com.google.android.gms.games.TurnBasedMultiplayerClient;
 import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.games.multiplayer.InvitationCallback;
 import com.google.android.gms.games.multiplayer.Multiplayer;
+import com.google.android.gms.games.multiplayer.ParticipantResult;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
@@ -52,6 +53,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -340,6 +342,36 @@ public class StartActivity extends Activity implements
         setViewVisibility();
     }
 
+    public void gameWon() {
+        showSpinner();
+        /*
+        List<com.google.android.gms.games.multiplayer.ParticipantResult> resultList = new ArrayList<com.google.android.gms.games.multiplayer.ParticipantResult>();
+        resultList.add(new ParticipantResult(mPlayerId, ParticipantResult.MATCH_RESULT_WIN, 1));
+        mTurnBasedMultiplayerClient.finishMatch(mMatch.getMatchId(), mTurnData.persist(), resultList)
+                .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
+                    @Override
+                    public void onSuccess(TurnBasedMatch turnBasedMatch) {
+                        onUpdateMatch(turnBasedMatch);
+                    }
+                })
+                .addOnFailureListener(createFailureListener("There was a problem finishing the match!"));
+
+        isDoingTurn = false;
+        setViewVisibility();
+        */
+        mTurnBasedMultiplayerClient.finishMatch(mMatch.getMatchId())
+                .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
+                    @Override
+                    public void onSuccess(TurnBasedMatch turnBasedMatch) {
+                        onUpdateMatch(turnBasedMatch);
+                    }
+                })
+                .addOnFailureListener(createFailureListener("There was a problem finishing the match!"));
+
+        isDoingTurn = false;
+        setViewVisibility();
+    }
+
 
     // Upload your new gamestate, then take a turn, and pass it on to the next
     // player.
@@ -362,7 +394,7 @@ public class StartActivity extends Activity implements
 
         mTurnData = null;
     }
-    public void takeTurn(int position) {
+    public void takeTurn() {
         showSpinner();
 
         String nextParticipantId = getNextParticipantId();
@@ -736,9 +768,15 @@ public class StartActivity extends Activity implements
             //startActivity(i);
         }else if (requestCode == SHOOTING) {
 
-            super.onActivityResult(requestCode, requestCode, intent);
+            super.onActivityResult(requestCode, resultCode, intent);
             if (resultCode == RESULT_OK) {
-
+                if(intent.getBooleanExtra("hasWon", false) == true){
+                    gameWon();
+                }
+                else{
+                    mTurnData.opponentsShips = intent.getIntArrayExtra("opponentsShips");
+                    takeTurn();
+                }
             } else
                 Toast.makeText(getBaseContext(), "There was a problem placing your ships", Toast.LENGTH_SHORT).show();
         }

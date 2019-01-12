@@ -14,6 +14,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     private int[] opponentsShips;
     private Button fireBtn = null;
     private GridFragment playerGrid;
+    private boolean hasWon;
     private int position;
 
     @Override
@@ -21,12 +22,10 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-        opponentsShips =  getIntent().getIntArrayExtra("opponentsShips");
+        //opponentsShips =  getIntent().getIntArrayExtra("opponentsShips");
 
 
         fireBtn = findViewById(R.id.fire);
-
-        //   View fragmentContainer = findViewById(R.id.fragment_container);
 
         playerGrid = new GridFragment();
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
@@ -45,14 +44,25 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     }
 
     public void onFireClick(View view){
+        opponentsShips = new int[]{1,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0};
         int clickedTile = playerGrid.getClickedTile();
         if(clickedTile >= 0){
-            if((opponentsShips[clickedTile] > 0) && (opponentsShips[clickedTile] < 10)){
+            if(isHit(clickedTile)){
                 opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
-                //hitCounter ++;
-            }
+                Toast.makeText(this, "You have destroyed a part of a ship..", Toast.LENGTH_LONG);
+                hasWon = checkIfWon();
+            }else
+                hasWon = false;
+
             Intent intent = new Intent();
             intent.putExtra("opponentsShips", opponentsShips);
+            intent.putExtra("hasWon", hasWon);
             setResult(RESULT_OK, intent);
             finish();
         }else{
@@ -70,5 +80,16 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     public void onItemClicked(int position) {
         this.position = position;
         Toast.makeText(getBaseContext(), "fakePosition: " + position, Toast.LENGTH_LONG).show();
+    }
+    private boolean checkIfWon(){
+        for (int i = 0 ; i < opponentsShips.length ; i ++){
+            if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
+                return false;
+        }
+        return true;
+    }
+    private boolean isHit(int tile){
+        boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));
+        return theHit;
     }
 }
