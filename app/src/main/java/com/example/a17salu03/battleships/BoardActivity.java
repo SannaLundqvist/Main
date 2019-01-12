@@ -11,8 +11,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener{
-    private int[] opponentsShips = null;
+    private int[] opponentsShips;
     private Button fireBtn = null;
+    private GridFragment playerGrid;
     private int position;
 
     @Override
@@ -20,38 +21,19 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-        opponentsShips = getIntent().getIntArrayExtra("opponentsShips");
+        opponentsShips =  getIntent().getIntArrayExtra("opponentsShips");
+
 
         fireBtn = findViewById(R.id.fire);
 
-     //   View fragmentContainer = findViewById(R.id.fragment_container);
+        //   View fragmentContainer = findViewById(R.id.fragment_container);
 
-        GridFragment playerGrid = new GridFragment();
+        playerGrid = new GridFragment();
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.addToBackStack(null);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
-
-        fireBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(position >= 0){
-                    if((opponentsShips[position] > 0) && (opponentsShips[position] < 10)){
-                        opponentsShips[position] = opponentsShips[position] + 10;
-                        //hitCounter ++;
-                    }
-                    Intent intent = new Intent();
-                    intent.putExtra("opponentsShips", opponentsShips);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }else{
-                    Toast.makeText(getBaseContext() , "Choose a block to shoot at", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
 
         GridFragment opponentGrid = new GridFragment();
         opponentGrid.setClickableTiles(true);
@@ -60,6 +42,22 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentft.addToBackStack(null);
         opponentft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         opponentft.commit();
+    }
+
+    public void onFireClick(View view){
+        int clickedTile = playerGrid.getClickedTile();
+        if(clickedTile >= 0){
+            if((opponentsShips[clickedTile] > 0) && (opponentsShips[clickedTile] < 10)){
+                opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
+                //hitCounter ++;
+            }
+            Intent intent = new Intent();
+            intent.putExtra("opponentsShips", opponentsShips);
+            setResult(RESULT_OK, intent);
+            finish();
+        }else{
+            Toast.makeText(getBaseContext(), "Choose a block to shoot at", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onBigClick(View view){
