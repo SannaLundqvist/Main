@@ -48,13 +48,13 @@ public class Tile {
                 tileImage.setImageResource(R.drawable.skepp_3r_w_r);
                 break;
             case TILE_TYPE_SHIP_LARGE_L :
-                tileImage.setImageResource(R.drawable.skepp_4r_hc);
+                tileImage.setImageResource(R.drawable.skepp_4r_w_l);
                 break;
             case TILE_TYPE_SHIP_LARGE_M :
-                    tileImage.setImageResource(R.drawable.skepp_4r_hc);
+                    tileImage.setImageResource(R.drawable.skepp_4r_w_m);
                     break;
             case TILE_TYPE_SHIP_LARGE_R :
-                tileImage.setImageResource(R.drawable.skepp_4r_hc);
+                tileImage.setImageResource(R.drawable.skepp_4r_w_r);
                 break;
         }
 
