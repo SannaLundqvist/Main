@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener {
+    private int[] myShips;
     private int[] opponentsShips;
     private Button fireBtn = null;
     private GridFragment opponentGrid;
@@ -23,11 +24,16 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
+        myShips = new int[49];
+        for (int i = 0; i < myShips.length; i++){
+            myShips[i] = 0;
+        }
         opponentsShips = getIntent().getIntArrayExtra("opponentsShips");
 
         fireBtn = findViewById(R.id.fire);
 
         playerGrid = new GridFragment();
+        playerGrid.setMyBoard(myShips);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.addToBackStack(null);
@@ -36,6 +42,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
         opponentGrid = new GridFragment();
         opponentGrid.setClickableTiles(true);
+        opponentGrid.setOpponentsBoard(opponentsShips);
         opponentGrid.setShipArray(opponentsShips);
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);

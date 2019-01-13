@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 
 import android.widget.GridLayout;
 
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -23,14 +24,18 @@ import java.util.List;
 public class GridFragment extends Fragment implements
         AdapterView.OnItemClickListener {
 
-    private int[] board = {0, 0 ,0 ,0 ,1, 0, 0 ,0 ,1, 0 ,0 ,2};
+    private int[] board = {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2};
 
     private ArrayList<Tile> tiles = new ArrayList<>();
     private int tileID = 0;
     private int clickedTile;
     private View thisView;
     private int[] ships;
+    private int[] myBoard;
+    private int[] opponentsBoard;
     public Integer layoutBorder = R.drawable.layout_border;
+    private GridView gridView;
+
 
     private boolean isClickableTiles = false;
 
@@ -51,90 +56,34 @@ public class GridFragment extends Fragment implements
         View view = getView();
         if (view != null) {
             thisView = view;
-            tileID = 0;
-            GridLayout gridLayout = thisView.findViewById(R.id.grid);
 
-            gridLayout.removeAllViews();
+                gridView = view.findViewById(R.id.grid);
 
-            int column = 7;
-            int row = 7;
-            int total = column * row;
-            gridLayout.setColumnCount(column);
-            gridLayout.setRowCount(row);
-            for(int i = 0, c = 0, r = 0; i < total; i++, c++)
-            {
-                if(c == column)
-                {
-                    c = 0;
-                    r++;
+                int[] gridArray = new int[49];
+                if (opponentsBoard != null) {
+                    System.arraycopy(opponentsBoard,0, gridArray, 0, opponentsBoard.length);
+                } else if (myBoard != null) {
+                    System.arraycopy(myBoard,0, gridArray, 0, myBoard.length);
+                } else {
+                    for (int i = 0; i < 49; i++) {
+                        gridArray[i] = R.drawable.water_tile;
+                    }
                 }
-
-                Tile tile;
-                if (isClickableTiles){
-
-                    tile = new ClickableTile(tileID, view, this, getTileAppenence(i));
-                } else{
-                    tile = new Tile(tileID, view, getTileAppenence(i));
-                }
-                tiles.add(tile);
-
-// https://stackoverflow.com/questions/37174955/fit-image-into-grid-view
-                tileID++;
-
-                ImageView imageView = tile.getTileImage();
-                imageView.setAdjustViewBounds(true);
-                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                GridLayout.LayoutParams param = new GridLayout.LayoutParams();
-
-                param.height = GridLayout.LayoutParams.WRAP_CONTENT;
-                param.width = GridLayout.LayoutParams.WRAP_CONTENT;
-
-                param.rightMargin = 5;
-                param.topMargin = 5;
-                param.columnSpec = GridLayout.spec(c);
-                param.rowSpec = GridLayout.spec(r);
-                imageView.setLayoutParams(param);
-                gridLayout.addView(imageView);
-
-            }
+                CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(getContext(), gridArray, this, isClickableTiles);
+                gridView.setAdapter(gridAdapter);
         }
     }
-    private int getTileAppenence(int pos){
-        int ship = ships[pos];
-        if((ship > 0) && (ship < 9)){
-            return Tile.TILE_TYPE_WATER;
-        }else if((ship > 10) && (ship <= 13)){
-            return  Tile.TILE_TYPE_SHIP_SMALL;
-        }else if(between(14, 15, pos)) {
-            if (!(pos % 7 == 0)) {
-                if (between(14, 15, ships[pos - 1])) {
-                    return Tile.TILE_TYPE_SHIP_MEDIUM_R;
-                }
-            }
-            if (!(pos % 7 == 6))
-                if (between(14, 15, ships[pos + 1])) {
-                    return Tile.TILE_TYPE_SHIP_MEDIUM_L;
-                }
-            return Tile.TILE_TYPE_HIT;
-        }
-        else{
-            if(!between(0, 1,(pos + 2) % 7)) {
-                if ((ships[pos + 2] > 15) && (ships[pos + 1] > 15)) {
-                    return Tile.TILE_TYPE_SHIP_LARGE_R;
-                }
-            }
-            if(((pos + 1) % 7 == 6) || ((pos - 1) % 7 == 0)){
-                if((ships[pos + 1] > 15) && (ships[pos - 1] > 15)){
-                    return Tile.TILE_TYPE_SHIP_LARGE_M;
-                }
-            }
-            if(!between(5, 6, (pos - 2) % 7 )){
-                if((ships[pos - 1] > 15) && (ships[pos - 2] > 15))
-                    return  Tile.TILE_TYPE_SHIP_LARGE_L;
-            }
-            return Tile.TILE_TYPE_HIT;
-        }
+
+
+    public void setMyBoard(int[] board){
+        myBoard = board;
     }
+
+    public void setOpponentsBoard(int[] board){
+        myBoard = board;
+    }
+
+
     private boolean between(int small, int large, int value){
         return (value >= small) && (value <= large);
     }
