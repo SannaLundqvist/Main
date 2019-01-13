@@ -69,7 +69,7 @@ public class GridFragment extends Fragment{
             }
 
 
-            CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, isFriendlyBoard, isClickableTiles, tiles);
+            CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, isFriendlyBoard, isClickableTiles, tiles, this.getView());
             gridView.setAdapter(gridAdapter);
 
 

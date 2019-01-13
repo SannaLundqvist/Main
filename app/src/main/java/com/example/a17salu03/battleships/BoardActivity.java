@@ -28,6 +28,14 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         for (int i = 0; i < myShips.length; i++){
             myShips[i] = 0;
         }
+
+        int [] myShips = {0, 0,	0, 0, 0, 0, 0,
+                        0, 6, 0, 0, 0, 0, 0,
+                        0, 6, 0, 0, 1, 0, 0,
+                        0, 6, 0, 0, 0, 2, 0,
+                        0, 0, 0, 4, 4, 10, 0,
+                        0, 0, 3, 0, 5, 0, 0,
+                        10, 0, 0, 0, 5, 0, 0};
         opponentsShips = getIntent().getIntArrayExtra("opponentsShips");
 
         fireBtn = findViewById(R.id.fire);
@@ -57,6 +65,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
                 hasWon = checkIfWon();
             } else {
+                opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
                 Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT).show();
                 hasWon = false;
             }
