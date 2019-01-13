@@ -36,7 +36,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         playerGrid.setMyBoard(myShips);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
-        playerft.addToBackStack(null);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
 
@@ -45,7 +44,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentGrid.setOpponentsBoard(opponentsShips);
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);
-        opponentft.addToBackStack(null);
         opponentft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         opponentft.commit();
     }

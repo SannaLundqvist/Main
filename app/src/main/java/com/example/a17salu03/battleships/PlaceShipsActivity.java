@@ -47,7 +47,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
         playerGrid.setClickableTiles(true);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
-        playerft.addToBackStack(null);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
 
@@ -107,10 +106,13 @@ public class PlaceShipsActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
     private void generateShipID(int shipSize){
         switch (shipSize){
             case 1:
