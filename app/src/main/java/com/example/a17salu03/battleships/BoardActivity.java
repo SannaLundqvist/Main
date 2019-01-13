@@ -43,7 +43,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentGrid = new GridFragment();
         opponentGrid.setClickableTiles(true);
         opponentGrid.setOpponentsBoard(opponentsShips);
-        opponentGrid.setShipArray(opponentsShips);
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);
         opponentft.addToBackStack(null);

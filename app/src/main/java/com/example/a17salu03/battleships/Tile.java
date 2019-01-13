@@ -10,18 +10,12 @@ public class Tile {
     protected ImageView tileImage;
     protected int tileID;
     private View view;
-    private static ArrayList<Tile> tiles = new ArrayList<Tile>();
 
-    public Tile(){
-
-    }
 
     public Tile(int ID, View view){
         tileID = ID;
         this.view = view;
         tileImage = new ImageView(view.getContext());
-
-        tiles.add(this);
 
     }
 
@@ -31,7 +25,9 @@ public class Tile {
 
     public void setTileImage(ImageView imageView){
         tileImage = imageView;
+    }
 
+    public void setClickDisabled(boolean answer){
     }
 
     public int getTileID(){

@@ -62,6 +62,10 @@ public class ClickableTile extends Tile{
     public void setTileImage(ImageView imageView){
         tileImage = imageView;
     }
+    @Override
+    public void setClickDisabled(boolean answer){
+        isClickDisabled = answer;
+    }
 
     public void setClickedImage(int image){
         tileImage.setImageResource(image);
