@@ -17,8 +17,8 @@ public class ClickableTile extends Tile{
 
     private View view;
 
-    public ClickableTile(int ID, View view, final GridFragment gridFragment, int tileApperence){
-        super(ID, view, tileApperence);
+    public ClickableTile(int ID, View view, final GridFragment gridFragment){
+        super(ID, view);
         this.view = view;
 
         tileImage.setOnClickListener(new View.OnClickListener(){
@@ -26,7 +26,6 @@ public class ClickableTile extends Tile{
             public void onClick(View view) {
                 if (!isClickDisabled){
                     gridFragment.setClickedTile(tileID);
-
 
                     ImageView imageView = (ImageView) view;
 
@@ -62,8 +61,16 @@ public class ClickableTile extends Tile{
     }
 
     @Override
-    public void setTileImage(int imageView){
-        tileImage.setImageResource(imageView);
+    public void setTileImage(ImageView imageView){
+        tileImage = imageView;
+    }
+    @Override
+    public void setClickDisabled(boolean answer){
+        isClickDisabled = answer;
+    }
+
+    public void setClickedImage(int image){
+        tileImage.setImageResource(image);
         isLastChosen = true;
         isClickDisabled = true;
     }

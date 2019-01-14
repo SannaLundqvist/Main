@@ -16,7 +16,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
     private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
-    private int[] boardState = new int[49];
+    private int[] boardState = new int[49];  //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
     private int shipToBePlaced;
     private int selectedShipID;
     private boolean isHorizontal = true;
@@ -47,7 +47,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
         playerGrid.setClickableTiles(true);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
-        playerft.addToBackStack(null);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
 
@@ -107,10 +106,13 @@ public class PlaceShipsActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+    }
+
     private void generateShipID(int shipSize){
         switch (shipSize){
             case 1:
@@ -147,12 +149,12 @@ public class PlaceShipsActivity extends AppCompatActivity {
                     shipsLeft--;
                     txt_1r.setText(shipsLeft + "");
 
-                } else if (selectedShipID >= 4 && selectedShipID <= 5 &&  checkShipsAtPosition(clickedTile, 2)){
+                } else if (selectedShipID >= 4 && selectedShipID <= 5 && checkShipsAtPosition(clickedTile, 2)){
                     int shipsLeft = Integer.parseInt(txt_2r.getText().toString());
                     ship2ID++;
                     shipsLeft--;
                     txt_2r.setText(shipsLeft + "");
-                } else if (selectedShipID >= 6 &&   checkShipsAtPosition(clickedTile, 3)){
+                } else if (selectedShipID >= 6 && checkShipsAtPosition(clickedTile, 3)){
                     int shipsLeft = Integer.parseInt(txt_3r.getText().toString());
                     ship3ID++;
                     shipsLeft--;
@@ -167,8 +169,8 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
     private boolean isVacant(int position){
         boolean isTileVacant = true;
-        for (int v : usedTiles){
-            if (position == v){
+        for (int tilePos : usedTiles){
+            if (position == tilePos){
                 isTileVacant = false;
                 break;
             }
@@ -176,19 +178,11 @@ public class PlaceShipsActivity extends AppCompatActivity {
         return isTileVacant;
     }
 
-    /**
-     * Hjälpmetod för att visa vart skeppen finns
-     * justs nu går det att lägga två skepp ovanpå varadra och
-     * om det hamnar utanför den högra begrensningen kommer den att
-     * fortsätta under.
-     * @param startPosition
-     * @param lenght
-     */
     private boolean checkShipsAtPosition(int startPosition, int lenght){
         if (lenght == 1) {                                           // skepp  1
             boardState[startPosition] = selectedShipID;
             Tile tile = playerGrid.getTileAtPosition(startPosition);
-            //       tile.setTileImage(R.drawable.skepp_1r);
+            //       tile.setClickedImage(R.drawable.skepp_1r);
             tile.getTileImage().setVisibility(View.INVISIBLE);
 
             usedTiles.add(startPosition);
@@ -223,6 +217,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                     placeShipAt(startPosition, startPosition + 7);
                     return  true;
                 }
+
             } else if (lenght == 3){
                 if (startPosition < 7 && isVacant(startPosition + 7) && isVacant(startPosition + 14)){
                     placeShipAt(startPosition, startPosition + 7, startPosition + 14);
@@ -240,32 +235,25 @@ public class PlaceShipsActivity extends AppCompatActivity {
     }
 
     private void placeShipAt(int startPosition, int endPosition){
-        boardState[startPosition] = selectedShipID;
-        boardState[endPosition] = selectedShipID;
-        usedTiles.add(startPosition);
-        usedTiles.add(endPosition);
         Tile tile;
         for (int i = startPosition; i <= endPosition; i++){
             if (i == startPosition || i == endPosition){        //Vertical fail safe
+                boardState[i] = selectedShipID;
                 tile = playerGrid.getTileAtPosition(i);
                 tile.getTileImage().setVisibility(View.INVISIBLE);
+                usedTiles.add(i);
             }
         }
     }
 
     private void placeShipAt(int startPosition, int middlePosition, int endPosition){
-        boardState[startPosition] = selectedShipID;
-        boardState[middlePosition] = selectedShipID;
-        boardState[endPosition] = selectedShipID;
-        usedTiles.add(startPosition);
-        usedTiles.add(middlePosition);
-        usedTiles.add(endPosition);
-
         Tile tile;
         for (int i = startPosition; i <= endPosition; i++){
             if (i == startPosition || i == middlePosition || i == endPosition){     //Vertical fail safe
+                boardState[i] = selectedShipID;
                 tile = playerGrid.getTileAtPosition(i);
                 tile.getTileImage().setVisibility(View.INVISIBLE);
+                usedTiles.add(i);
             }
         }
     }

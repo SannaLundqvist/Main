@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener {
+    private int[] myShips;
     private int[] opponentsShips;
     private Button fireBtn = null;
     private GridFragment opponentGrid;
@@ -23,31 +24,34 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
+        myShips = new int[49];
+        for (int i = 0; i < myShips.length; i++){
+            myShips[i] = 0;
+        }
+
+        int [] myShips = {0, 0,	0, 0, 0, 0, 0,
+                        0, 6, 0, 0, 0, 0, 0,
+                        0, 6, 0, 0, 1, 0, 0,
+                        0, 6, 0, 0, 0, 2, 0,
+                        0, 0, 0, 4, 4, 10, 0,
+                        0, 0, 3, 0, 5, 0, 0,
+                        10, 0, 0, 0, 5, 0, 0};
         opponentsShips = getIntent().getIntArrayExtra("opponentsShips");
 
         fireBtn = findViewById(R.id.fire);
 
         playerGrid = new GridFragment();
-        playerGrid.setShipArray(new int[]{0,11,0,12,13,0,0,
-                14,14,0,0,0,0,0,
-                0,0,0,15,15,0,0,
-                0,11,0,0,0,0,0,
-                0,0,0,16,16,16,0,
-                0,0,0,0,0,0,0,
-                0,0,0,0,0,0,0
-        });
+
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
-        playerft.addToBackStack(null);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
 
         opponentGrid = new GridFragment();
         opponentGrid.setClickableTiles(true);
-        opponentGrid.setShipArray(opponentsShips);
+        opponentGrid.setOpponentsBoard(opponentsShips);
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);
-        opponentft.addToBackStack(null);
         opponentft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         opponentft.commit();
     }
@@ -61,6 +65,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
                 hasWon = checkIfWon();
             } else {
+                opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
                 Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT).show();
                 hasWon = false;
             }
