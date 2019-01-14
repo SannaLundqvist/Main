@@ -79,10 +79,10 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     }
 
     public void onFireClick(View view) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
+        //MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
         int clickedTile = opponentGrid.getClickedTile();
         if (clickedTile >= 0) {
-            mediaPlayer.start();
+           // mediaPlayer.start();
             if (isHit(clickedTile)) {
                 opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();

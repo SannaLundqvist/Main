@@ -69,26 +69,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_1r = null;
     private TextView txt_2r = null;
     private TextView txt_3r = null;
-    public static final String TILE_TYPE_WATER = "W";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_2 = "2H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_3 = "3H";
 
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L = "4HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R = "4HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L = "4VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R = "4VR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L = "5HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R = "5HR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L = "5VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R = "5VR";
-
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L = "6HL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M = "6HM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R = "6HR";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L = "6VL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

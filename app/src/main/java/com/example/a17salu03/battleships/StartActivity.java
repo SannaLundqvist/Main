@@ -326,39 +326,10 @@ public class StartActivity extends Activity implements
         setViewVisibility();
     }
 
-    // Finish the game. Sometimes, this is your only choice.
-    public void onFinishClicked(View view) {
-        showSpinner();
-        mTurnBasedMultiplayerClient.finishMatch(mMatch.getMatchId())
-                .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
-                    @Override
-                    public void onSuccess(TurnBasedMatch turnBasedMatch) {
-                        onUpdateMatch(turnBasedMatch);
-                    }
-                })
-                .addOnFailureListener(createFailureListener("There was a problem finishing the match!"));
-
-        isDoingTurn = false;
-        setViewVisibility();
-    }
 
     public void gameWon() {
         showSpinner();
-        /*
-        List<com.google.android.gms.games.multiplayer.ParticipantResult> resultList = new ArrayList<com.google.android.gms.games.multiplayer.ParticipantResult>();
-        resultList.add(new ParticipantResult(mPlayerId, ParticipantResult.MATCH_RESULT_WIN, 1));
-        mTurnBasedMultiplayerClient.finishMatch(mMatch.getMatchId(), mTurnData.persist(), resultList)
-                .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
-                    @Override
-                    public void onSuccess(TurnBasedMatch turnBasedMatch) {
-                        onUpdateMatch(turnBasedMatch);
-                    }
-                })
-                .addOnFailureListener(createFailureListener("There was a problem finishing the match!"));
 
-        isDoingTurn = false;
-        setViewVisibility();
-        */
         mTurnBasedMultiplayerClient.finishMatch(mMatch.getMatchId())
                 .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
                     @Override
@@ -372,28 +343,6 @@ public class StartActivity extends Activity implements
         setViewVisibility();
     }
 
-
-    // Upload your new gamestate, then take a turn, and pass it on to the next
-    // player.
-    public void onDoneClicked(View view) {
-        showSpinner();
-
-        String nextParticipantId = getNextParticipantId();
-        // Create the next turn
-        mTurnData.turnCounter += 1;
-
-        mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
-                mTurnData.persist(), nextParticipantId)
-                .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
-                    @Override
-                    public void onSuccess(TurnBasedMatch turnBasedMatch) {
-                        onUpdateMatch(turnBasedMatch);
-                    }
-                })
-                .addOnFailureListener(createFailureListener("There was a problem taking a turn!"));
-
-        mTurnData = null;
-    }
     public void takeTurn() {
         showSpinner();
 
@@ -413,14 +362,14 @@ public class StartActivity extends Activity implements
 
         mTurnData = null;
     }
-    public void takeTurnPlaceShips(int[] ships) {
+    public void takeTurnPlaceShips(String[] ships) {
         showSpinner();
 
         String nextParticipantId = getNextParticipantId();
 
         // Create the next turn
         mTurnData.turnCounter += 1;
-        Toast.makeText(this, "turnCOunt" + mTurnData.turnCounter, Toast.LENGTH_LONG);
+        Toast.makeText(this, "turnCOunt" + mTurnData.turnCounter, Toast.LENGTH_LONG).show();
         //här lägger man till sitt data som skickas mellan spelare
         //borttaget
         mTurnData.myShips = ships;
@@ -457,39 +406,7 @@ public class StartActivity extends Activity implements
         ((TextView) findViewById(R.id.name_field)).setText(mDisplayName);
         findViewById(R.id.login_layout).setVisibility(View.GONE);
 
-        //if (isDoingTurn) {
-         //   findViewById(R.id.matchup_layout).setVisibility(View.GONE);
-         //   findViewById(R.id.gameplay_layout).setVisibility(View.VISIBLE);
-       // } else {
             findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
-       // }
-        /*
-        boolean isSignedIn = mTurnBasedMultiplayerClient != null;
-
-        if (!isSignedIn) {
-            findViewById(R.id.login_layout).setVisibility(View.VISIBLE);
-            findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
-            findViewById(R.id.matchup_layout).setVisibility(View.GONE);
-            findViewById(R.id.gameplay_layout).setVisibility(View.GONE);
-
-            if (mAlertDialog != null) {
-                mAlertDialog.dismiss();
-            }
-            return;
-        }
-
-
-        ((TextView) findViewById(R.id.name_field)).setText(mDisplayName);
-        findViewById(R.id.login_layout).setVisibility(View.GONE);
-
-        if (isDoingTurn) {
-            findViewById(R.id.matchup_layout).setVisibility(View.GONE);
-            findViewById(R.id.gameplay_layout).setVisibility(View.VISIBLE);
-        } else {
-            findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
-            findViewById(R.id.gameplay_layout).setVisibility(View.GONE);
-        }
-        */
     }
 
     // Switch to gameplay view.
@@ -757,7 +674,7 @@ public class StartActivity extends Activity implements
             super.onActivityResult(requestCode, requestCode, intent);
             if(resultCode == RESULT_OK){
 
-                takeTurnPlaceShips (intent.getIntArrayExtra("boardState"));
+                takeTurnPlaceShips (intent.getStringArrayExtra("boardState"));
 
             }
             else
@@ -774,7 +691,7 @@ public class StartActivity extends Activity implements
                     gameWon();
                 }
                 else{
-                    mTurnData.opponentsShips = intent.getIntArrayExtra("opponentsShips");
+                    mTurnData.opponentsShips = intent.getStringArrayExtra("opponentsShips");
                     takeTurn();
                 }
             } else
