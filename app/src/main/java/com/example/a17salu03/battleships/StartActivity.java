@@ -421,6 +421,7 @@ public class StartActivity extends Activity implements
         }else{
             Intent intent = new Intent(StartActivity.this, BoardActivity.class);
             intent.putExtra("opponentsShips", mTurnData.opponentsShips);
+            intent.putExtra("myShips", mTurnData.myShips);
             startActivityForResult(intent, SHOOTING);
         }
         setViewVisibility();

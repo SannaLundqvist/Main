@@ -45,19 +45,29 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
-
+/*
         myShips = new String[49];
         for (int i = 0; i < myShips.length; i++){
             myShips[i] = TILE_TYPE_WATER;
         }
 
-    /*    int [] myShips = {0, 0,	0, 0, 0, 0, 0,
-                        0, 6, 0, 0, 0, 0, 0,
-                        0, 6, 0, 0, 1, 0, 0,
-                        0, 6, 0, 0, 0, 2, 0,
-                        0, 0, 0, 4, 4, 10, 0,
-                        0, 0, 3, 0, 5, 0, 0,
-                        10, 0, 0, 0, 5, 0, 0}; */
+    /*    String [] myShips = {"W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W"};
+
+        String [] opponentsShips = {"W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W",
+                "W", "W", "W", "W", "W", "W", "W"}; */
+
+        myShips = getIntent().getStringArrayExtra("myShips");
         opponentsShips = getIntent().getStringArrayExtra("opponentsShips");
 
         fireBtn = findViewById(R.id.fire);
