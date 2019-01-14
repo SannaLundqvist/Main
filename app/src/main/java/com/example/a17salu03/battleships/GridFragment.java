@@ -3,7 +3,6 @@ package com.example.a17salu03.battleships;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,10 +60,6 @@ public class GridFragment extends Fragment{
             Tile tile;
             for (int position = 0; position < 49; position++) {
 
-                    if(ships != null)
-                        tile = new Tile(tileID, view, getTileAppenence(i));
-                    else
-                        tile = new Tile(tileID, view, Tile.TILE_TYPE_WATER);
                 if (isClickableTiles) {
                     tile = new ClickableTile(position, getView(), this);
                 } else {
@@ -81,53 +76,6 @@ public class GridFragment extends Fragment{
 
         }
     }
-    private int getTileAppenence(int pos){
-        int ship = ships[pos];
-        if((ship >= 0) && (ship < 9)){
-            return Tile.TILE_TYPE_WATER;
-        }else if((ship > 10) && (ship <= 13)){
-            return  Tile.TILE_TYPE_SHIP_SMALL;
-        }else if(between(14, 15, ship)) {
-            if (!(pos % 7 == 0)) {
-                if (between(14, 15, ships[pos - 1])) {
-                    return Tile.TILE_TYPE_SHIP_MEDIUM_R;
-                }
-            }
-            if (!(pos % 7 == 6))
-                if (between(14, 15, ships[pos + 1])) {
-                    return Tile.TILE_TYPE_SHIP_MEDIUM_L;
-                }
-            return Tile.TILE_TYPE_HIT;
-        }
-        else{
-            if(!between(0, 1,(pos + 2) % 7)) {
-                try {
-                    if ((ships[pos + 2] > 15) && (ships[pos + 1] > 15)) {
-                        return Tile.TILE_TYPE_SHIP_LARGE_L;
-                    }
-                }catch (IndexOutOfBoundsException e){
-                    Log.e("GridFragment", e.toString());
-                }
-            }
-            if(!(((pos + 1) % 7) == 6) || (((pos - 1) % 7) == 0)){
-                try {
-                    if ((ships[pos + 1] > 15) && (ships[pos - 1] > 15)) {
-                        return Tile.TILE_TYPE_SHIP_LARGE_M;
-                    }
-                }catch (IndexOutOfBoundsException e){
-                    Log.e("GridFragment", e.toString());
-                }
-            }
-            if(!between(5, 6, (pos - 2) % 7 )){
-                try {
-                    if ((ships[pos - 1] > 15) && (ships[pos - 2] > 15))
-                        return Tile.TILE_TYPE_SHIP_LARGE_R;
-                }catch (IndexOutOfBoundsException e){
-                    Log.e("GridFragment", e.toString());
-                }
-            }
-            return Tile.TILE_TYPE_HIT;
-        }
 
 
     public void setMyBoard(int[] board) {
@@ -142,8 +90,7 @@ public class GridFragment extends Fragment{
 
 
     private boolean between(int small, int large, int value) {
-        boolean returnB = ((value >= small) && (value <= large));
-            return returnB;
+        return (value >= small) && (value <= large);
     }
 
     public Tile getTileAtPosition(int position) {
