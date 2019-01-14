@@ -219,7 +219,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageResource(R.drawable.water_tile);
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED:
-                    if (isShipDestroyed(boardState[position])){
+                    if (isShipDestroyed(boardState[position], position)){
 
                     }
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
@@ -325,10 +325,18 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
     }
 
-    private boolean isShipDestroyed(String value) {
-        if (value.matches("[D{1}]")){
+    private boolean isShipDestroyed(String value, int position) {
+        boolean isDestroyed = false;
+        if (value.charAt(0) <= '3'){
+            isDestroyed = true;
+        } else if (value.charAt(0) == '4' && value.charAt(0) == '5'){
+            if (value.charAt(0) == boardState[position + 1].charAt(0) || value.charAt(0) == boardState[position - 1].charAt(0) || value.charAt(0) == boardState[position + 7].charAt(0) || value.charAt(0) == boardState[position - 7].charAt(0)){
+
+            }
+        } else if (value.charAt(0) == '6'){
+
         }
-        return true;
+        return isDestroyed;
     }
 
 

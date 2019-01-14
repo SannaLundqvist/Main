@@ -282,10 +282,10 @@ public class PlaceShipsActivity extends AppCompatActivity {
         boolean flipImage = false;
         if (!isHorizontal){
            rotateDegrees = 90;
-     //      flipImage = true;
+           flipImage = true;
         }
-        startTile.getTileImage().setImageBitmap(BitMapEdit.flip(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage)));
-        endTile.getTileImage().setImageBitmap(BitMapEdit.flip(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage)));
+        startTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage));
+        endTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage));
 
         startTile.setClickDisabled(true);
         endTile.setClickDisabled(true);
