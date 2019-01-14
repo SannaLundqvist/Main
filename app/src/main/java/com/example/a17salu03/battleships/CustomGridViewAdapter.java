@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class CustomGridViewAdapter extends BaseAdapter {
-    private int[] boardState; //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
+    private String[] boardState; //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
     private boolean isFriendlyBoard;
     private boolean isClickable;
     private ArrayList<Tile> tiles;
@@ -21,7 +21,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
     private  ImageView mImageView;
     private int rotateDegrees;
 
-    public CustomGridViewAdapter(int[] boardState, boolean isFriendly, boolean isClickable, ArrayList<Tile> tiles, View view) {
+    public CustomGridViewAdapter(String[] boardState, boolean isFriendly, boolean isClickable, ArrayList<Tile> tiles, View view) {
         this.boardState = boardState;
         isFriendlyBoard = isFriendly;
         this.isClickable = isClickable;

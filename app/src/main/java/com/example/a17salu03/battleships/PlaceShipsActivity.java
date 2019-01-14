@@ -70,7 +70,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
         playerft.commit();
 
         for (int i = 0; i < boardState.length; i++){
-            boardState[i] = "W";
+            boardState[i] = TILE_TYPE_WATER;
         }
 
         rotateBtn = findViewById(R.id.rotate);
@@ -162,13 +162,11 @@ public class PlaceShipsActivity extends AppCompatActivity {
         if (clickedTile != null && selectedShipID != 0){
             if (isVacant(clickedTile)){
 
-
                 if (selectedShipID >= 1 && selectedShipID <= 3 && checkShipsAtPosition(clickedTile, 1)){
                     int shipsLeft = Integer.parseInt(txt_1r.getText().toString());
                     ship1ID++;
                     shipsLeft--;
                     txt_1r.setText(shipsLeft + "");
-
                 } else if (selectedShipID >= 4 && selectedShipID <= 5 && checkShipsAtPosition(clickedTile, 2)){
                     int shipsLeft = Integer.parseInt(txt_2r.getText().toString());
                     ship2ID++;
@@ -208,7 +206,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 boardState[startPosition] = TILE_TYPE_SIZE_1_SHIPID_3;
 
             Tile tile = playerGrid.getTileAtPosition(startPosition);
-            tile.getTileImage().setImageResource(R.drawable.skepp_1r_w);
+            tile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, this.getWindow().getDecorView().findViewById(android.R.id.content), 0, false));
             tile.setClickDisabled(true);
             usedTiles.add(startPosition);
             return true;
@@ -260,11 +258,8 @@ public class PlaceShipsActivity extends AppCompatActivity {
     }
 
     private void placeShipAt(int startPosition, int endPosition){
-
         Tile startTile = playerGrid.getTileAtPosition(startPosition);
         Tile endTile = playerGrid.getTileAtPosition(endPosition);
-        startTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, this.getWindow().getDecorView().findViewById(android.R.id.content)));
-        endTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, this.getWindow().getDecorView().findViewById(android.R.id.content)));
         if (selectedShipID == 4) {
             if (isHorizontal){
                 boardState[startPosition] = TILE_TYPE_SIZE_2_SHIPID_4_H_L;
@@ -283,10 +278,15 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 boardState[endPosition] = TILE_TYPE_SIZE_2_SHIPID_5_V_R;
             }
         }
-        if (isHorizontal){
-            startTile.getTileImage().setRotation(-90);
-            endTile.getTileImage().setRotation(-90);
+        int rotateDegrees = 0;
+        boolean flipImage = false;
+        if (!isHorizontal){
+           rotateDegrees = 90;
+     //      flipImage = true;
         }
+        startTile.getTileImage().setImageBitmap(BitMapEdit.flip(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage)));
+        endTile.getTileImage().setImageBitmap(BitMapEdit.flip(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage)));
+
         startTile.setClickDisabled(true);
         endTile.setClickDisabled(true);
         usedTiles.add(startPosition);
@@ -298,9 +298,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
         Tile startTile = playerGrid.getTileAtPosition(startPosition);
         Tile middleTile = playerGrid.getTileAtPosition(middlePosition);
         Tile endTile = playerGrid.getTileAtPosition(endPosition);
-        startTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l, this.getWindow().getDecorView().findViewById(android.R.id.content)));
-        middleTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m, this.getWindow().getDecorView().findViewById(android.R.id.content)));
-        endTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, this.getWindow().getDecorView().findViewById(android.R.id.content)));
 
         if (isHorizontal){
             boardState[startPosition] = TILE_TYPE_SIZE_3_SHIPID_6_H_L;
@@ -311,6 +308,17 @@ public class PlaceShipsActivity extends AppCompatActivity {
             boardState[middlePosition] = TILE_TYPE_SIZE_3_SHIPID_6_V_M;
             boardState[endPosition] = TILE_TYPE_SIZE_3_SHIPID_6_V_R;
         }
+
+        int rotateDegrees = 0;
+        boolean flipImage = false;
+        if (!isHorizontal){
+            rotateDegrees = 90;
+            flipImage = true;
+        }
+        startTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage));
+        middleTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage));
+        endTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, this.getWindow().getDecorView().findViewById(android.R.id.content), rotateDegrees, flipImage));
+
         startTile.setClickDisabled(true);
         middleTile.setClickDisabled(true);
         endTile.setClickDisabled(true);

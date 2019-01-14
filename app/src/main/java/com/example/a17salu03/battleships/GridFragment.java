@@ -17,13 +17,13 @@ public class GridFragment extends Fragment{
     private int tileID = 0;
     private int clickedTile;
     private View thisView;
-    private int[] ships;
-    private int[] board;
-    private int[] opponentsBoard;
+    private String[] ships;
+    private String[] board;
+    private String[] opponentsBoard;
     public Integer layoutBorder = R.drawable.layout_border;
     private GridView gridView;
     private boolean isFriendlyBoard = true;
-
+    public static final String TILE_TYPE_WATER = "W";
 
     private boolean isClickableTiles = false;
 
@@ -47,14 +47,14 @@ public class GridFragment extends Fragment{
 
             gridView = view.findViewById(R.id.grid);
 
-            int[] gridArray = new int[49];
+            String[] gridArray = new String[49];
             if (opponentsBoard != null) {
                 System.arraycopy(opponentsBoard, 0, gridArray, 0, opponentsBoard.length);
             } else if (board != null) {
                 System.arraycopy(board, 0, gridArray, 0, board.length);
             } else {
                 for (int i = 0; i < 49; i++) {
-                    gridArray[i] = 0;
+                    gridArray[i] = TILE_TYPE_WATER;
                 }
             }
             Tile tile;
@@ -78,12 +78,12 @@ public class GridFragment extends Fragment{
     }
 
 
-    public void setMyBoard(int[] board) {
+    public void setMyBoard(String[] board) {
         this.board = board;
         isFriendlyBoard = true;
     }
 
-    public void setOpponentsBoard(int[] board) {
+    public void setOpponentsBoard(String[] board) {
         this.board = board;
         isFriendlyBoard = false;
     }
@@ -109,11 +109,11 @@ public class GridFragment extends Fragment{
         isClickableTiles = answer;
     }
 
-    public int getTile(int tileID) {
+    public String getTile(int tileID) {
         return board[tileID];
     }
 
-    public int[] getBoard() {
+    public String[] getBoard() {
         return board;
     }
 
@@ -121,6 +121,6 @@ public class GridFragment extends Fragment{
         public void onItemClicked(int position);
     }
 
-    public void setShipArray(int[] ships) {
+    public void setShipArray(String[] ships) {
         this.ships = ships;
     }}
