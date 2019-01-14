@@ -1,7 +1,9 @@
 package com.example.a17salu03.battleships;
 
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +18,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
     private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
-    private int[] boardState = new int[49];  //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
+    private String[] boardState = new String[49];  //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
     private int shipToBePlaced;
     private int selectedShipID;
     private boolean isHorizontal = true;
@@ -34,9 +36,26 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_1r = null;
     private TextView txt_2r = null;
     private TextView txt_3r = null;
-    //används för att ta reda på vilket skepp som ska placeras (än så
-    //länge i en förvald ordning... bör vara enkelt att få i spelarvald ordning
-    private int shipNbr = 0;
+    public static final String TILE_TYPE_WATER = "W";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_2 = "2H";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_3 = "3H";
+
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L = "4HL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R = "4HL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L = "4VL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R = "4VR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L = "5HL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R = "5HR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L = "5VL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R = "5VR";
+
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L = "6HL";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M = "6HM";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R = "6HR";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L = "6VL";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +70,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
         playerft.commit();
 
         for (int i = 0; i < boardState.length; i++){
-            boardState[i] = 0;
+            boardState[i] = "W";
         }
 
         rotateBtn = findViewById(R.id.rotate);
@@ -63,6 +82,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
         txt_1r = findViewById(R.id.ship_1r_text);
         txt_2r = findViewById(R.id.ship_2r_text);
         txt_3r = findViewById(R.id.ship_3r_text);
+
 
 
         isShipAtPosition = new boolean[49];
@@ -180,11 +200,16 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
     private boolean checkShipsAtPosition(int startPosition, int lenght){
         if (lenght == 1) {                                           // skepp  1
-            boardState[startPosition] = selectedShipID;
-            Tile tile = playerGrid.getTileAtPosition(startPosition);
-            //       tile.setClickedImage(R.drawable.skepp_1r);
-            tile.getTileImage().setVisibility(View.INVISIBLE);
+            if (selectedShipID == 1)
+                boardState[startPosition] = TILE_TYPE_SIZE_1_SHIPID_1;
+            else if (selectedShipID == 2)
+                boardState[startPosition] = TILE_TYPE_SIZE_1_SHIPID_2;
+            else if (selectedShipID == 3)
+                boardState[startPosition] = TILE_TYPE_SIZE_1_SHIPID_3;
 
+            Tile tile = playerGrid.getTileAtPosition(startPosition);
+            tile.getTileImage().setImageResource(R.drawable.skepp_1r_w);
+            tile.setClickDisabled(true);
             usedTiles.add(startPosition);
             return true;
         } else if (isHorizontal) {
@@ -235,27 +260,63 @@ public class PlaceShipsActivity extends AppCompatActivity {
     }
 
     private void placeShipAt(int startPosition, int endPosition){
-        Tile tile;
-        for (int i = startPosition; i <= endPosition; i++){
-            if (i == startPosition || i == endPosition){        //Vertical fail safe
-                boardState[i] = selectedShipID;
-                tile = playerGrid.getTileAtPosition(i);
-                tile.getTileImage().setVisibility(View.INVISIBLE);
-                usedTiles.add(i);
+
+        Tile startTile = playerGrid.getTileAtPosition(startPosition);
+        Tile endTile = playerGrid.getTileAtPosition(endPosition);
+        startTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, this.getWindow().getDecorView().findViewById(android.R.id.content)));
+        endTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, this.getWindow().getDecorView().findViewById(android.R.id.content)));
+        if (selectedShipID == 4) {
+            if (isHorizontal){
+                boardState[startPosition] = TILE_TYPE_SIZE_2_SHIPID_4_H_L;
+                boardState[endPosition] = TILE_TYPE_SIZE_2_SHIPID_4_H_R;
+            } else {
+                boardState[startPosition] = TILE_TYPE_SIZE_2_SHIPID_4_V_L;
+                boardState[endPosition] = TILE_TYPE_SIZE_2_SHIPID_4_V_R;
+            }
+
+        } else if (selectedShipID == 5) {
+            if (isHorizontal){
+                boardState[startPosition] = TILE_TYPE_SIZE_2_SHIPID_5_H_L;
+                boardState[endPosition] = TILE_TYPE_SIZE_2_SHIPID_5_H_R;
+            } else {
+                boardState[startPosition] = TILE_TYPE_SIZE_2_SHIPID_5_V_L;
+                boardState[endPosition] = TILE_TYPE_SIZE_2_SHIPID_5_V_R;
             }
         }
+        if (isHorizontal){
+            startTile.getTileImage().setRotation(-90);
+            endTile.getTileImage().setRotation(-90);
+        }
+        startTile.setClickDisabled(true);
+        endTile.setClickDisabled(true);
+        usedTiles.add(startPosition);
+        usedTiles.add(endPosition);
+
     }
 
     private void placeShipAt(int startPosition, int middlePosition, int endPosition){
-        Tile tile;
-        for (int i = startPosition; i <= endPosition; i++){
-            if (i == startPosition || i == middlePosition || i == endPosition){     //Vertical fail safe
-                boardState[i] = selectedShipID;
-                tile = playerGrid.getTileAtPosition(i);
-                tile.getTileImage().setVisibility(View.INVISIBLE);
-                usedTiles.add(i);
-            }
+        Tile startTile = playerGrid.getTileAtPosition(startPosition);
+        Tile middleTile = playerGrid.getTileAtPosition(middlePosition);
+        Tile endTile = playerGrid.getTileAtPosition(endPosition);
+        startTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l, this.getWindow().getDecorView().findViewById(android.R.id.content)));
+        middleTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m, this.getWindow().getDecorView().findViewById(android.R.id.content)));
+        endTile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, this.getWindow().getDecorView().findViewById(android.R.id.content)));
+
+        if (isHorizontal){
+            boardState[startPosition] = TILE_TYPE_SIZE_3_SHIPID_6_H_L;
+            boardState[middlePosition] = TILE_TYPE_SIZE_3_SHIPID_6_H_M;
+            boardState[endPosition] = TILE_TYPE_SIZE_3_SHIPID_6_H_R;
+        } else {
+            boardState[startPosition] = TILE_TYPE_SIZE_3_SHIPID_6_V_L;
+            boardState[middlePosition] = TILE_TYPE_SIZE_3_SHIPID_6_V_M;
+            boardState[endPosition] = TILE_TYPE_SIZE_3_SHIPID_6_V_R;
         }
+        startTile.setClickDisabled(true);
+        middleTile.setClickDisabled(true);
+        endTile.setClickDisabled(true);
+        usedTiles.add(startPosition);
+        usedTiles.add(middlePosition);
+        usedTiles.add(endPosition);
     }
 
     @Override
