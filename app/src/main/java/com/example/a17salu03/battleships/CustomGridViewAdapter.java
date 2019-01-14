@@ -1,9 +1,5 @@
 package com.example.a17salu03.battleships;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -20,6 +16,47 @@ public class CustomGridViewAdapter extends BaseAdapter {
     private View view;
     private  ImageView mImageView;
     private int rotateDegrees;
+
+    public static final String TILE_TYPE_WATER = "W";
+    public static final String TILE_TYPE_HIT = "HIT";
+    public static final String TILE_TYPE_MISS = "MISS";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED = "1HD";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_2 = "2H";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_2_DAMAGED = "2HD";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_3 = "3H";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_3_DAMAGED = "3HD";
+
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L = "4HL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L_DAMAGED = "4HLD";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R = "4HR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R_DAMAGED = "4HRD";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L = "4VL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L_DAMAGED = "4VLD";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R = "4VR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R_DAMAGED = "4VRD";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L = "5HL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L_DAMAGED = "5HLD";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R = "5HR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R_DAMAGED = "5HRD";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L = "5VL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L_DAMAGED = "5VLD";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R = "5VR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R_DAMAGED = "5VRD";
+
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L = "6HL";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L_DAMAGED = "6HLD";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M = "6HM";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M_DAMAGED = "6HMD";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R = "6HR";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R_DAMAGED = "6HRD";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L = "6VL";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L_DAMAGED = "6VLD";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M_DAMAGED = "6VMD";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED = "6VRD";
+
 
     public CustomGridViewAdapter(String[] boardState, boolean isFriendly, boolean isClickable, ArrayList<Tile> tiles, View view) {
         this.boardState = boardState;
@@ -60,141 +97,239 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
     private void setImage(int position){
         if (isFriendlyBoard) {
-            rotateDegrees = -90;
-            if (boardState[position] == 0) {
-                mImageView.setImageResource(R.drawable.water_tile);
-            } else if (boardState[position] >= 1 && boardState[position] <= 3) {
-                mImageView.setImageResource(R.drawable.skepp_1r);
-
-            } else if (boardState[position] == 4 || boardState[position] == 5) {
-                showShipSizeMedium(position);
-
-            } else if (boardState[position] == 6) {
-                showShipSizeLarge(position);
-            } else if (boardState[position] == 10){
-                mImageView.setImageResource(R.drawable.water_tile_hit);
+            switch (boardState[position]){
+                case TILE_TYPE_WATER:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_MISS:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.water_tile_miss, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_1:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_2:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_2_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_3:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_3_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_H_L:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_H_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_H_R:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_H_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_V_L:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_V_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_V_R:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_V_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_H_L:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_H_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_H_R:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_H_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_V_L:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_V_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_V_R:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_V_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_L:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_M:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_M_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_R:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_L:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l, view, 90, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 90, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_M:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m, view, 90, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_M_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 90, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_R:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, view, 90, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false));
+                    break;
             }
-        } else if (!isFriendlyBoard) {
-            rotateDegrees = 90;
-            if (boardState[position] < 10){
-                mImageView.setImageResource(R.drawable.water_tile);
-            } else if (boardState[position] == 10){
-                mImageView.setImageResource(R.drawable.water_tile_hit);
-            } else if (boardState[position] >= 11 && boardState[position] <= 13) {
-                mImageView.setImageResource(R.drawable.skepp_1r);
-            } else if (boardState[position] == 14 || boardState[position] == 15) {
-                if (isShipDestroyed(position)) {
-                    showShipSizeMedium(position);
-                } else {
-                    mImageView.setImageBitmap(combineImages(R.drawable.broken_parts));
-                }
-            } else if (boardState[position] == 16) {
-                if (isShipDestroyed(position))
-                    showShipSizeLarge(position);
-                else {
-                    mImageView.setImageBitmap(combineImages(R.drawable.broken_parts));
-                }
+        } else if (!isFriendlyBoard){
+            switch (boardState[position]){
+                case TILE_TYPE_WATER:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_MISS:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.water_tile_miss, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_1:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED:
+                    if (isShipDestroyed(boardState[position])){
+
+                    }
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_2:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_2_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_3:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_1_SHIPID_3_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_H_L:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_H_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_H_R:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_H_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_V_L:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_V_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_V_R:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_4_V_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_H_L:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_H_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_H_R:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_H_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_V_L:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_V_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_V_R:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_2_SHIPID_5_V_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_L:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_M:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_M_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_R:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_H_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 0, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_L:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_L_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 90, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_M:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_M_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 90, false));
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_R:
+                    mImageView.setImageResource(R.drawable.water_tile);
+                    break;
+                case TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED:
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false));
+                    break;
             }
         }
 
-
-        if (isClickable){
-            if (boardState[position] > 10){
-                tiles.get(position).setClickDisabled(true);
-            }
-        }
     }
 
-    private Bitmap combineImages(int layerImage){
-        Bitmap bottomImage = BitmapFactory.decodeResource(view.getResources(), R.drawable.water_tile);
-        Bitmap topImage = BitmapFactory.decodeResource(view.getResources(), layerImage);
-        if (layerImage == R.drawable.broken_parts){
-            Random random = new Random();
-            topImage = rotateBitmap(topImage, random.nextInt(360));
-        }
-
-        Bitmap combined = Bitmap.createBitmap(bottomImage.getWidth(), bottomImage.getHeight(), bottomImage.getConfig());
-        Canvas canvas = new Canvas(combined);
-        canvas.drawBitmap(bottomImage, 0, 0, null);
-        canvas.drawBitmap(topImage, 0, 0, null);
-
-        return combined;
-    }
-
-    private Bitmap rotateBitmap(Bitmap original, int degrees) {
-        int width = original.getWidth();
-        int height = original.getHeight();
-
-        Matrix matrix = new Matrix();
-        matrix.preRotate(degrees);
-
-        return Bitmap.createBitmap(original, 0, 0, width, height, matrix, true);
-    }
-
-    private boolean isShipDestroyed(int position) {
-        for (int i = 0; i < boardState.length; i++) {
-            if (boardState[position] == boardState[i] - 10) {
-                return false;
-            }
+    private boolean isShipDestroyed(String value) {
+        if (value.matches("[D{1}]")){
         }
         return true;
     }
 
-    private void showShipSizeMedium(int position){
-        if (position < 42 && (boardState[position + 7] == boardState[position] || (boardState[position + 7] - 10) == (boardState[position]))) {
-            if (isFriendlyBoard)
-                mImageView.setImageResource(R.drawable.skepp_2r_w_r);
-            else
-                mImageView.setImageResource(R.drawable.skepp_2r_w_l);
-            mImageView.setRotation(rotateDegrees);
-        } else if (position > 7 && (boardState[position - 7] == boardState[position] || (boardState[position - 7] - 10) == (boardState[position]))) {
-            if (isFriendlyBoard)
-                mImageView.setImageResource(R.drawable.skepp_2r_w_l);
-            else
-                mImageView.setImageResource(R.drawable.skepp_2r_w_r);
-            mImageView.setRotation(rotateDegrees);
-        } else if (position != 48 && (boardState[position + 1] == boardState[position] || (boardState[position + 1] - 10) == (boardState[position]))) {
-            mImageView.setImageResource(R.drawable.skepp_2r_w_l);
-        } else if (position != 0 && (boardState[position - 1] == boardState[position] || (boardState[position - 1] - 10) == (boardState[position]))) {
-            mImageView.setImageResource(R.drawable.skepp_2r_w_r);
-        }
-    }
 
-    private void showShipSizeLarge(int position){
-        if (position < 42 && (boardState[position + 7] == boardState[position] || (boardState[position + 7] - 10) == (boardState[position]))) {
-            if (position < 35 && (boardState[position + 14] == boardState[position] || (boardState[position + 14] - 10) == (boardState[position]))) {
-                if (isFriendlyBoard)
-                    mImageView.setImageResource(R.drawable.skepp_3r_w_r);
-                else
-                    mImageView.setImageResource(R.drawable.skepp_3r_w_l);
-                mImageView.setRotation(rotateDegrees);
-            } else if (position > 7 && (boardState[position - 7] == boardState[position] || (boardState[position - 7] - 10) == (boardState[position]))) {
-                mImageView.setImageResource(R.drawable.skepp_3r_w_m);
-                mImageView.setRotation(rotateDegrees);
-            }
-        } else if (position > 7 && (boardState[position - 7] == boardState[position] || (boardState[position - 7] - 10) == (boardState[position]))) {
-            if (position > 14 && (boardState[position - 14] == boardState[position] || (boardState[position - 14] - 10) == (boardState[position]))) {
-                if (isFriendlyBoard)
-                    mImageView.setImageResource(R.drawable.skepp_3r_w_l);
-                else
-                    mImageView.setImageResource(R.drawable.skepp_3r_w_r);
-                mImageView.setRotation(rotateDegrees);
-            } else if (position < 42 && (boardState[position + 7] == boardState[position] || (boardState[position + 7] - 10) == (boardState[position]))) {
-                mImageView.setImageResource(R.drawable.skepp_3r_w_m);
-                mImageView.setRotation(rotateDegrees);
-            }
-        } else if (position != 48 && (boardState[position + 1] == boardState[position] || (boardState[position + 1] - 10) == (boardState[position]))) {
-            if (position != 47 && (boardState[position + 2] == boardState[position] || (boardState[position + 2] - 10) == (boardState[position]))) {
-                mImageView.setImageResource(R.drawable.skepp_3r_w_l);
-            } else if (position != 0 && (boardState[position - 1] == boardState[position] || (boardState[position - 1] - 10) == (boardState[position]))) {
-                mImageView.setImageResource(R.drawable.skepp_3r_w_m);
-            }
-        } else if (position != 0 && (boardState[position - 1] == boardState[position] || (boardState[position - 1] - 10) == (boardState[position]))) {
-            if (position != 1 && (boardState[position - 2] == boardState[position] || (boardState[position - 2] - 10) == (boardState[position]))) {
-                mImageView.setImageResource(R.drawable.skepp_3r_w_r);
-            } else if (position != 48 && (boardState[position + 1] == boardState[position] || (boardState[position + 1] - 10) == (boardState[position]))) {
-                mImageView.setImageResource(R.drawable.skepp_3r_w_m);
-            }
-        }
-    }
 }
