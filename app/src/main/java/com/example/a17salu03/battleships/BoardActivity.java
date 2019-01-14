@@ -79,10 +79,10 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     }
 
     public void onFireClick(View view) {
-        MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
+        //MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
         int clickedTile = opponentGrid.getClickedTile();
         if (clickedTile >= 0) {
-            mediaPlayer.start();
+           // mediaPlayer.start();
             if (isHit(clickedTile)) {
                 opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
@@ -115,14 +115,16 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
     private boolean checkIfWon() {
         for (int i = 0; i < opponentsShips.length; i++) {
-   //         if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
-                return false;
+            //         if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
+            return false;
+
         }
         return true;
     }
 
     private boolean isHit(int tile) {
         boolean isHit = false;
+
 
 
  //       boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));

@@ -17,6 +17,8 @@ public class Tile {
         this.view = view;
         tileImage = new ImageView(view.getContext());
 
+
+
     }
 
     public ImageView getTileImage(){

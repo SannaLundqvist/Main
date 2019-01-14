@@ -36,28 +36,13 @@ public class SkeletonTurn {
 
     public static final String TAG = "EBTurn";
 
-    public int[] myShips = null;
-    public int[] opponentsShips = null;
+    public String[] myShips = null;
+    public String[] opponentsShips = null;
     public int firePosition;
     public int turnCounter;
 
     public SkeletonTurn() {
-        /*
-        myShips = new int[49];
-        for (int i = 0; i < myShips.length; i++) {
-            if (i % 2 == 0)
-                myShips[i] = 0;
-            else
-                myShips[i] = 1;
-        }
-        opponentsShips = new int[49];
-        for (int i = 0; i < opponentsShips.length; i++) {
-            if (i % 2 == 0)
-                opponentsShips[i] = 1;
-            else
-                opponentsShips[i] = 0;
-        }
-        */
+
     }
 
     // This is the byte array we will write out to the TBMP API.
@@ -140,12 +125,12 @@ public class SkeletonTurn {
                 if (array == null)
                     Log.e("SkeletonTurn", "There was an issue getting JSONArray!");
 
-                int[] numbers = new int[array.length()];
+                String[] shipPlacment = new String[array.length()];
 
                 for (int i = 0; i < array.length(); ++i) {
-                    numbers[i] = array.optInt(i);
+                    shipPlacment[i] = array.optString(i);
                 }
-                retVal.opponentsShips = numbers;
+                retVal.opponentsShips = shipPlacment;
             }
             if (obj.has("opponentsShips")) {
                 JSONArray array = obj.getJSONArray("opponentsShips");
@@ -153,12 +138,12 @@ public class SkeletonTurn {
                 if (array == null)
                     Log.e("SkeletonTurn", "There was an issue getting JSONArray!");
 
-                int[] numbers = new int[array.length()];
+                String[] shipPlacement = new String[array.length()];
 
                 for (int i = 0; i < array.length(); ++i) {
-                    numbers[i] = array.optInt(i);
+                    shipPlacement[i] = array.optString(i);
                 }
-                retVal.myShips = numbers;
+                retVal.myShips = shipPlacement;
             }
             if(obj.has("firePosition")){
                 retVal.firePosition = obj.getInt("firePosition");
