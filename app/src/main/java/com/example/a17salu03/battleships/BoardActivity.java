@@ -117,6 +117,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         for (int i = 0; i < opponentsShips.length; i++) {
             //         if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
             return false;
+
         }
         return true;
     }
@@ -125,7 +126,8 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         boolean isHit = false;
 
 
-        //       boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));
+
+ //       boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));
         return isHit;
     }
 }

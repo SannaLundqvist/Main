@@ -67,11 +67,12 @@ public class ClickableTile extends Tile{
     @Override
     public void setClickDisabled(boolean answer){
         isClickDisabled = answer;
+        lastClickedTile = null;
     }
 
     public void setClickedImage(int image){
         tileImage.setImageResource(image);
-        isLastChosen = true;
+
         isClickDisabled = true;
     }
 }
