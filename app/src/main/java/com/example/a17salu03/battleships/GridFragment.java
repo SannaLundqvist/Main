@@ -54,7 +54,7 @@ public class GridFragment extends Fragment{
                 System.arraycopy(board, 0, gridArray, 0, board.length);
             } else {
                 for (int i = 0; i < 49; i++) {
-                    gridArray[i] = R.drawable.water_tile;
+                    gridArray[i] = 0;
                 }
             }
             Tile tile;
@@ -69,7 +69,7 @@ public class GridFragment extends Fragment{
             }
 
 
-            CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, isFriendlyBoard, isClickableTiles, tiles, this.getView());
+            CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, isFriendlyBoard, isClickableTiles, tiles, view);
             gridView.setAdapter(gridAdapter);
 
 
