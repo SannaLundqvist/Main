@@ -54,14 +54,50 @@ public class CustomGridViewAdapter extends BaseAdapter {
         }
         //bild
 
-        tiles.get(position).getTileImage().setImageBitmap(combineImages(R.drawable.skepp_1r_w2_broken));
+        String shipID = PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_4_V_R;
+        setDrawable(tiles.get(position), shipID);
         return mImageView;
     }
     private void setDrawable(Tile tile, String shipId){
-        switch (shipId){
-            case :
+            switch (shipId) {
+                case PlaceShipsActivity.TILE_TYPE_SIZE_1_SHIPID_1:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_1r_w));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_1_SHIPID_2:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_1r_w));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_1_SHIPID_3:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_1r_w));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_4_H_L:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_2r_w_l));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_4_H_R:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_2r_w_r));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_4_V_L:
+                    tile.getTileImage().setImageBitmap(rotateBitmap(combineImages(R.drawable.skepp_2r_w_l), 90));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_4_V_R:
+                    tile.getTileImage().setImageBitmap(rotateBitmap(combineImages(R.drawable.skepp_2r_w_r), 90));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_5_H_L:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_2r_w_l));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_5_H_R:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_2r_w_r));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_5_V_L:
+                    tile.getTileImage().setImageBitmap(rotateBitmap(combineImages(R.drawable.skepp_2r_w_l), 90));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_2_SHIPID_5_V_R:
+                    tile.getTileImage().setImageBitmap(rotateBitmap(combineImages(R.drawable.skepp_2r_w_r), 90));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_3_SHIPID_6_H_L:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_3r_w_l));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_3_SHIPID_6_H_M:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_3r_w_m));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_3_SHIPID_6_H_R:
+                    tile.getTileImage().setImageBitmap(combineImages(R.drawable.skepp_3r_w_r));
+                case  PlaceShipsActivity.TILE_TYPE_SIZE_3_SHIPID_6_V_L :
+                    tile.getTileImage().setImageBitmap(rotateBitmap(combineImages(R.drawable.skepp_3r_w_l), 90));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_3_SHIPID_6_V_M:
+                    tile.getTileImage().setImageBitmap(rotateBitmap(combineImages(R.drawable.skepp_3r_w_m),90));
+                case PlaceShipsActivity.TILE_TYPE_SIZE_3_SHIPID_6_V_R:
+                    tile.getTileImage().setImageBitmap(rotateBitmap(combineImages(R.drawable.skepp_3r_w_r),90));
 
-        }
+            }
+
+
     }
 
     private Bitmap combineImages(int layerImage) {

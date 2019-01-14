@@ -14,6 +14,39 @@ import java.util.ArrayList;
 
 public class PlaceShipsActivity extends AppCompatActivity {
 
+    public static final String TILE_TYPE_WATER = "W";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_2 = "2H";
+    public static final String TILE_TYPE_SIZE_1_SHIPID_3 = "3H";
+
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L = "4HL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R = "4HR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L = "4VL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R = "4VR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L = "5HL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R = "5HR";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L = "5VL";
+    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R = "5VR";
+
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L = "6HL";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M = "6HM";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R = "6HR";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L = "6VL";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
+    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
+
+    public static final int GROUP_SMALL = 1;
+    public static final int GROUP_MEDIUM_LEFT_VERTICAL = 2;
+    public static final int GROUP_MEDIUM_LEFT_HORISONTAL = 3;
+    public static final int GROUP_MEDIUM_RIGHT_VERTICAL = 4;
+    public static final int GROUP_MEDIUM_RIGHT_HORISONAL = 5;
+    public static final int GROUP_LARGE_LEFT_VERTICAL = 6;
+    public static final int GROUP_LARGE_MIDDLE_VERTICAL = 7;
+    public static final int GROUP_LARGE_RIGHT_VERTICAL = 8;
+    public static final int GROUP_LARGE_LEFT_HORISONTAL = 9;
+    public static final int GROUP_LARGE_MIDDLE_HORISONTAL = 10;
+    public static final int GROUP_LARGE_RIGHT_HORISONTAL = 11;
+
     private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
     private int[] boardState = new int[49];  //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
@@ -257,6 +290,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
             }
         }
     }
+
 
     @Override
     public void onBackPressed() {

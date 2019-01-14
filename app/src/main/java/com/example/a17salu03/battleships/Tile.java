@@ -17,35 +17,7 @@ public class Tile {
         this.view = view;
         tileImage = new ImageView(view.getContext());
 
-        switch (tileApperance){
-            case TILE_TYPE_WATER :
-                tileImage.setImageResource(R.drawable.water_tile);
-                break;
-            case TILE_TYPE_HIT :
-                tileImage.setImageResource(R.drawable.water_tile_hit);
-                break;
-            case TILE_TYPE_SHIP_SMALL :
-                tileImage.setImageResource(R.drawable.skepp_2r_w);
-                break;
-            case TILE_TYPE_SHIP_MEDIUM_L :
-                tileImage.setImageResource(R.drawable.skepp_3r_w_l);
-                break;
-            case TILE_TYPE_SHIP_MEDIUM_R :
-                tileImage.setImageResource(R.drawable.skepp_3r_w_r);
-                break;
-            case TILE_TYPE_SHIP_LARGE_L :
-                tileImage.setImageResource(R.drawable.skepp_4r_w_l);
-                break;
-            case TILE_TYPE_SHIP_LARGE_M :
-                    tileImage.setImageResource(R.drawable.skepp_4r_w_m);
-                    break;
-            case TILE_TYPE_SHIP_LARGE_R :
-                tileImage.setImageResource(R.drawable.skepp_4r_w_r);
-                break;
-        }
 
-        //tileImage.setImageResource(R.drawable.water_tile);
-        tiles.add(this);
 
     }
 
