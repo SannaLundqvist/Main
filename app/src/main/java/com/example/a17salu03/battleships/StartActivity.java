@@ -256,7 +256,7 @@ public class StartActivity extends Activity implements
     // Open the create-game UI. You will get back an onActivityResult
     // and figure out what to do.
     public void onStartMatchClicked(View view) {
-        mTurnBasedMultiplayerClient.getSelectOpponentsIntent(1, 7, true)
+        mTurnBasedMultiplayerClient.getSelectOpponentsIntent(1, 1, true)
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
                     @Override
                     public void onSuccess(Intent intent) {
