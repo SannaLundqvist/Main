@@ -11,6 +11,7 @@
         android:orientation="horizontal"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/wooden_plank"
         android:gravity="center">
         <TextView
             android:id="@+id/time_view"
@@ -32,12 +33,22 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" >
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/wooden_plank"/>
         <FrameLayout
             android:id="@+id/fragment_container_player"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="7" />
+            android:layout_weight="10" />
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/wooden_plank"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -52,12 +63,22 @@
                 android:onClick="onFireClick"
                 android:layout_gravity="bottom"/>
         </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/wooden_plank"/>
         <FrameLayout
             android:id="@+id/fragment_container_opponent"
             android:layout_width="0dp"
-            android:layout_weight="7"
+            android:layout_weight="10"
             android:layout_height="match_parent" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/wooden_plank"/>
     </LinearLayout>
+
 
 </RelativeLayout>

@@ -692,6 +692,7 @@ public class StartActivity extends Activity implements
                     gameWon();
                 }
                 else{
+                    mTurnData.myShips = intent.getStringArrayExtra("myShips");
                     mTurnData.opponentsShips = intent.getStringArrayExtra("opponentsShips");
                     takeTurn();
                 }
