@@ -2,6 +2,7 @@ package com.example.a17salu03.battleships;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentTransaction;
@@ -37,18 +38,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
     public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
     public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
 
-    public static final int GROUP_SMALL = 1;
-    public static final int GROUP_MEDIUM_LEFT_VERTICAL = 2;
-    public static final int GROUP_MEDIUM_LEFT_HORISONTAL = 3;
-    public static final int GROUP_MEDIUM_RIGHT_VERTICAL = 4;
-    public static final int GROUP_MEDIUM_RIGHT_HORISONAL = 5;
-    public static final int GROUP_LARGE_LEFT_VERTICAL = 6;
-    public static final int GROUP_LARGE_MIDDLE_VERTICAL = 7;
-    public static final int GROUP_LARGE_RIGHT_VERTICAL = 8;
-    public static final int GROUP_LARGE_LEFT_HORISONTAL = 9;
-    public static final int GROUP_LARGE_MIDDLE_HORISONTAL = 10;
-    public static final int GROUP_LARGE_RIGHT_HORISONTAL = 11;
-
     private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
     private String[] boardState = new String[49];  //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
@@ -69,12 +58,15 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_1r = null;
     private TextView txt_2r = null;
     private TextView txt_3r = null;
+    StartActivity startActivity = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
+
+        Context con = getIntent().get
 
         playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);
@@ -140,6 +132,9 @@ public class PlaceShipsActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void onLeaveClicked(View view){
+        startActivity.onLeaveClicked(view);
     }
 
     @Override
@@ -340,7 +335,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
         usedTiles.add(middlePosition);
         usedTiles.add(endPosition);
     }
-
 
     @Override
     public void onBackPressed() {

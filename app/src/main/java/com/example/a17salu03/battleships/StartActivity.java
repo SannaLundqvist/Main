@@ -936,7 +936,7 @@ public class StartActivity extends Activity implements
                 showErrorMessage(R.string.match_error_locally_modified);
                 break;
             default:
-                showErrorMessage(R.string.win);
+                showErrorMessage(R.string.status_exception_error);
                 Log.d(TAG, "Did not have warning or string to deal with: "
                         + statusCode);
         }
