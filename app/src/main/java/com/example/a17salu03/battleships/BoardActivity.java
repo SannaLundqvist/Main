@@ -30,18 +30,18 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         }
 
         int [] myShips = {0, 0,	0, 0, 0, 0, 0,
-                        0, 6, 0, 0, 0, 0, 0,
-                        0, 6, 0, 0, 1, 0, 0,
-                        0, 6, 0, 0, 0, 2, 0,
-                        0, 0, 0, 4, 4, 10, 0,
-                        0, 0, 3, 0, 5, 0, 0,
-                        10, 0, 0, 0, 5, 0, 0};
+                0, 6, 0, 0, 0, 0, 0,
+                0, 6, 0, 0, 1, 0, 0,
+                0, 6, 0, 0, 0, 2, 0,
+                0, 0, 0, 4, 4, 10, 0,
+                0, 0, 3, 0, 5, 0, 0,
+                10, 0, 0, 0, 5, 0, 0};
         opponentsShips = getIntent().getIntArrayExtra("opponentsShips");
 
         fireBtn = findViewById(R.id.fire);
 
         playerGrid = new GridFragment();
-
+        playerGrid.setMyBoard(myShips);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
