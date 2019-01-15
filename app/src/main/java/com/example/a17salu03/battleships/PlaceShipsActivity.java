@@ -52,13 +52,13 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private Button rotateBtn;
     private Button placeBtn = null;
     private Button doneBtn = null;
+    private Button leaveBtn = null;
     private ImageView img_1r = null;
     private ImageView img_2r = null;
     private ImageView img_3r = null;
     private TextView txt_1r = null;
     private TextView txt_2r = null;
     private TextView txt_3r = null;
-    StartActivity startActivity = null;
 
 
     @Override
@@ -66,7 +66,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
 
-        Context con = getIntent().get
+
 
         playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);
@@ -82,6 +82,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
         rotateBtn = findViewById(R.id.rotate);
         placeBtn = findViewById(R.id.place);
         doneBtn = findViewById(R.id.done);
+        leaveBtn = findViewById(R.id.leave);
         img_1r = findViewById(R.id.ship_1r_draw);
         img_2r = findViewById(R.id.ship_2r_draw);
         img_3r = findViewById(R.id.ship_3r_draw);
@@ -131,10 +132,19 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
             }
         });
+        leaveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(StartActivity.RESULT_LEAVE);
+                finish();
+            }
+        });
 
     }
-    private void onLeaveClicked(View view){
-        startActivity.onLeaveClicked(view);
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override

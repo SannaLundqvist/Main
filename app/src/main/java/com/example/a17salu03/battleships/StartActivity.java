@@ -96,6 +96,8 @@ public class StartActivity extends Activity implements
     public static final int PLACED_SHIPS = 2001;
     public static final int SHOOTING = 2002;
 
+    public static final int RESULT_LEAVE = 999;
+
 
     // Should I be showing the turn API?
     public boolean isDoingTurn = false;
@@ -324,6 +326,22 @@ public class StartActivity extends Activity implements
                 .addOnFailureListener(createFailureListener("There was a problem leaving the match!"));
 
         setViewVisibility();
+    }
+    private void leaveGame(){
+            showSpinner();
+            String nextParticipantId = getNextParticipantId();
+
+            mTurnBasedMultiplayerClient.leaveMatchDuringTurn(mMatch.getMatchId(), nextParticipantId)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            onLeaveMatch();
+                        }
+                    })
+                    .addOnFailureListener(createFailureListener("There was a problem leaving the match!"));
+
+            setViewVisibility();
+
     }
 
 
@@ -677,7 +695,9 @@ public class StartActivity extends Activity implements
                 takeTurnPlaceShips (intent.getStringArrayExtra("boardState"));
 
             }
-            else
+            else if(resultCode == RESULT_LEAVE){
+                leaveGame();
+            }else
                 Toast.makeText(getBaseContext(), "There was a problem placing your ships", Toast.LENGTH_SHORT).show();
             //intent.getIntArrayExtra()
             //takeTurn();
@@ -694,8 +714,11 @@ public class StartActivity extends Activity implements
                     mTurnData.opponentsShips = intent.getStringArrayExtra("opponentsShips");
                     takeTurn();
                 }
-            } else
-                Toast.makeText(getBaseContext(), "There was a problem placing your ships", Toast.LENGTH_SHORT).show();
+            }  else if(resultCode == RESULT_LEAVE){
+                leaveGame();
+            }else{
+                Toast.makeText(getBaseContext(), "There was a problem shooting", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

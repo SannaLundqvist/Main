@@ -15,31 +15,15 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     private String[] myShips;
     private String[] opponentsShips;
     private Button fireBtn = null;
+    private Button leaveBtn = null;
     private GridFragment opponentGrid;
     private boolean hasWon;
     private GridFragment playerGrid;
     private int position;
 
+
     public static final String TILE_TYPE_WATER = "W";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_2 = "2H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_3 = "3H";
 
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L = "4HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R = "4HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L = "4VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R = "4VR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L = "5HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R = "5HR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L = "5VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R = "5VR";
-
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L = "6HL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M = "6HM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R = "6HR";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L = "6VL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +45,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentsShips = getIntent().getStringArrayExtra("opponentsShips");
 
         fireBtn = findViewById(R.id.fire);
+        leaveBtn = findViewById(R.id.leave);
 
         playerGrid = new GridFragment();
         playerGrid.setMyBoard(myShips);
@@ -76,6 +61,14 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);
         opponentft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         opponentft.commit();
+
+        leaveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(StartActivity.RESULT_LEAVE);
+                finish();
+            }
+        });
     }
 
     public void onFireClick(View view) {
