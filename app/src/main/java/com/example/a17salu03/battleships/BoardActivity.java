@@ -1,10 +1,14 @@
 package com.example.a17salu03.battleships;
 
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +24,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     private String[] myShips;
     private String[] opponentsShips;
     private Button fireBtn = null;
+    private Button leaveBtn = null;
     private GridFragment opponentGrid;
     private boolean hasWon;
     private GridFragment playerGrid;
@@ -32,7 +37,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     private int opponentShip_small_Remaining;
     private int opponentShip_medium_Remaining;
     private int opponentShip_large_Remaining;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentsShips = getIntent().getStringArrayExtra("opponentsShips");
     //    shipsRemaining();
         fireBtn = findViewById(R.id.fire);
+        leaveBtn = findViewById(R.id.leave);
 
         playerGrid = new GridFragment();
         playerGrid.setMyBoard(myShips);
@@ -84,6 +89,36 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);
         opponentft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         opponentft.commit();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(R.layout.dialog_leave);
+
+        builder.setPositiveButton(R.string.leave, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                leaveGame();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface leaveDialog, int id) {
+                leaveDialog.dismiss();
+            }
+        });
+// Set other dialog properties
+
+// Create the AlertDialog
+        final AlertDialog dialog = builder.create();
+
+        leaveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+
+            }
+        });
+    }
+    public void leaveGame(){
+        setResult(StartActivity.RESULT_LEAVE);
+        finish();
     }
     @Override
     protected void onPause(){
@@ -188,4 +223,5 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         }
         return isHit;
     }
+
 }

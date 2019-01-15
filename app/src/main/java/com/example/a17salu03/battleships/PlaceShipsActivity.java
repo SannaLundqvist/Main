@@ -1,10 +1,11 @@
 package com.example.a17salu03.battleships;
 
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,7 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
 public class PlaceShipsActivity extends AppCompatActivity {
+
     private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
     private String[] boardState = new String[49];
@@ -43,7 +45,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private int ship2ID = 4;
     private int ship3ID = 6;
     private Button rotateBtn;
-    private Button doneBtn = null;
     private ImageView img_1r = null;
     private ImageView img_2r = null;
     private ImageView img_3r = null;
@@ -74,15 +75,30 @@ public class PlaceShipsActivity extends AppCompatActivity {
             boardState[i] = TILE_TYPE_WATER;
         }
 
-
         rotateBtn = findViewById(R.id.rotate);
-        doneBtn = findViewById(R.id.done);
+        Button doneBtn = findViewById(R.id.done);
+        Button leaveBtn = findViewById(R.id.leave);
         img_1r = findViewById(R.id.ship_1r_draw);
         img_2r = findViewById(R.id.ship_2r_draw);
         img_3r = findViewById(R.id.ship_3r_draw);
         txt_1r = findViewById(R.id.ship_1r_text);
         txt_2r = findViewById(R.id.ship_2r_text);
         txt_3r = findViewById(R.id.ship_3r_text);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(R.layout.dialog_leave);
+
+        builder.setPositiveButton(R.string.leave, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                leaveGame();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        final AlertDialog leaveDialog = builder.create();
 
         img_1r.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +141,24 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        leaveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                leaveDialog.show();
+            }
+        });
+
+    }
+
+    public void leaveGame(){
+        setResult(StartActivity.RESULT_LEAVE);
+        finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -334,7 +368,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
         usedTiles.add(middlePosition);
         usedTiles.add(endPosition);
     }
-
 
     @Override
     public void onBackPressed() {
