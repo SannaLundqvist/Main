@@ -75,8 +75,8 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
+            public void onClick(DialogInterface leaveDialog, int id) {
+                leaveDialog.dismiss();
             }
         });
 // Set other dialog properties

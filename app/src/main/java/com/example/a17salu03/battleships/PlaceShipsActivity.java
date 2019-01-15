@@ -107,7 +107,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        final AlertDialog dialog = builder.create();
+        final AlertDialog leaveDialog = builder.create();
 
         img_1r.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +150,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
         leaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
+                leaveDialog.show();
             }
         });
 
