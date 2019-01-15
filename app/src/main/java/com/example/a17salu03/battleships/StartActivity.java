@@ -700,7 +700,6 @@ public class StartActivity extends Activity implements
         }else if (requestCode == PLACED_SHIPS) {
             super.onActivityResult(requestCode, requestCode, intent);
             if(resultCode == RESULT_OK){
-                //gameWon();
                 takeTurnPlaceShips (intent.getStringArrayExtra("boardState"));
 
             }
@@ -716,7 +715,7 @@ public class StartActivity extends Activity implements
 
             super.onActivityResult(requestCode, resultCode, intent);
             if (resultCode == RESULT_OK) {
-                if(true){
+                if(intent.getBooleanExtra("hasWon", false)){
                     gameWon();
                 }
                 else{
