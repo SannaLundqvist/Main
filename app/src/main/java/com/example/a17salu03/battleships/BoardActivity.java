@@ -39,7 +39,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         setContentView(R.layout.activity_board);
         mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
         mediaPlayer.start();
-        shipsRemaining();
+
 
 
 /*
@@ -66,7 +66,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
         myShips = getIntent().getStringArrayExtra("myShips");
         opponentsShips = getIntent().getStringArrayExtra("opponentsShips");
-
+        shipsRemaining();
         fireBtn = findViewById(R.id.fire);
 
         playerGrid = new GridFragment();
