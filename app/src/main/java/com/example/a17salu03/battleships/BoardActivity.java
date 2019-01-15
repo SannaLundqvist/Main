@@ -125,23 +125,23 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         Toast.makeText(getBaseContext(), "fakePosition: " + position, Toast.LENGTH_LONG).show();
     }
 
-    private void shipsRemaining(){
+    private void shipsRemaining() {
         String shipIDs = null;
         StringBuilder sb = new StringBuilder();
         TextView ship_1_remaining = findViewById(R.id.ship_1_remaining);
 
-        for(String string : myShips){
-            if (string.contains("D")){
+        for (String string : myShips) {
+            if (string.contains("D")) {
                 shipIDs = sb.append(string.charAt(0)).toString();
             }
         }
         if (shipIDs != null && !shipIDs.isEmpty()) {
-            for (int i = 0; i < shipIDs.length(); i++){
-                if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3){
+            for (int i = 0; i < shipIDs.length(); i++) {
+                if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3) {
                     friendlyShip_small_Remaining--;
-                } else if (shipIDs.charAt(i) == 4 || shipIDs.charAt(i) == 5){
+                } else if (shipIDs.charAt(i) == 4 || shipIDs.charAt(i) == 5) {
                     friendlyShip_medium_Remaining--;
-                } else if (shipIDs.charAt(i) == 6){
+                } else if (shipIDs.charAt(i) == 6) {
                     friendlyShip_large_Remaining--;
                 }
             }
@@ -149,23 +149,21 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
         ship_1_remaining.setText(friendlyShip_small_Remaining);
 
-        for(String string : opponentsShips){
-            if (string.contains("D")){
+        for (String string : opponentsShips) {
+            if (string.contains("D")) {
                 shipIDs = sb.append(string.charAt(0)).toString();
             }
         }
-        try {
-            for (int i = 0; i < shipIDs.length(); i++){
-                if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3){
+        if (shipIDs != null && !shipIDs.isEmpty()){
+            for (int i = 0; i < shipIDs.length(); i++) {
+                if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3) {
                     opponentShip_large_Remaining--;
-                } else if (shipIDs.charAt(i) == 4 || shipIDs.charAt(i) == 5){
+                } else if (shipIDs.charAt(i) == 4 || shipIDs.charAt(i) == 5) {
                     opponentShip_medium_Remaining--;
-                } else if (shipIDs.charAt(i) == 6){
+                } else if (shipIDs.charAt(i) == 6) {
                     opponentShip_large_Remaining--;
                 }
             }
-        } catch (NullPointerException e){
-            Log.d("BoardActivity", "ArrayOutOfBounds");
         }
 
     }
