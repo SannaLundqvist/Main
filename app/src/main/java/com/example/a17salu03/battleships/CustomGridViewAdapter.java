@@ -50,19 +50,14 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 public class CustomGridViewAdapter extends BaseAdapter {
     private String[] boardState; //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
     private boolean isFriendlyBoard;
-    private boolean isClickable;
     private ArrayList<Tile> tiles;
     private View view;
     private ImageView mImageView;
-    private int rotateDegrees;
 
 
-
-
-    public CustomGridViewAdapter(String[] boardState, boolean friendly, boolean isClickable, ArrayList<Tile> tiles, View view) {
+    public CustomGridViewAdapter(String[] boardState, boolean friendly, ArrayList<Tile> tiles, View view) {
         this.boardState = boardState;
         isFriendlyBoard = friendly;
-        this.isClickable = isClickable;
         this.tiles = tiles;
         this.view = view;
 

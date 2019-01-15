@@ -20,13 +20,12 @@ import android.widget.Toast;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_MISS;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
-public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener {
+public class BoardActivity extends AppCompatActivity {
     private String[] myShips;
     private String[] opponentsShips;
     private Button fireBtn = null;
     private Button leaveBtn = null;
     private GridFragment opponentGrid;
-    private boolean hasWon;
     private GridFragment playerGrid;
     private int position;
     private MediaPlayer mediaPlayer;
@@ -37,30 +36,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         setContentView(R.layout.activity_board);
         mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
         mediaPlayer.start();
-
-
-
-/*
-        myShips = new String[49];
-        for (int i = 0; i < myShips.length; i++){
-            myShips[i] = TILE_TYPE_WATER;
-        }
-
-    /*    String [] myShips = {"W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W"};
-
-        String [] opponentsShips = {"W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W",
-                "W", "W", "W", "W", "W", "W", "W"}; */
 
         myShips = getIntent().getStringArrayExtra("myShips");
         opponentsShips = getIntent().getStringArrayExtra("opponentsShips");
@@ -126,6 +101,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         int clickedTile = opponentGrid.getClickedTile();
         if (!(clickedTile == -1)) {
             mediaPlayer.start();
+            boolean hasWon;
             if (isHit(clickedTile)) {
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
                 hasWon = checkIfWon(clickedTile);
@@ -141,18 +117,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
             setResult(RESULT_OK, intent);
             finish();
         }
-    }
-
-    public void onBigClick(View view) {
-        ImageView imageView = (ImageView) view;
-        imageView.setBackgroundResource(R.drawable.red_borderrr);
-        Toast.makeText(getApplicationContext(), "onItemClick", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onItemClicked(int position) {
-        this.position = position;
-        Toast.makeText(getBaseContext(), "fakePosition: " + position, Toast.LENGTH_LONG).show();
     }
 
     private void shipsRemaining() {
@@ -181,11 +145,9 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                 }
             }
         }
-
         ship_small_friendly_remaining.setText("x" + friendlyShip_small_Remaining);
         ship_medium_friendly_remaining.setText("x" + friendlyShip_medium_Remaining);
         ship_large_friendly_remaining.setText("x" + friendlyShip_large_Remaining);
-
 
         int opponentShip_small_Remaining = 3;
         int opponentShip_medium_Remaining = 4;

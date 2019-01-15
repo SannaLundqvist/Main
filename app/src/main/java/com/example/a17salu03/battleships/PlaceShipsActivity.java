@@ -51,7 +51,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_1r = null;
     private TextView txt_2r = null;
     private TextView txt_3r = null;
-    private View view;
+
     private ImageView lastClickedShip;
     private MediaPlayer mediaPlayer;
 
@@ -61,7 +61,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_place_ships);
         mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
         mediaPlayer.start();
-        view = this.getWindow().getDecorView().findViewById(android.R.id.content);
 
         playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);
@@ -184,17 +183,17 @@ public class PlaceShipsActivity extends AppCompatActivity {
     public void onRotateClicked(View view){
         isHorizontal = !isHorizontal;
         if (isHorizontal){
-            rotateBtn.setText("Horizontal");
+            rotateBtn.setText(R.string.horizontal);
         } else {
-            rotateBtn.setText("Vertical");
+            rotateBtn.setText(R.string.vertical);
         }
     }
 
     private void highlightChosenShip(ImageView clickedShip){
-        if (lastClickedShip != null){
+        if (lastClickedShip != null)
             lastClickedShip.setBackgroundColor(0);
-        }
-        clickedShip.setBackgroundColor(Color.parseColor("#ff8000"));
+        if (clickedShip != null)
+            clickedShip.setBackgroundResource(R.color.Color_Selected);
         lastClickedShip = clickedShip;
     }
 
@@ -222,6 +221,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 }
                 if (shipsLeft == 0){
                     selectedShipID = 0;
+                    highlightChosenShip(null);
                 }
             }
 
