@@ -11,11 +11,13 @@ import android.widget.GridView;
 
 import java.util.ArrayList;
 
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
+
 public class GridFragment extends Fragment{
 
     private ArrayList<Tile> tiles = new ArrayList<>();
     private int tileID = 0;
-    private int clickedTile;
+    private int clickedTile = 50;
     private View thisView;
     private String[] ships;
     private String[] board;
@@ -23,7 +25,7 @@ public class GridFragment extends Fragment{
     public Integer layoutBorder = R.drawable.layout_border;
     private GridView gridView;
     private boolean isFriendlyBoard = true;
-    public static final String TILE_TYPE_WATER = "W";
+
 
     private boolean isClickableTiles = false;
 
@@ -68,11 +70,8 @@ public class GridFragment extends Fragment{
                 tiles.add(tile);
             }
 
-
             CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, isFriendlyBoard, isClickableTiles, tiles, view);
             gridView.setAdapter(gridAdapter);
-
-
 
         }
     }

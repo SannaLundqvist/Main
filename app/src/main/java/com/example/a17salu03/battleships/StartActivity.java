@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -107,13 +108,15 @@ public class StartActivity extends Activity implements
     // Do not retain references to match data once you have
     // taken an action on the match, such as takeTurn()
     public SkeletonTurn mTurnData;
+    private MediaPlayer mediaPlayer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
+        mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
+        mediaPlayer.start();
         // Create the Google API Client with access to Games
         // Create the client used to sign in.
 
@@ -145,7 +148,7 @@ public class StartActivity extends Activity implements
     @Override
     protected void onPause() {
         super.onPause();
-
+        mediaPlayer.stop();
         // Unregister the invitation callbacks; they will be re-registered via
         // onResume->signInSilently->onConnected.
         if (mInvitationsClient != null) {

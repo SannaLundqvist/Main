@@ -9,7 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_MISS;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
 public class BoardActivity extends AppCompatActivity implements GridFragment.OnItemClickedListener {
     private String[] myShips;
@@ -19,32 +23,25 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     private boolean hasWon;
     private GridFragment playerGrid;
     private int position;
+    private MediaPlayer mediaPlayer;
+    private int friendlyShip_small_Remaining;
+    private int friendlyShip_medium_Remaining;
+    private int friendlyShip_large_Remaining;
 
-    public static final String TILE_TYPE_WATER = "W";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_2 = "2H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_3 = "3H";
+    private int opponentShip_small_Remaining;
+    private int opponentShip_medium_Remaining;
+    private int opponentShip_large_Remaining;
 
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L = "4HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R = "4HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L = "4VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R = "4VR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L = "5HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R = "5HR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L = "5VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R = "5VR";
-
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L = "6HL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M = "6HM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R = "6HR";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L = "6VL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
+        mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
+        mediaPlayer.start();
+        shipsRemaining();
+
+
 /*
         myShips = new String[49];
         for (int i = 0; i < myShips.length; i++){
@@ -87,19 +84,22 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         opponentft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         opponentft.commit();
     }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mediaPlayer.stop();
+    }
 
     public void onFireClick(View view) {
-        //MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
+        MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
         int clickedTile = opponentGrid.getClickedTile();
-        if (clickedTile >= 0) {
-           // mediaPlayer.start();
+        if (!(clickedTile == 50)) {
+            mediaPlayer.start();
             if (isHit(clickedTile)) {
-                opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
-                hasWon = checkIfWon();
+                hasWon = checkIfWon(clickedTile);
             } else {
-                opponentsShips[clickedTile] = opponentsShips[clickedTile] + 10;
-                Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_LONG).show();
                 hasWon = false;
             }
 
@@ -113,7 +113,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
     public void onBigClick(View view) {
         ImageView imageView = (ImageView) view;
-        imageView.setBackgroundResource(R.drawable.red_border);
+        imageView.setBackgroundResource(R.drawable.red_borderrr);
         Toast.makeText(getApplicationContext(), "onItemClick", Toast.LENGTH_LONG).show();
     }
 
@@ -123,21 +123,70 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         Toast.makeText(getBaseContext(), "fakePosition: " + position, Toast.LENGTH_LONG).show();
     }
 
-    private boolean checkIfWon() {
-        for (int i = 0; i < opponentsShips.length; i++) {
-            //         if ((opponentsShips[i] > 0) && (opponentsShips[i] < 10))
-            return false;
+    private void shipsRemaining(){
+        String shipIDs = null;
+        StringBuilder sb = new StringBuilder();
+        TextView ship_1_remaining = findViewById(R.id.ship_1_remaining);
+
+        for(String string : myShips){
+            if (string.contains("D")){
+                shipIDs = sb.append(string.charAt(0)).toString();
+            }
+        }
+        try{
+            for (int i = 0; i < shipIDs.length(); i++){
+                if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3){
+                    friendlyShip_small_Remaining--;
+                } else if (shipIDs.charAt(i) == 4 || shipIDs.charAt(i) == 5){
+                    friendlyShip_medium_Remaining--;
+                } else if (shipIDs.charAt(i) == 6){
+                    friendlyShip_large_Remaining--;
+                }
+            }
+        } catch (NullPointerException e){
 
         }
-        return true;
+
+
+        ship_1_remaining.setText(friendlyShip_small_Remaining);
+
+        for(String string : opponentsShips){
+            if (string.contains("D")){
+                shipIDs = sb.append(string.charAt(0)).toString();
+            }
+        }
+        try {
+            for (int i = 0; i < shipIDs.length(); i++){
+                if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3){
+                    opponentShip_large_Remaining--;
+                } else if (shipIDs.charAt(i) == 4 || shipIDs.charAt(i) == 5){
+                    opponentShip_medium_Remaining--;
+                } else if (shipIDs.charAt(i) == 6){
+                    opponentShip_large_Remaining--;
+                }
+            }
+        } catch (NullPointerException e){
+
+        }
+
     }
 
-    private boolean isHit(int tile) {
+    private boolean checkIfWon(int clickedTile) {
+        int shipRemaining = 10;
+        for (int i = 0; i < opponentsShips.length; i++) {
+            if (opponentsShips[clickedTile].contains("D")){
+                shipRemaining -= 1;
+            }
+        }
+        return (shipRemaining == 0);
+    }
+
+    private boolean isHit(int position) {
         boolean isHit = false;
-
-
-
- //       boolean theHit = ((opponentsShips[tile] > 0) && (opponentsShips[tile] < 10));
+        if (!opponentsShips[position].equals(TILE_TYPE_WATER) && !opponentsShips[position].equals(TILE_TYPE_MISS)){
+            opponentsShips[position] = opponentsShips[position] + "D";
+            isHit = true;
+        }
         return isHit;
     }
 }

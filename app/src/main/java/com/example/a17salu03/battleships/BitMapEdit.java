@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class BitMapEdit {
 
-    public static Bitmap combineImages(int layerImage, View view, int rotateDegrees, boolean doFlip){
-        Bitmap bottomImage = BitmapFactory.decodeResource(view.getResources(), R.drawable.water_tile);
+    public static Bitmap combineImages(int layerImage, int baseImage, View view, int rotateDegrees, boolean doFlip){
+        Bitmap bottomImage = BitmapFactory.decodeResource(view.getResources(), baseImage);
         Bitmap topImage = BitmapFactory.decodeResource(view.getResources(), layerImage);
         if (rotateDegrees > 0){
             topImage = rotateBitmap(topImage, rotateDegrees);
@@ -31,6 +31,11 @@ public class BitMapEdit {
         canvas.drawBitmap(topImage, 0, 0, null);
 
         return combined;
+
+    }
+
+    public static Bitmap combineImages(int layerImage, View view, int rotateDegrees, boolean doFlip){
+        return combineImages(layerImage, R.drawable.water_tile, view, rotateDegrees, doFlip);
     }
 
     public static Bitmap rotateBitmap(Bitmap bitmap, int degrees) {

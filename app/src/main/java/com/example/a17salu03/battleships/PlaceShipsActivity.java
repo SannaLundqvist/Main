@@ -1,9 +1,9 @@
 package com.example.a17salu03.battleships;
 
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,54 +14,34 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_1;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_2;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_3;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_H_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_H_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_V_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_V_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_H_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_H_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_V_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_V_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_M;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_M;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_R;
+
 public class PlaceShipsActivity extends AppCompatActivity {
-
-    public static final String TILE_TYPE_WATER = "W";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_2 = "2H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_3 = "3H";
-
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L = "4HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R = "4HR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L = "4VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R = "4VR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L = "5HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R = "5HR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L = "5VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R = "5VR";
-
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L = "6HL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M = "6HM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R = "6HR";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L = "6VL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
-
-    public static final int GROUP_SMALL = 1;
-    public static final int GROUP_MEDIUM_LEFT_VERTICAL = 2;
-    public static final int GROUP_MEDIUM_LEFT_HORISONTAL = 3;
-    public static final int GROUP_MEDIUM_RIGHT_VERTICAL = 4;
-    public static final int GROUP_MEDIUM_RIGHT_HORISONAL = 5;
-    public static final int GROUP_LARGE_LEFT_VERTICAL = 6;
-    public static final int GROUP_LARGE_MIDDLE_VERTICAL = 7;
-    public static final int GROUP_LARGE_RIGHT_VERTICAL = 8;
-    public static final int GROUP_LARGE_LEFT_HORISONTAL = 9;
-    public static final int GROUP_LARGE_MIDDLE_HORISONTAL = 10;
-    public static final int GROUP_LARGE_RIGHT_HORISONTAL = 11;
-
     private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
-    private String[] boardState = new String[49];  //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
-    private int shipToBePlaced;
+    private String[] boardState = new String[49];
     private int selectedShipID;
     private boolean isHorizontal = true;
     private int ship1ID = 1;
     private int ship2ID = 4;
     private int ship3ID = 6;
-    private int selectedPosition;
-    private boolean[] isShipAtPosition;
     private Button rotateBtn;
-    private Button placeBtn = null;
     private Button doneBtn = null;
     private ImageView img_1r = null;
     private ImageView img_2r = null;
@@ -69,12 +49,17 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_1r = null;
     private TextView txt_2r = null;
     private TextView txt_3r = null;
-
+    private View view;
+    private ImageView lastClickedShip;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
+        mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
+        mediaPlayer.start();
+        view = this.getWindow().getDecorView().findViewById(android.R.id.content);
 
         playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);
@@ -83,12 +68,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
 
-        for (int i = 0; i < boardState.length; i++){
-            boardState[i] = TILE_TYPE_WATER;
-        }
-
         rotateBtn = findViewById(R.id.rotate);
-        placeBtn = findViewById(R.id.place);
         doneBtn = findViewById(R.id.done);
         img_1r = findViewById(R.id.ship_1r_draw);
         img_2r = findViewById(R.id.ship_2r_draw);
@@ -97,16 +77,13 @@ public class PlaceShipsActivity extends AppCompatActivity {
         txt_2r = findViewById(R.id.ship_2r_text);
         txt_3r = findViewById(R.id.ship_3r_text);
 
-
-
-        isShipAtPosition = new boolean[49];
-
         img_1r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int shipsLeft0 = Integer.parseInt(txt_1r.getText().toString());
                 if(shipsLeft0 > 0){
                     generateShipID(1);
+                    highlightChosenShip(img_1r);
                 }
             }
         });
@@ -116,6 +93,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 int shipsLeft1 = Integer.parseInt(txt_2r.getText().toString());
                 if(shipsLeft1 > 0){
                     generateShipID(2);
+                    highlightChosenShip(img_2r);
                 }
             }
         });
@@ -125,6 +103,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 int shipsLeft2 = Integer.parseInt(txt_3r.getText().toString());
                 if(shipsLeft2 > 0){
                     generateShipID(3);
+                    highlightChosenShip(img_3r);
                 }
             }
         });
@@ -135,16 +114,16 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("boardState", boardState);
                 setResult(RESULT_OK, intent);
+                mediaPlayer.stop();
                 finish();
-
             }
         });
-
     }
 
     @Override
     protected void onPause(){
         super.onPause();
+        mediaPlayer.stop();
     }
 
     private void generateShipID(int shipSize){
@@ -170,10 +149,18 @@ public class PlaceShipsActivity extends AppCompatActivity {
         }
     }
 
-    public void onPlaceClicked(View view){
-       Integer clickedTile = Integer.valueOf(playerGrid.getClickedTile());
+    private void highlightChosenShip(ImageView clickedShip){
+        if (lastClickedShip != null){
+            lastClickedShip.setBackgroundColor(0);
+        }
+        clickedShip.setBackgroundColor(Color.parseColor("#ff8000"));
+        lastClickedShip = clickedShip;
+    }
 
-        if (clickedTile != null && selectedShipID != 0){
+    public void onPlaceClicked(View view){
+       int clickedTile = playerGrid.getClickedTile();
+
+        if (!(clickedTile == 50) && selectedShipID != 0){
             if (isVacant(clickedTile)){
 
                 if (selectedShipID >= 1 && selectedShipID <= 3 && checkShipsAtPosition(clickedTile, 1)){

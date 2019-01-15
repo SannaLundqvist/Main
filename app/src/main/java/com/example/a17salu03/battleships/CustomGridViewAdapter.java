@@ -9,6 +9,43 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_MISS;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_1;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_2;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_2_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_3;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_3_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_H_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_H_L_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_H_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_H_R_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_V_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_V_L_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_V_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_4_V_R_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_H_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_H_L_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_H_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_H_R_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_V_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_V_L_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_V_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_2_SHIPID_5_V_R_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_L_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_M;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_M_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H_R_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_L;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_L_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_M;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_M_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
+
 public class CustomGridViewAdapter extends BaseAdapter {
     private String[] boardState; //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
     private boolean isFriendlyBoard;
@@ -18,45 +55,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
     private ImageView mImageView;
     private int rotateDegrees;
 
-    public static final String TILE_TYPE_WATER = "W";
-    public static final String TILE_TYPE_HIT = "HIT";
-    public static final String TILE_TYPE_MISS = "MISS";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED = "1HD";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_2 = "2H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_2_DAMAGED = "2HD";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_3 = "3H";
-    public static final String TILE_TYPE_SIZE_1_SHIPID_3_DAMAGED = "3HD";
 
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L = "4HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_L_DAMAGED = "4HLD";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R = "4HR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_H_R_DAMAGED = "4HRD";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L = "4VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_L_DAMAGED = "4VLD";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R = "4VR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_4_V_R_DAMAGED = "4VRD";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L = "5HL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_L_DAMAGED = "5HLD";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R = "5HR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_H_R_DAMAGED = "5HRD";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L = "5VL";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_L_DAMAGED = "5VLD";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R = "5VR";
-    public static final String TILE_TYPE_SIZE_2_SHIPID_5_V_R_DAMAGED = "5VRD";
-
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L = "6HL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_L_DAMAGED = "6HLD";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M = "6HM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_M_DAMAGED = "6HMD";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R = "6HR";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_H_R_DAMAGED = "6HRD";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L = "6VL";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_L_DAMAGED = "6VLD";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M = "6VM";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_M_DAMAGED = "6VMD";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
-    public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED = "6VRD";
 
 
     public CustomGridViewAdapter(String[] boardState, boolean isFriendly, boolean isClickable, ArrayList<Tile> tiles, View view) {
