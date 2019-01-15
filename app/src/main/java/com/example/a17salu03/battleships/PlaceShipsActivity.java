@@ -1,9 +1,7 @@
 package com.example.a17salu03.battleships;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_1;
@@ -35,6 +32,12 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_R;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
+/**
+ *
+ *
+ * @author Mattias Melchior, Sanna Lundqvist
+ */
+
 public class PlaceShipsActivity extends AppCompatActivity {
 
     private GridFragment playerGrid;
@@ -52,7 +55,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_1r = null;
     private TextView txt_2r = null;
     private TextView txt_3r = null;
-
     private ImageView lastClickedShip;
     private MediaPlayer mediaPlayer;
 
@@ -105,7 +107,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int shipsLeft0 = Integer.parseInt(txt_1r.getText().toString());
                 if(shipsLeft0 > 0){
-                    generateShipID(1);
+                    selectedShipID = ship1ID;
                     highlightChosenShip(img_1r);
                 }
             }
@@ -115,7 +117,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int shipsLeft1 = Integer.parseInt(txt_2r.getText().toString());
                 if(shipsLeft1 > 0){
-                    generateShipID(2);
+                    selectedShipID = ship2ID;
                     highlightChosenShip(img_2r);
                 }
             }
@@ -125,7 +127,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int shipsLeft2 = Integer.parseInt(txt_3r.getText().toString());
                 if(shipsLeft2 > 0){
-                    generateShipID(3);
+                    selectedShipID = ship3ID;
                     highlightChosenShip(img_3r);
                 }
             }
@@ -169,18 +171,14 @@ public class PlaceShipsActivity extends AppCompatActivity {
         mediaPlayer.stop();
     }
 
-    private void generateShipID(int shipSize){
-        switch (shipSize){
-            case 1:
-                selectedShipID = ship1ID;
-                break;
-            case 2:
-                selectedShipID = ship2ID;
-                break;
-            case 3:
-                selectedShipID = ship3ID;
-                break;
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public void recreate (){
+        super.recreate();
     }
 
     public void onRotateClicked(View view){
@@ -190,14 +188,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
         } else {
             rotateBtn.setText(R.string.vertical);
         }
-    }
-
-    private void highlightChosenShip(ImageView clickedShip){
-        if (lastClickedShip != null)
-            lastClickedShip.setBackgroundColor(0);
-        if (clickedShip != null)
-            clickedShip.setBackgroundResource(R.color.Color_Selected);
-        lastClickedShip = clickedShip;
     }
 
     public void onPlaceClicked(View view){
@@ -229,9 +219,13 @@ public class PlaceShipsActivity extends AppCompatActivity {
             }
         }
     }
-    @Override
-    public void recreate (){
-        super.recreate();
+
+    private void highlightChosenShip(ImageView clickedShip){
+        if (lastClickedShip != null)
+            lastClickedShip.setBackgroundColor(0);
+        if (clickedShip != null)
+            clickedShip.setBackgroundResource(R.color.Color_Selected);
+        lastClickedShip = clickedShip;
     }
 
     public void onResetClicked(View view){
@@ -378,10 +372,5 @@ public class PlaceShipsActivity extends AppCompatActivity {
         usedTiles.add(startPosition);
         usedTiles.add(middlePosition);
         usedTiles.add(endPosition);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }
