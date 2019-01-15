@@ -403,19 +403,19 @@ public class CustomGridViewAdapter extends BaseAdapter {
                 if (matchingPosition != null) {
                     switch (matchingPosition) {
                         case "east":
-                            if (value.charAt(0) == boardState[position + 2].charAt(0))
+                            if (value.charAt(0) == boardState[position + 2].charAt(0) || value.charAt(0) == boardState[position - 1].charAt(0))
                                 isDestroyed = true;
                             break;
                         case "west":
-                            if (value.charAt(0) == boardState[position - 2].charAt(0))
+                            if (value.charAt(0) == boardState[position - 2].charAt(0) || value.charAt(0) == boardState[position + 1].charAt(0))
                                 isDestroyed = true;
                             break;
                         case "south":
-                            if (value.charAt(0) == boardState[position + 14].charAt(0))
+                            if (value.charAt(0) == boardState[position + 14].charAt(0) || value.charAt(0) == boardState[position - 7].charAt(0))
                                 isDestroyed = true;
                             break;
                         case "north":
-                            if (value.charAt(0) == boardState[position - 14].charAt(0))
+                            if (value.charAt(0) == boardState[position - 14].charAt(0) || value.charAt(0) == boardState[position + 7].charAt(0))
                                 isDestroyed = true;
                             break;
                     }

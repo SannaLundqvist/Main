@@ -20,9 +20,6 @@ public class GridFragment extends Fragment {
     private String[] board;
     private GridView gridView;
     private boolean isFriendlyBoard = true;
-
-
-
     private boolean isClickableTiles = false;
 
     @Override
