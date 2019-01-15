@@ -3,9 +3,11 @@ package com.example.a17salu03.battleships;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -94,6 +96,21 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
         isShipAtPosition = new boolean[49];
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(R.layout.dialog_leave);
+
+        builder.setPositiveButton(R.string.leave, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                leaveGame();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        final AlertDialog dialog = builder.create();
+
         img_1r.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,11 +152,15 @@ public class PlaceShipsActivity extends AppCompatActivity {
         leaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(StartActivity.RESULT_LEAVE);
-                finish();
+                dialog.show();
             }
         });
 
+    }
+
+    public void leaveGame(){
+        setResult(StartActivity.RESULT_LEAVE);
+        finish();
     }
 
     @Override

@@ -25,6 +25,9 @@
     <string name="turn_label">Turn %1$d</string>
     <string name="win">yay, you won! (eg. felmeddelande)</string>
 
+    <string name="leaveHead">Are you sure that you want to leave this game? </string>
+    <string name="leaveText">All game data vill be lost.</string>
+
     <string name="place_your_ships">Place your ships</string>
 
     <string name="ship2r">3</string>
