@@ -58,18 +58,13 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
 
 
-    public CustomGridViewAdapter(String[] boardState, boolean isFriendly, boolean isClickable, ArrayList<Tile> tiles, View view) {
+    public CustomGridViewAdapter(String[] boardState, boolean friendly, boolean isClickable, ArrayList<Tile> tiles, View view) {
         this.boardState = boardState;
-        isFriendlyBoard = isFriendly;
+        isFriendlyBoard = friendly;
         this.isClickable = isClickable;
         this.tiles = tiles;
         this.view = view;
 
-        for (int i = 0; i < boardState.length; i++){
-            if (!boardState[i].equals(TILE_TYPE_WATER)){
-                tiles.get(i).setClickDisabled(true);
-            }
-        }
     }
 
     public int getCount() {
@@ -226,6 +221,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                 case TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_2:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -233,6 +229,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                 case TILE_TYPE_SIZE_1_SHIPID_2_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_3:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -240,6 +237,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                 case TILE_TYPE_SIZE_1_SHIPID_3_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_L:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -249,6 +247,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_R:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -258,6 +257,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_V_L:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -267,6 +267,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_V_R:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -276,6 +277,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_H_L:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -285,6 +287,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_H_R:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -294,6 +297,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_V_L:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -303,6 +307,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_V_R:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -312,6 +317,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_L:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -321,6 +327,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 0, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_M:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -330,6 +337,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 0, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_R:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -339,6 +347,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 0, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_L:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -348,6 +357,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 90, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_M:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -357,6 +367,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 90, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_R:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -366,6 +377,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
+                    tiles.get(position).setClickDisabled(true);
                     break;
             }
         }
