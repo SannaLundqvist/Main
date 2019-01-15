@@ -24,9 +24,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +43,7 @@ import com.google.android.gms.games.TurnBasedMultiplayerClient;
 import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.games.multiplayer.InvitationCallback;
 import com.google.android.gms.games.multiplayer.Multiplayer;
+import com.google.android.gms.games.multiplayer.ParticipantResult;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
@@ -55,6 +54,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -84,8 +84,6 @@ public class StartActivity extends Activity implements
 
     // Client used to interact with the TurnBasedMultiplayer system.
     private TurnBasedMultiplayerClient mTurnBasedMultiplayerClient = null;
-    private boolean isMusicOn;
-
 
     // Client used to interact with the Invitation system.
     private InvitationsClient mInvitationsClient = null;
@@ -100,8 +98,6 @@ public class StartActivity extends Activity implements
     public static final int SHOOTING = 2002;
 
     public static final int RESULT_LEAVE = 999;
-
-    Switch aSwitch = null;
 
 
     // Should I be showing the turn API?
@@ -276,65 +272,6 @@ public class StartActivity extends Activity implements
                         getString(R.string.error_get_select_opponents)));
     }
 
-    public void onSettingsClicked(View view){
-
-        LayoutInflater factory = LayoutInflater.from(this);
-        final View textEntryView = factory.inflate(R.layout.dialog_settings, null);
-        final AlertDialog alertDialog = new AlertDialog.Builder(this)
-                //.setIconAttribute(android.R.attr.alertDialogIcon)
-                .setView(textEntryView)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int btn) {
-                        try
-                        {
-                            isMusicOn = aSwitch.isChecked();
-                            if(isMusicOn)
-                                Toast.makeText(getBaseContext(), "Music on", Toast.LENGTH_SHORT).show();
-                            else
-                                Toast.makeText(getBaseContext(), "music of", Toast.LENGTH_SHORT).show();
-                        }
-                        catch (Exception e)
-                        {
-                        }
-                    }
-                })
-                .create();
-
-        alertDialog.show();
-        aSwitch = (Switch) alertDialog.findViewById(R.id.musicSwitch);
-        /*
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-
-        alertDialogBuilder.setView(R.layout.dialog_settings);
-
-
-        // set dialog message
-        alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Switch musicSwitch = alertDialogBuilder.findViewById(R.id.musicSwitch);
-                        if(musicSwitch.isChecked())
-                            Toast.makeText(getBaseContext(), "on", Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getBaseContext(), "off", Toast.LENGTH_SHORT).show();
-                        // if this button is clicked, close
-                        // current activity
-                    }
-                });
-
-        // create alert dialog
-        //mAlertDialog = alertDialogBuilder.create();
-        AlertDialog alertDialog = new alertDialogBuilder.create();
-        alertDialog.findViewById(R.id.musicSwitch);
-
-        // show it
-        mAlertDialog.show();
-        */
-
-    }
-
     // Create a one-on-one automatch game.
     public void onQuickMatchClicked(View view) {
 
@@ -394,25 +331,26 @@ public class StartActivity extends Activity implements
         setViewVisibility();
     }
     private void leaveGame(){
-            showSpinner();
-            String nextParticipantId = getNextParticipantId();
+        showSpinner();
+        String nextParticipantId = getNextParticipantId();
 
-            mTurnBasedMultiplayerClient.leaveMatchDuringTurn(mMatch.getMatchId(), nextParticipantId)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            onLeaveMatch();
-                        }
-                    })
-                    .addOnFailureListener(createFailureListener("There was a problem leaving the match!"));
+        mTurnBasedMultiplayerClient.leaveMatchDuringTurn(mMatch.getMatchId(), nextParticipantId)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        onLeaveMatch();
+                    }
+                })
+                .addOnFailureListener(createFailureListener("There was a problem leaving the match!"));
 
-            setViewVisibility();
+        setViewVisibility();
 
     }
 
 
     public void gameWon() {
         showSpinner();
+        String id = mMatch.getMatchId();
 
         mTurnBasedMultiplayerClient.finishMatch(mMatch.getMatchId())
                 .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
@@ -490,7 +428,7 @@ public class StartActivity extends Activity implements
         ((TextView) findViewById(R.id.name_field)).setText(mDisplayName);
         findViewById(R.id.login_layout).setVisibility(View.GONE);
 
-            findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
+        findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
     }
 
     // Switch to gameplay view.
@@ -758,7 +696,7 @@ public class StartActivity extends Activity implements
         }else if (requestCode == PLACED_SHIPS) {
             super.onActivityResult(requestCode, requestCode, intent);
             if(resultCode == RESULT_OK){
-
+                //gameWon();
                 takeTurnPlaceShips (intent.getStringArrayExtra("boardState"));
 
             }
@@ -774,7 +712,7 @@ public class StartActivity extends Activity implements
 
             super.onActivityResult(requestCode, resultCode, intent);
             if (resultCode == RESULT_OK) {
-                if(intent.getBooleanExtra("hasWon", false) == true){
+                if(true){
                     gameWon();
                 }
                 else{
@@ -887,17 +825,17 @@ public class StartActivity extends Activity implements
                         "We're still waiting for an automatch partner.");
                 return;
             case TurnBasedMatch.MATCH_STATUS_COMPLETE:
-                if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
-                    showWarning("Complete!",
-                            "This game is over; someone finished it, and so did you!  " +
-                                    "There is nothing to be done.");
-                    break;
-                }
-
-                // Note that in this state, you must still call "Finish" yourself,
-                // so we allow this to continue.
+                //if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
                 showWarning("Complete!",
-                        "This game is over; someone finished it!  You can only finish it now.");
+                        "This game is over; someone finished it, and so did you!  " +
+                                "There is nothing to be done.");
+                return;
+            //}
+
+            // Note that in this state, you must still call "Finish" yourself,
+            // so we allow this to continue.
+            //showWarning("Complete!",
+            //        "This game is over; someone finished it!  You can only finish it now.");
         }
 
         // OK, it's active. Check on turn status.
