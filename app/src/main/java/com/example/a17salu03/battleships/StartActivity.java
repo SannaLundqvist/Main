@@ -24,7 +24,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,6 +91,8 @@ public class StartActivity extends Activity implements
     private InvitationsClient mInvitationsClient = null;
 
     private AlertDialog mAlertDialog;
+    private boolean isMusicOn;
+    Switch aSwitch = null;
 
     // For our intents
     private static final int RC_SIGN_IN = 9001;
@@ -972,7 +976,30 @@ public class StartActivity extends Activity implements
 
         return false;
     }
+    public void onSettingsClicked(View view) {
 
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View textEntryView = factory.inflate(R.layout.dialog_settings, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                //.setIconAttribute(android.R.attr.alertDialogIcon)
+                .setView(textEntryView)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int btn) {
+                        try {
+                            isMusicOn = aSwitch.isChecked();
+                            if (isMusicOn)
+                                Toast.makeText(getBaseContext(), "Music on", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(getBaseContext(), "music of", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                        }
+                    }
+                })
+                .create();
+
+        alertDialog.show();
+        aSwitch = (Switch) alertDialog.findViewById(R.id.musicSwitch);
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
