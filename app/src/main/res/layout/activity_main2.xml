@@ -94,6 +94,12 @@
                 android:layout_height="wrap_content"
                 android:onClick="onQuickMatchClicked"
                 android:text="@string/quick_match" />
+            <Button
+                android:id="@+id/settingButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:onClick="onSettingsClicked"
+                android:text="@string/settings"/>
         </LinearLayout>
     </RelativeLayout>
 

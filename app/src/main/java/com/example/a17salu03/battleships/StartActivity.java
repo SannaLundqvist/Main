@@ -24,7 +24,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,7 +45,6 @@ import com.google.android.gms.games.TurnBasedMultiplayerClient;
 import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.games.multiplayer.InvitationCallback;
 import com.google.android.gms.games.multiplayer.Multiplayer;
-import com.google.android.gms.games.multiplayer.ParticipantResult;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
@@ -54,7 +55,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -84,6 +84,8 @@ public class StartActivity extends Activity implements
 
     // Client used to interact with the TurnBasedMultiplayer system.
     private TurnBasedMultiplayerClient mTurnBasedMultiplayerClient = null;
+    private boolean isMusicOn;
+
 
     // Client used to interact with the Invitation system.
     private InvitationsClient mInvitationsClient = null;
@@ -98,6 +100,8 @@ public class StartActivity extends Activity implements
     public static final int SHOOTING = 2002;
 
     public static final int RESULT_LEAVE = 999;
+
+    Switch aSwitch = null;
 
 
     // Should I be showing the turn API?
@@ -270,6 +274,65 @@ public class StartActivity extends Activity implements
                 })
                 .addOnFailureListener(createFailureListener(
                         getString(R.string.error_get_select_opponents)));
+    }
+
+    public void onSettingsClicked(View view){
+
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View textEntryView = factory.inflate(R.layout.dialog_settings, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                //.setIconAttribute(android.R.attr.alertDialogIcon)
+                .setView(textEntryView)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int btn) {
+                        try
+                        {
+                            isMusicOn = aSwitch.isChecked();
+                            if(isMusicOn)
+                                Toast.makeText(getBaseContext(), "Music on", Toast.LENGTH_SHORT).show();
+                            else
+                                Toast.makeText(getBaseContext(), "music of", Toast.LENGTH_SHORT).show();
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                    }
+                })
+                .create();
+
+        alertDialog.show();
+        aSwitch = (Switch) alertDialog.findViewById(R.id.musicSwitch);
+        /*
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+
+        alertDialogBuilder.setView(R.layout.dialog_settings);
+
+
+        // set dialog message
+        alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        //Switch musicSwitch = alertDialogBuilder.findViewById(R.id.musicSwitch);
+                        if(musicSwitch.isChecked())
+                            Toast.makeText(getBaseContext(), "on", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(getBaseContext(), "off", Toast.LENGTH_SHORT).show();
+                        // if this button is clicked, close
+                        // current activity
+                    }
+                });
+
+        // create alert dialog
+        //mAlertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = new alertDialogBuilder.create();
+        alertDialog.findViewById(R.id.musicSwitch);
+
+        // show it
+        mAlertDialog.show();
+        */
+
     }
 
     // Create a one-on-one automatch game.
