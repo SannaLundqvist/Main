@@ -1,6 +1,5 @@
 package com.example.a17salu03.battleships;
 
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +7,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_MISS;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_1;
@@ -49,7 +47,7 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
 public class CustomGridViewAdapter extends BaseAdapter {
     private String[] boardState; //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
-    private boolean isFriendlyBoard;
+    private boolean friendlyBoard;
     private ArrayList<Tile> tiles;
     private View view;
     private ImageView mImageView;
@@ -57,7 +55,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
     public CustomGridViewAdapter(String[] boardState, boolean friendly, ArrayList<Tile> tiles, View view) {
         this.boardState = boardState;
-        isFriendlyBoard = friendly;
+        friendlyBoard = friendly;
         this.tiles = tiles;
         this.view = view;
 
@@ -91,7 +89,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
     }
 
     private void setImage(int position) {
-        if (isFriendlyBoard) {
+        if (friendlyBoard) {
             switch (boardState[position]) {
                 case TILE_TYPE_WATER:
                     mImageView.setImageResource(R.drawable.water_tile);
@@ -202,7 +200,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false));
                     break;
             }
-        } else if (!isFriendlyBoard) {
+        } else if (!friendlyBoard) {
             switch (boardState[position]) {
                 case TILE_TYPE_WATER:
                     mImageView.setImageResource(R.drawable.water_tile);

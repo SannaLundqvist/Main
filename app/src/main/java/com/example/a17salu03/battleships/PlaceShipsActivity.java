@@ -132,12 +132,14 @@ public class PlaceShipsActivity extends AppCompatActivity {
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            if (Integer.parseInt(txt_1r.getText().toString()) == 0 && Integer.parseInt(txt_2r.getText().toString()) == 0 && Integer.parseInt(txt_3r.getText().toString()) == 0){
                 Intent intent = new Intent();
                 intent.putExtra("boardState", boardState);
                 setResult(RESULT_OK, intent);
                 mediaPlayer.stop();
                 finish();
+            }
+
             }
         });
 

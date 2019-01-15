@@ -42,6 +42,7 @@ public class GridFragment extends Fragment {
         View view = getView();
         if (view != null) {
 
+            gridView = view.findViewById(R.id.grid);
             String[] gridArray = new String[49];
             if (board != null) {
                 System.arraycopy(board, 0, gridArray, 0, board.length);
