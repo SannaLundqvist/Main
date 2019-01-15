@@ -201,26 +201,28 @@ public class PlaceShipsActivity extends AppCompatActivity {
     public void onPlaceClicked(View view){
        int clickedTile = playerGrid.getClickedTile();
 
-        if (!(clickedTile == 50) && selectedShipID != 0){
+        if (!(clickedTile == -1) && selectedShipID != 0){
             if (isVacant(clickedTile)){
-
+                int shipsLeft = -1;
                 if (selectedShipID >= 1 && selectedShipID <= 3 && checkShipsAtPosition(clickedTile, 1)){
-                    int shipsLeft = Integer.parseInt(txt_1r.getText().toString());
+                    shipsLeft = Integer.parseInt(txt_1r.getText().toString());
                     ship1ID++;
                     shipsLeft--;
-                    txt_1r.setText(shipsLeft + "");
+                    txt_1r.setText(String.valueOf(shipsLeft));
                 } else if (selectedShipID >= 4 && selectedShipID <= 5 && checkShipsAtPosition(clickedTile, 2)){
-                    int shipsLeft = Integer.parseInt(txt_2r.getText().toString());
+                    shipsLeft = Integer.parseInt(txt_2r.getText().toString());
                     ship2ID++;
                     shipsLeft--;
-                    txt_2r.setText(shipsLeft + "");
+                    txt_2r.setText(String.valueOf(shipsLeft));
                 } else if (selectedShipID >= 6 && checkShipsAtPosition(clickedTile, 3)){
-                    int shipsLeft = Integer.parseInt(txt_3r.getText().toString());
+                    shipsLeft = Integer.parseInt(txt_3r.getText().toString());
                     ship3ID++;
                     shipsLeft--;
-                    txt_3r.setText(shipsLeft + "");
+                    txt_3r.setText(String.valueOf(shipsLeft));
                 }
-                selectedShipID = 0;
+                if (shipsLeft == 0){
+                    selectedShipID = 0;
+                }
             }
 
         }

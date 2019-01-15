@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_1r_w"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:id="@+id/ship_small_friendly_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_2r"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:id="@+id/ship_medium_friendly_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_3r"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:id="@+id/ship_large_friendly_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
+
         <TextView
             android:id="@+id/time_view"
             android:layout_width="match_parent"
@@ -21,19 +60,84 @@
     <FrameLayout
         android:id="@+id/fragment_container_player"
         android:layout_width="match_parent"
-        android:layout_weight="14"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_weight="10"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/fire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fire"
+            android:paddingBottom="15dp"
+            android:onClick="onFireClick"
+            android:layout_gravity="bottom"/>
+        <Button
+            android:id="@+id/leave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:layout_gravity="bottom"
+            android:text="@string/leave"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_3r"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/ship_large_opponent_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_2r"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/ship_medium_opponent_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_1r_w"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/ship_small_opponent_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fragment_container_opponent"
         android:layout_width="match_parent"
-        android:layout_weight="14"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_weight="10"/>
 
 </LinearLayout>

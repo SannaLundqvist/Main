@@ -1,5 +1,6 @@
 package com.example.a17salu03.battleships;
 
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,6 @@ public class CustomGridViewAdapter extends BaseAdapter {
         } else {
             mImageView = (ImageView) convertView;
         }
-
         setImage(position);
 
         return mImageView;
@@ -108,19 +108,19 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_2:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_2_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_3:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_3_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_L:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 0, false));
@@ -132,7 +132,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_R_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_V_L:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 90, true));
@@ -144,7 +144,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 90, true));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_V_R_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true)));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_H_L:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 0, false));
@@ -156,7 +156,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_H_R_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_V_L:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 90, true));
@@ -168,19 +168,19 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 90, true));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_V_R_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true)));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_L:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_L_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_M:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_M_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_R:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, view, 0, false));
@@ -192,13 +192,13 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l, view, 90, false));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_L_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 90, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 90, false)));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_M:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m, view, 90, false));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_M_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 90, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 90, false)));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_R:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, view, 90, false));
@@ -220,7 +220,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false)));
                     tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_2:
@@ -228,7 +228,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_2_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false)));
                     tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_3:
@@ -236,7 +236,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_3_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_1r_w_broken, view, 0, false)));
                     tiles.get(position).setClickDisabled(true);
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_L:
@@ -244,7 +244,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_L_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -254,7 +254,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_R_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -264,7 +264,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_V_L_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -274,7 +274,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_V_R_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -284,7 +284,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_H_L_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -294,7 +294,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_H_R_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 0, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -304,7 +304,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_V_L_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -314,7 +314,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_V_R_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r_broken, view, 90, true))));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -324,7 +324,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_L_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 0, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -334,7 +334,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_M_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 0, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -344,7 +344,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_R_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 0, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 0, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -354,7 +354,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_L_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 90, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l_broken, view, 90, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -364,7 +364,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_M_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 90, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_m_broken, view, 90, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);
@@ -374,7 +374,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED:
                     if (isShipDestroyed(boardState[position], position))
-                        mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false));
+                        mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false)));
                     else
                         mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.broken_parts, view, 360, false));
                     tiles.get(position).setClickDisabled(true);

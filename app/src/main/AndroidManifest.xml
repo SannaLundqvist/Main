@@ -25,8 +25,7 @@
         </activity>
 
         <activity
-            android:name=".BoardActivity"
-            android:screenOrientation="landscape" />
+            android:name=".BoardActivity" />
 
 
         <activity

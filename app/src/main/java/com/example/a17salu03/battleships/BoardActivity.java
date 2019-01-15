@@ -30,13 +30,6 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     private GridFragment playerGrid;
     private int position;
     private MediaPlayer mediaPlayer;
-    private int friendlyShip_small_Remaining;
-    private int friendlyShip_medium_Remaining;
-    private int friendlyShip_large_Remaining;
-
-    private int opponentShip_small_Remaining;
-    private int opponentShip_medium_Remaining;
-    private int opponentShip_large_Remaining;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +64,8 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
         myShips = getIntent().getStringArrayExtra("myShips");
         opponentsShips = getIntent().getStringArrayExtra("opponentsShips");
-    //    shipsRemaining();
+
+        shipsRemaining();
         fireBtn = findViewById(R.id.fire);
         leaveBtn = findViewById(R.id.leave);
 
@@ -103,6 +97,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                 leaveDialog.dismiss();
             }
         });
+
 // Set other dialog properties
 
 // Create the AlertDialog
@@ -129,7 +124,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     public void onFireClick(View view) {
         MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
         int clickedTile = opponentGrid.getClickedTile();
-        if (!(clickedTile == 50)) {
+        if (!(clickedTile == -1)) {
             mediaPlayer.start();
             if (isHit(clickedTile)) {
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
@@ -161,46 +156,65 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     }
 
     private void shipsRemaining() {
-        String shipIDs = null;
-        StringBuilder sb = new StringBuilder();
-        TextView ship_1_remaining = findViewById(R.id.ship_1_remaining);
+        int friendlyShip_small_Remaining = 3;
+        int friendlyShip_medium_Remaining = 4;
+        int friendlyShip_large_Remaining = 3;
 
+        String friendlyShipIDs = null;
+        TextView ship_small_friendly_remaining = findViewById(R.id.ship_small_friendly_remaining);
+        TextView ship_medium_friendly_remaining = findViewById(R.id.ship_medium_friendly_remaining);
+        TextView ship_large_friendly_remaining = findViewById(R.id.ship_large_friendly_remaining);
+        StringBuilder friendlySB = new StringBuilder();
         for (String string : myShips) {
             if (string.contains("D")) {
-                shipIDs = sb.append(string.charAt(0)).toString();
+                friendlyShipIDs = friendlySB.append(string.charAt(0)).toString();
             }
         }
-        if (shipIDs != null && !shipIDs.isEmpty()) {
-            for (int i = 0; i < shipIDs.length(); i++) {
-                if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3) {
+        if (friendlyShipIDs != null && !friendlyShipIDs.isEmpty()) {
+            for (int i = 0; i < friendlyShipIDs.length(); i++) {
+                if (friendlyShipIDs.charAt(i) == '1' || friendlyShipIDs.charAt(i) == '2' || friendlyShipIDs.charAt(i) == '3') {
                     friendlyShip_small_Remaining--;
-                } else if (shipIDs.charAt(i) == 4 || shipIDs.charAt(i) == 5) {
+                } else if (friendlyShipIDs.charAt(i) == '4' || friendlyShipIDs.charAt(i) == '5') {
                     friendlyShip_medium_Remaining--;
-                } else if (shipIDs.charAt(i) == 6) {
+                } else if (friendlyShipIDs.charAt(i) == '6') {
                     friendlyShip_large_Remaining--;
                 }
             }
         }
 
-        ship_1_remaining.setText(friendlyShip_small_Remaining);
+        ship_small_friendly_remaining.setText("x" + friendlyShip_small_Remaining);
+        ship_medium_friendly_remaining.setText("x" + friendlyShip_medium_Remaining);
+        ship_large_friendly_remaining.setText("x" + friendlyShip_large_Remaining);
 
+
+        int opponentShip_small_Remaining = 3;
+        int opponentShip_medium_Remaining = 4;
+        int opponentShip_large_Remaining = 3;
+
+        String opponentShipIDs = null;
+        TextView ship_small_opponent_remaining = findViewById(R.id.ship_small_opponent_remaining);
+        TextView ship_medium_opponent_remaining = findViewById(R.id.ship_medium_opponent_remaining);
+        TextView ship_large_opponent_remaining = findViewById(R.id.ship_large_opponent_remaining);
+        StringBuilder opponentSB = new StringBuilder();
         for (String string : opponentsShips) {
             if (string.contains("D")) {
-                shipIDs = sb.append(string.charAt(0)).toString();
+                opponentShipIDs = opponentSB.append(string.charAt(0)).toString();
             }
         }
-        if (shipIDs != null && !shipIDs.isEmpty()){
-            for (int i = 0; i < shipIDs.length(); i++) {
-                if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3) {
-                    opponentShip_large_Remaining--;
-                } else if (shipIDs.charAt(i) == 4 || shipIDs.charAt(i) == 5) {
+        if (opponentShipIDs != null && !opponentShipIDs.isEmpty()) {
+            for (int i = 0; i < opponentShipIDs.length(); i++) {
+                if (opponentShipIDs.charAt(i) == '1' || opponentShipIDs.charAt(i) == '2' || opponentShipIDs.charAt(i) == '3') {
+                    opponentShip_small_Remaining--;
+                } else if (opponentShipIDs.charAt(i) == '4' || opponentShipIDs.charAt(i) == '5') {
                     opponentShip_medium_Remaining--;
-                } else if (shipIDs.charAt(i) == 6) {
+                } else if (opponentShipIDs.charAt(i) == '6') {
                     opponentShip_large_Remaining--;
                 }
             }
         }
-
+        ship_small_opponent_remaining.setText("x" + opponentShip_small_Remaining);
+        ship_medium_opponent_remaining.setText("x" + opponentShip_medium_Remaining);
+        ship_large_opponent_remaining.setText("x" + opponentShip_large_Remaining);
     }
 
     private boolean checkIfWon(int clickedTile) {

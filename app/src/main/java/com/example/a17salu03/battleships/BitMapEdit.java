@@ -3,7 +3,11 @@ package com.example.a17salu03.battleships;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -52,6 +56,15 @@ public class BitMapEdit {
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, false);
     }
 
+    public static Bitmap darkenBitMap(Bitmap bitmap) {
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint(Color.WHITE);
+        ColorFilter filter = new LightingColorFilter(0xFF7F7F7F, 0x00000000);
+        paint.setColorFilter(filter);
+        canvas.drawBitmap(bitmap, new Matrix(), paint);
+
+        return bitmap;
+    }
 }
 
 
