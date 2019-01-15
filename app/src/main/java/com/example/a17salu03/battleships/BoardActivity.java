@@ -106,6 +106,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
             Intent intent = new Intent();
             intent.putExtra("opponentsShips", opponentsShips);
+            intent.putExtra("myShips", myShips);
             intent.putExtra("hasWon", hasWon);
             setResult(RESULT_OK, intent);
             finish();
@@ -134,7 +135,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                 shipIDs = sb.append(string.charAt(0)).toString();
             }
         }
-        try{
+        if (shipIDs != null && !shipIDs.isEmpty()) {
             for (int i = 0; i < shipIDs.length(); i++){
                 if (shipIDs.charAt(i) == 1 || shipIDs.charAt(i) == 2 || shipIDs.charAt(i) == 3){
                     friendlyShip_small_Remaining--;
@@ -144,12 +145,9 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                     friendlyShip_large_Remaining--;
                 }
             }
-        } catch (NullPointerException e){
-
         }
 
-
-    //    ship_1_remaining.setText(friendlyShip_small_Remaining);
+        ship_1_remaining.setText(friendlyShip_small_Remaining);
 
         for(String string : opponentsShips){
             if (string.contains("D")){
