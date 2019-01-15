@@ -183,9 +183,11 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
     private boolean isHit(int position) {
         boolean isHit = false;
-        if (!opponentsShips[position].equals(TILE_TYPE_WATER) && !opponentsShips[position].equals(TILE_TYPE_MISS)){
+        if (!opponentsShips[position].equals(TILE_TYPE_WATER)){
             opponentsShips[position] = opponentsShips[position] + "D";
             isHit = true;
+        } else {
+            opponentsShips[position] = TILE_TYPE_MISS;
         }
         return isHit;
     }

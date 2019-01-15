@@ -102,7 +102,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageResource(R.drawable.water_tile);
                     break;
                 case TILE_TYPE_MISS:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.water_tile, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.water_tile_miss, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_1:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, view, 0, false));
@@ -213,7 +213,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageResource(R.drawable.water_tile);
                     break;
                 case TILE_TYPE_MISS:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.water_tile, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.water_tile_miss, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_1_SHIPID_1:
                     mImageView.setImageResource(R.drawable.water_tile);
