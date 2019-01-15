@@ -65,6 +65,11 @@ public class CustomGridViewAdapter extends BaseAdapter {
         this.tiles = tiles;
         this.view = view;
 
+        for (int i = 0; i < boardState.length; i++){
+            if (!boardState[i].equals(TILE_TYPE_WATER)){
+                tiles.get(i).setClickDisabled(true);
+            }
+        }
     }
 
     public int getCount() {

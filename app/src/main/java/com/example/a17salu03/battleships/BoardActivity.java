@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -166,7 +167,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
                 }
             }
         } catch (NullPointerException e){
-
+            Log.d("BoardActivity", "ArrayOutOfBounds");
         }
 
     }
