@@ -37,7 +37,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
-        mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
+        mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
         mediaPlayer.start();
 
 
@@ -66,7 +66,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
 
         myShips = getIntent().getStringArrayExtra("myShips");
         opponentsShips = getIntent().getStringArrayExtra("opponentsShips");
-        shipsRemaining();
+    //    shipsRemaining();
         fireBtn = findViewById(R.id.fire);
 
         playerGrid = new GridFragment();
@@ -148,7 +148,7 @@ public class BoardActivity extends AppCompatActivity implements GridFragment.OnI
         }
 
 
-        ship_1_remaining.setText(friendlyShip_small_Remaining);
+    //    ship_1_remaining.setText(friendlyShip_small_Remaining);
 
         for(String string : opponentsShips){
             if (string.contains("D")){

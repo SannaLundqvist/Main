@@ -31,6 +31,7 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_H
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_L;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_M;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_R;
+import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
 public class PlaceShipsActivity extends AppCompatActivity {
     private GridFragment playerGrid;
@@ -67,6 +68,12 @@ public class PlaceShipsActivity extends AppCompatActivity {
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
+
+
+        for (int i = 0; i < boardState.length; i++){
+            boardState[i] = TILE_TYPE_WATER;
+        }
+
 
         rotateBtn = findViewById(R.id.rotate);
         doneBtn = findViewById(R.id.done);

@@ -25,6 +25,7 @@ public class GridFragment extends Fragment{
     public Integer layoutBorder = R.drawable.layout_border;
     private GridView gridView;
     private boolean isFriendlyBoard = true;
+    private String[] gridArray;
 
 
     private boolean isClickableTiles = false;
@@ -49,7 +50,7 @@ public class GridFragment extends Fragment{
 
             gridView = view.findViewById(R.id.grid);
 
-            String[] gridArray = new String[49];
+            gridArray = new String[49];
             if (opponentsBoard != null) {
                 System.arraycopy(opponentsBoard, 0, gridArray, 0, opponentsBoard.length);
             } else if (board != null) {
@@ -87,6 +88,9 @@ public class GridFragment extends Fragment{
         isFriendlyBoard = false;
     }
 
+    public String[] getGridArray(){
+        return gridArray;
+    }
 
     private boolean between(int small, int large, int value) {
         return (value >= small) && (value <= large);
