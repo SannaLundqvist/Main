@@ -104,7 +104,7 @@ public class BoardActivity extends AppCompatActivity {
             boolean hasWon;
             if (isHit(clickedTile)) {
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();
-                hasWon = checkIfWon(clickedTile);
+                hasWon = checkIfWon();
             } else {
                 Toast.makeText(BoardActivity.this, "You missed...", Toast.LENGTH_LONG).show();
                 hasWon = false;
@@ -179,10 +179,10 @@ public class BoardActivity extends AppCompatActivity {
         ship_large_opponent_remaining.setText("x" + opponentShip_large_Remaining);
     }
 
-    private boolean checkIfWon(int clickedTile) {
+    private boolean checkIfWon() {
         int shipRemaining = 10;
         for (int i = 0; i < opponentsShips.length; i++) {
-            if (opponentsShips[clickedTile].contains("D")){
+            if (opponentsShips[i].contains("D")){
                 shipRemaining -= 1;
             }
         }

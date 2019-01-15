@@ -1,5 +1,6 @@
 package com.example.a17salu03.battleships;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -226,9 +227,15 @@ public class PlaceShipsActivity extends AppCompatActivity {
                     highlightChosenShip(null);
                 }
             }
-
         }
+    }
+    @Override
+    public void recreate (){
+        super.recreate();
+    }
 
+    public void onResetClicked(View view){
+        recreate();
     }
 
     private boolean isVacant(int position){
