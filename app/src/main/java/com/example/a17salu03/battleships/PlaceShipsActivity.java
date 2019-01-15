@@ -68,8 +68,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
 
-
-
         playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
