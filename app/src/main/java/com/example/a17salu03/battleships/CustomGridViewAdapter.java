@@ -381,7 +381,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
         boolean isDestroyed = false;
         if (value.charAt(0) <= '3') {
             isDestroyed = true;
-        } else if (value.charAt(0) == '4' && value.charAt(0) == '5') {
+        } else if (value.charAt(0) == '4' || value.charAt(0) == '5') {
             try {
                 if (value.charAt(0) == boardState[position + 1].charAt(0) || value.charAt(0) == boardState[position - 1].charAt(0) || value.charAt(0) == boardState[position + 7].charAt(0) || value.charAt(0) == boardState[position - 7].charAt(0))
                     isDestroyed = true;
