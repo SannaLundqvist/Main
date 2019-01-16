@@ -60,19 +60,6 @@ import java.util.ArrayList;
 
 
 /**
- * TBMPSkeleton: A minimalistic "game" that shows turn-based
- * multiplayer features for Play Games Services.  In this game, you
- * can invite a variable number of players and take turns editing a
- * shared state, which consists of single string.  You can also select
- * automatch players; all known players play before automatch slots
- * are filled.
- * <p>
- * INSTRUCTIONS: To run this sample, please set up
- * a project in the Developer Console. Then, place your app ID on
- * res/values/ids.xml. Also, change the package name to the package name you
- * used to create the client ID in Developer Console. Make sure you sign the
- * APK with the certificate whose fingerprint you entered in Developer Console
- * when creating your Client Id.
  *
  * @author Wolff (wolff@google.com), 2013
  */
@@ -115,7 +102,7 @@ public class StartActivity extends Activity implements
     // This is the current match data after being unpersisted.
     // Do not retain references to match data once you have
     // taken an action on the match, such as takeTurn()
-    public SkeletonTurn mTurnData;
+    public GameData mTurnData;
     private MediaPlayer backroundMusicPlayer;
     private MediaPlayer effectMusicPlayer;
 
@@ -740,7 +727,7 @@ public class StartActivity extends Activity implements
     // callback to OnTurnBasedMatchUpdated(), which will show the game
     // UI.
     public void startMatch(TurnBasedMatch match) {
-        mTurnData = new SkeletonTurn();
+        mTurnData = new GameData();
 
         mMatch = match;
 
@@ -850,7 +837,7 @@ public class StartActivity extends Activity implements
         // OK, it's active. Check on turn status.
         switch (turnStatus) {
             case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
-                mTurnData = SkeletonTurn.unpersist(mMatch.getData());
+                mTurnData = GameData.unpersist(mMatch.getData());
                 setGameplayUI();
                 return;
             case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
