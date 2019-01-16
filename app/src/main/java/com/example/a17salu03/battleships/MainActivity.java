@@ -22,18 +22,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, BoardActivity.class);
 
-<<<<<<< HEAD
-=======
-                startActivity(intent);
-            }
-        });
-
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, StartActivity.class);
-
->>>>>>> develope
                 startActivity(intent);
             }
         });
