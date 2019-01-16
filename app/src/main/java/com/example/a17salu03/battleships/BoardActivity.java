@@ -62,7 +62,7 @@ public class BoardActivity extends AppCompatActivity {
         playerft.commit();
 
         opponentGrid = new GridFragment();
-        opponentGrid.setClickableTiles(true);
+        opponentGrid.isClickableTiles(true);
         opponentGrid.setOpponentsBoard(opponentsShips);
         FragmentTransaction opponentft = getSupportFragmentManager().beginTransaction();
         opponentft.replace(R.id.fragment_container_opponent, opponentGrid);

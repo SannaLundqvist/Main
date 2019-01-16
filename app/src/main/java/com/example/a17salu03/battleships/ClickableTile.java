@@ -2,17 +2,26 @@ package com.example.a17salu03.battleships;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-
+/**
+ * The Tile class but this one is clickable.
+ *
+ * @author Mattias Melchior, Sanna Lundqvist
+ */
 public class ClickableTile extends Tile{
     private static View lastClickedTile = null;
     private static int lastClickedTileCounter = 0;
-    private boolean isClickDisabled = false;
+    private boolean clickDisabled = false;
 
+    /**
+     * This constructor sets a onClickListener on the imageview that changes appearance if clicked on
+     * and if another is clicked the appearance is set to the default, also works if the same is
+     * clicked twice.
+     *
+     * @param ID the ID
+     * @param view the view
+     * @param gridFragment the GridFragment
+     */
     public ClickableTile(int ID, View view, final GridFragment gridFragment){
         super(ID, view);
 
@@ -20,11 +29,10 @@ public class ClickableTile extends Tile{
         tileImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                if (!isClickDisabled){
+                if (!clickDisabled){
                     gridFragment.setClickedTile(tileID);
 
                     ImageView imageView = (ImageView) view;
-
 
                     if (lastClickedTile == null) {
                         imageView.setImageResource(R.drawable.water_tile_border);
@@ -43,25 +51,19 @@ public class ClickableTile extends Tile{
                         }
                     }
                     lastClickedTile = view;
-
-
                 }
-
-
             }
-
         });
-
-
     }
 
-    @Override
-    public void setTileImage(ImageView imageView){
-        tileImage = imageView;
-    }
+    /**
+     * Sets the click mechanics to disabled or able.
+     *
+     * @param answer the answer
+     */
     @Override
     public void setClickDisabled(boolean answer){
-        isClickDisabled = answer;
+        clickDisabled = answer;
         lastClickedTile = null;
     }
 

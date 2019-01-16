@@ -72,7 +72,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
         isMusicOn = getIntent().getBooleanExtra("isBackroundMusicOn", true);
 
         playerGrid = new GridFragment();
-        playerGrid.setClickableTiles(true);
+        playerGrid.isClickableTiles(true);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
@@ -293,7 +293,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
            placeShipAt(selectedPosition);
            return true;
         } else if (isHorizontal) {
-            if (length == 2) {                                     // skepp 2
+            if (length == 2) {
                 if (selectedPosition % 7 == 6 && isVacant(selectedPosition - 1)) {
                     placeShipAt(selectedPosition - 1, selectedPosition);
                     return true;
@@ -301,7 +301,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                     placeShipAt(selectedPosition, selectedPosition + 1);
                     return true;
                 }
-            } else if (length == 3) {                                            // skepp 3
+            } else if (length == 3) {
                 if (selectedPosition % 7 == 6 && isVacant(selectedPosition - 1) && isVacant(selectedPosition - 2)) {
                     placeShipAt(selectedPosition - 2, selectedPosition - 1, selectedPosition);
                     return true;

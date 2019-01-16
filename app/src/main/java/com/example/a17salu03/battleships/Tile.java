@@ -6,9 +6,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * The tile class containing an ImageView and an ID.
+ *
+ * @author Mattias Melchior, Sanna Lundqvist
+ */
 public class Tile {
     public static final String TILE_TYPE_WATER = "W";
-    public static final String TILE_TYPE_HIT = "HIT";
     public static final String TILE_TYPE_MISS = "MISS";
     public static final String TILE_TYPE_SIZE_1_SHIPID_1 = "1H";
     public static final String TILE_TYPE_SIZE_1_SHIPID_1_DAMAGED = "1HD";
@@ -47,35 +51,35 @@ public class Tile {
     public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R = "6VR";
     public static final String TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED = "6VRD";
 
+
     protected ImageView tileImage;
     protected int tileID;
-    private View view;
 
-
+    /**
+     * The constructor for Tile.
+     *
+     * @param ID the ID
+     * @param view the view
+     */
     public Tile(int ID, View view){
         tileID = ID;
-        this.view = view;
         tileImage = new ImageView(view.getContext());
-
-
-
     }
 
+    /**
+     * Gets the imageview
+     *
+     * @return the imageview
+     */
     public ImageView getTileImage(){
         return tileImage;
     }
 
-    public void setTileImage(ImageView imageView){
-        tileImage = imageView;
-    }
-
+    /**
+     * Does nothing here, it's for ClickedTile.
+     *
+     * @param answer the answer
+     */
     public void setClickDisabled(boolean answer){
     }
-
-    public int getTileID(){
-        return tileID;
-    }
-
-
-
 }

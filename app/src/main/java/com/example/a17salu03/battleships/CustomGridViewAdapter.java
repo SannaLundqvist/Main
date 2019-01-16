@@ -126,7 +126,9 @@ public class CustomGridViewAdapter extends BaseAdapter {
     }
 
     /**
-     * Sets a new image on the imageView.
+     * Sets a new image on the imageView. Depending on if the board is friendly or not. If it's
+     * friendly everything on the board is shown. If it's the opponents board only stuff
+     * that's been hit are shown, and only full ships are shown if the entire ship is destroyed.
      *
      * @param position the position of the board
      */
