@@ -330,23 +330,7 @@ public class StartActivity extends Activity implements
         setViewVisibility();
     }
 
-    // Leave the game during your turn. Note that there is a separate
-    // mTurnBasedMultiplayerClient.leaveMatch() if you want to leave NOT on your turn.
-    public void onLeaveClicked(View view) {
-        showSpinner();
-        String nextParticipantId = getNextParticipantId();
 
-        mTurnBasedMultiplayerClient.leaveMatchDuringTurn(mMatch.getMatchId(), nextParticipantId)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        onLeaveMatch();
-                    }
-                })
-                .addOnFailureListener(createFailureListener("There was a problem leaving the match!"));
-
-        setViewVisibility();
-    }
     private void leaveGame(){
         showSpinner();
         String nextParticipantId = getNextParticipantId();
@@ -363,7 +347,6 @@ public class StartActivity extends Activity implements
         setViewVisibility();
 
     }
-
 
     public void gameWon() {
         showSpinner();
