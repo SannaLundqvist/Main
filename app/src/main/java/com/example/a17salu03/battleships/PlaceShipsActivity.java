@@ -59,6 +59,10 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private ImageView lastClickedShip;
     private boolean isMusicOn;
     private MediaPlayer backroundMusicPlayer;
+    public static final int NUMBER_OF_SHIP_TILES = 10;
+    public static final int NUMBER_OF_SMALL_TILES = 3;
+    public static final int NUMBER_OF_MEDIUM_TILES = 4;
+    public static final int NUMBER_OF_LARGE_TILES = 3;
 
     /**
      * Here most things get initialized.

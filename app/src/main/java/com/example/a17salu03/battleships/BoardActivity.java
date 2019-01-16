@@ -32,6 +32,8 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
     private int musicDuration;
     private SharedPreferences prefs;
 
+    public static final String SHIP_TILE_IS_HIT = "D";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,9 +144,9 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
     }
 
     private void shipsRemaining() {
-        int friendlyShip_small_Remaining = 3;
-        int friendlyShip_medium_Remaining = 4;
-        int friendlyShip_large_Remaining = 3;
+        int friendlyShip_small_Remaining = PlaceShipsActivity.NUMBER_OF_SMALL_TILES;
+        int friendlyShip_medium_Remaining = PlaceShipsActivity.NUMBER_OF_MEDIUM_TILES;
+        int friendlyShip_large_Remaining = PlaceShipsActivity.NUMBER_OF_LARGE_TILES;
 
         String friendlyShipIDs = null;
         TextView ship_small_friendly_remaining = findViewById(R.id.ship_small_friendly_remaining);
@@ -152,7 +154,7 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
         TextView ship_large_friendly_remaining = findViewById(R.id.ship_large_friendly_remaining);
         StringBuilder friendlySB = new StringBuilder();
         for (String string : myShips) {
-            if (string.contains("D")) {
+            if (string.contains(SHIP_TILE_IS_HIT)) {
                 friendlyShipIDs = friendlySB.append(string.charAt(0)).toString();
             }
         }
@@ -171,9 +173,9 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
         ship_medium_friendly_remaining.setText("x" + friendlyShip_medium_Remaining);
         ship_large_friendly_remaining.setText("x" + friendlyShip_large_Remaining);
 
-        int opponentShip_small_Remaining = 3;
-        int opponentShip_medium_Remaining = 4;
-        int opponentShip_large_Remaining = 3;
+        int opponentShip_small_Remaining = PlaceShipsActivity.NUMBER_OF_SMALL_TILES;
+        int opponentShip_medium_Remaining = PlaceShipsActivity.NUMBER_OF_MEDIUM_TILES;
+        int opponentShip_large_Remaining = PlaceShipsActivity.NUMBER_OF_LARGE_TILES;
 
         String opponentShipIDs = null;
         TextView ship_small_opponent_remaining = findViewById(R.id.ship_small_opponent_remaining);
@@ -181,7 +183,7 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
         TextView ship_large_opponent_remaining = findViewById(R.id.ship_large_opponent_remaining);
         StringBuilder opponentSB = new StringBuilder();
         for (String string : opponentsShips) {
-            if (string.contains("D")) {
+            if (string.contains(SHIP_TILE_IS_HIT)) {
                 opponentShipIDs = opponentSB.append(string.charAt(0)).toString();
             }
         }
@@ -202,9 +204,9 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
     }
 
     private boolean checkIfWon() {
-        int shipRemaining = 10;
+        int shipRemaining = PlaceShipsActivity.NUMBER_OF_SHIP_TILES;
         for (int i = 0; i < opponentsShips.length; i++) {
-            if (opponentsShips[i].contains("D")){
+            if (opponentsShips[i].contains(SHIP_TILE_IS_HIT)){
                 shipRemaining -= 1;
             }
         }
@@ -214,7 +216,7 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
     private boolean isHit(int position) {
         boolean isHit = false;
         if (!opponentsShips[position].equals(TILE_TYPE_WATER)){
-            opponentsShips[position] = opponentsShips[position] + "D";
+            opponentsShips[position] = opponentsShips[position] + SHIP_TILE_IS_HIT;
             isHit = true;
         } else {
             opponentsShips[position] = TILE_TYPE_MISS;
