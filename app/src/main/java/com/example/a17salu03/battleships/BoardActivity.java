@@ -114,7 +114,6 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
             backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
             backroundMusicPlayer.setOnSeekCompleteListener(this);
             backroundMusicPlayer.seekTo(musicDuration);
-            backroundMusicPlayer.start();
         }
     }
 
