@@ -114,7 +114,7 @@ public class StartActivity extends Activity implements
     // Do not retain references to match data once you have
     // taken an action on the match, such as takeTurn()
     public SkeletonTurn mTurnData;
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer backroundMusicPlayer;
 
 
     @Override
@@ -123,8 +123,7 @@ public class StartActivity extends Activity implements
         setContentView(R.layout.activity_main2);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         isMusicOn = prefs.getBoolean("music", true);
-        mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
-        mediaPlayer.start();
+
         // Create the Google API Client with access to Games
         // Create the client used to sign in.
 
@@ -148,6 +147,9 @@ public class StartActivity extends Activity implements
         super.onResume();
         Log.d(TAG, "onResume()");
 
+        backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
+        backroundMusicPlayer.start();
+
         // Since the state of the signed in user can change when the activity is not active
         // it is recommended to try and sign in silently from when the app resumes.
         signInSilently();
@@ -156,7 +158,7 @@ public class StartActivity extends Activity implements
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.stop();
+        backroundMusicPlayer.stop();
 
         prefs.edit().putBoolean("music", isMusicOn).apply();
         // Unregister the invitation callbacks; they will be re-registered via
