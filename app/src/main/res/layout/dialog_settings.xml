@@ -31,15 +31,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
-        android:id="@+id/musicSwitch"
+        android:id="@+id/backroundMusicSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="25dp"
-        android:switchPadding="150dp"
-        android:text="@string/music"
+        android:layout_marginTop="16dp"
+        android:switchPadding="80dp"
+        android:text="@string/backroundMusic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Switch
+        android:id="@+id/effectMusicSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:switchPadding="108dp"
+        android:text="@string/effectMusic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backroundMusicSwitch" />
 
     <Switch
         android:id="@+id/winSwitch"
@@ -48,10 +59,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:checked="false"
-        android:switchPadding="120dp"
+        android:switchPadding="118dp"
         android:text="@string/swichWin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/musicSwitch" />
+        app:layout_constraintTop_toBottomOf="@+id/effectMusicSwitch" />
 
 
 </android.support.constraint.ConstraintLayout>

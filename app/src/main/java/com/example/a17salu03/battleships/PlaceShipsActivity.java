@@ -57,7 +57,8 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_2r = null;
     private TextView txt_3r = null;
     private ImageView lastClickedShip;
-    private MediaPlayer mediaPlayer;
+    private boolean isMusicOn;
+    private MediaPlayer backroundMusicPlayer;
 
     /**
      * Here most things get initialized.
@@ -68,8 +69,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
-        mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
-        mediaPlayer.start();
+        isMusicOn = getIntent().getBooleanExtra("isBackroundMusicOn", true);
 
         playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);
@@ -145,7 +145,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("boardState", boardState);
                 setResult(RESULT_OK, intent);
-                mediaPlayer.stop();
+                backroundMusicPlayer.stop();
                 finish();
             }
 
@@ -172,7 +172,17 @@ public class PlaceShipsActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        mediaPlayer.stop();
+        if(isMusicOn)
+            backroundMusicPlayer.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(isMusicOn) {
+            backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
+            backroundMusicPlayer.start();
+        }
     }
 
     @Override
