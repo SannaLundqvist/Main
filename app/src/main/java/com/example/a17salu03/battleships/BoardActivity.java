@@ -3,7 +3,9 @@ package com.example.a17salu03.battleships;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -16,7 +18,7 @@ import android.widget.Toast;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_MISS;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
-public class BoardActivity extends AppCompatActivity {
+public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSeekCompleteListener {
     private String[] myShips;
     private String[] opponentsShips;
     private Button fireBtn = null;
@@ -27,6 +29,8 @@ public class BoardActivity extends AppCompatActivity {
     private boolean isBackroundMusicOn;
     private boolean isEffectMusicOn;
     private MediaPlayer backroundMusicPlayer;
+    private int musicDuration;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,9 @@ public class BoardActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(R.layout.dialog_leave);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        musicDuration = prefs.getInt("musicDuration", 0);
+
         builder.setPositiveButton(R.string.leave, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 leaveGame();
@@ -94,6 +101,8 @@ public class BoardActivity extends AppCompatActivity {
         super.onPause();
         if(isBackroundMusicOn){
             backroundMusicPlayer.stop();
+            musicDuration = backroundMusicPlayer.getCurrentPosition();
+            prefs.edit().putInt("musicDuration", musicDuration).apply();
         }
     }
 
@@ -101,7 +110,10 @@ public class BoardActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(isBackroundMusicOn){
+
             backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
+            backroundMusicPlayer.setOnSeekCompleteListener(this);
+            backroundMusicPlayer.seekTo(musicDuration);
             backroundMusicPlayer.start();
         }
     }
@@ -211,4 +223,8 @@ public class BoardActivity extends AppCompatActivity {
         return isHit;
     }
 
+    @Override
+    public void onSeekComplete(MediaPlayer mp) {
+        backroundMusicPlayer.start();
+    }
 }
