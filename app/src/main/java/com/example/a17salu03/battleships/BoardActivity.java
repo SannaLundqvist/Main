@@ -24,7 +24,8 @@ public class BoardActivity extends AppCompatActivity {
     private GridFragment opponentGrid;
     private GridFragment playerGrid;
     private int position;
-    private boolean isMusicOn;
+    private boolean isBackroundMusicOn;
+    private boolean isEffectMusicOn;
     private MediaPlayer backroundMusicPlayer;
 
     @Override
@@ -35,7 +36,8 @@ public class BoardActivity extends AppCompatActivity {
         Intent intent = getIntent();
         myShips = intent.getStringArrayExtra("myShips");
         opponentsShips = intent.getStringArrayExtra("opponentsShips");
-        isMusicOn = intent.getBooleanExtra("isMusicOn", true);
+        isBackroundMusicOn = intent.getBooleanExtra("isBackroundMusicOn", true);
+        isEffectMusicOn = intent.getBooleanExtra("isEffectMusicOn", true);;
 
         shipsRemaining();
         fireBtn = findViewById(R.id.fire);
@@ -90,7 +92,7 @@ public class BoardActivity extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
-        if(isMusicOn){
+        if(isBackroundMusicOn){
             backroundMusicPlayer.stop();
         }
     }
@@ -98,7 +100,7 @@ public class BoardActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(isMusicOn){
+        if(isBackroundMusicOn){
             backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
             backroundMusicPlayer.start();
         }
@@ -108,7 +110,8 @@ public class BoardActivity extends AppCompatActivity {
         MediaPlayer fireMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
         int clickedTile = opponentGrid.getClickedTile();
         if (!(clickedTile == -1)) {
-            fireMusicPlayer.start();
+            if(isEffectMusicOn)
+                fireMusicPlayer.start();
             boolean hasWon;
             if (isHit(clickedTile)) {
                 Toast.makeText(BoardActivity.this, "Hit!", Toast.LENGTH_LONG).show();

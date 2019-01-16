@@ -69,7 +69,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
-        isMusicOn = getIntent().getBooleanExtra("isMusicOn", true);
+        isMusicOn = getIntent().getBooleanExtra("isBackroundMusicOn", true);
 
         playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);

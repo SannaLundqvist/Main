@@ -91,8 +91,10 @@ public class StartActivity extends Activity implements
     private InvitationsClient mInvitationsClient = null;
 
     private AlertDialog mAlertDialog;
-    private boolean isMusicOn;
-    Switch musicSwitch = null;
+    private boolean isBackroundMusicOn;
+    private boolean isEffectMusicOn;
+    Switch backroundMusicSwitch = null;
+    Switch effectMusicSwitch = null;
     Switch winSwitch = null;
 
     // For our intents
@@ -115,6 +117,7 @@ public class StartActivity extends Activity implements
     // taken an action on the match, such as takeTurn()
     public SkeletonTurn mTurnData;
     private MediaPlayer backroundMusicPlayer;
+    private MediaPlayer effectMusicPlayer;
 
 
     @Override
@@ -122,7 +125,8 @@ public class StartActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        isMusicOn = prefs.getBoolean("music", true);
+        isBackroundMusicOn = prefs.getBoolean("backroundMusic", true);
+        isEffectMusicOn = prefs.getBoolean("effectMusic", true);
 
         // Create the Google API Client with access to Games
         // Create the client used to sign in.
@@ -147,7 +151,7 @@ public class StartActivity extends Activity implements
         super.onResume();
         Log.d(TAG, "onResume()");
 
-        if(isMusicOn) {
+        if(isBackroundMusicOn) {
             backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
             backroundMusicPlayer.start();
         }
@@ -159,10 +163,11 @@ public class StartActivity extends Activity implements
     @Override
     protected void onPause() {
         super.onPause();
-        if(isMusicOn)
+        if(isBackroundMusicOn)
             backroundMusicPlayer.stop();
 
-        prefs.edit().putBoolean("music", isMusicOn).apply();
+        prefs.edit().putBoolean("backroundMusic", isBackroundMusicOn).apply();
+        prefs.edit().putBoolean("effectMusic", isEffectMusicOn).apply();
         // Unregister the invitation callbacks; they will be re-registered via
         // onResume->signInSilently->onConnected.
         if (mInvitationsClient != null) {
@@ -450,14 +455,15 @@ public class StartActivity extends Activity implements
         //eftersom turnCounter fungerar borde inte helt skiten bli crap på startActivityForResult
         if(mTurnData.turnCounter < 2){
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
-            intent.putExtra("isMusicOn", isMusicOn);
+            intent.putExtra("isBackroundMusicOn", isBackroundMusicOn);
             startActivityForResult(intent, PLACED_SHIPS);
 
         }else{
             Intent intent = new Intent(StartActivity.this, BoardActivity.class);
             intent.putExtra("opponentsShips", mTurnData.opponentsShips);
             intent.putExtra("myShips", mTurnData.myShips);
-            intent.putExtra("isMusicOn", isMusicOn);
+            intent.putExtra("isBackroundMusicOn", isBackroundMusicOn);
+            intent.putExtra("isEffectMusicOn", isEffectMusicOn);
             startActivityForResult(intent, SHOOTING);
         }
         setViewVisibility();
@@ -830,19 +836,23 @@ public class StartActivity extends Activity implements
         switch (status) {
             case TurnBasedMatch.MATCH_STATUS_CANCELED:
                 showWarning("Canceled!", "This game was canceled!");
+                setViewVisibility();
                 return;
             case TurnBasedMatch.MATCH_STATUS_EXPIRED:
                 showWarning("Expired!", "This game is expired.  So sad!");
+                setViewVisibility();
                 return;
             case TurnBasedMatch.MATCH_STATUS_AUTO_MATCHING:
                 showWarning("Waiting for auto-match...",
                         "We're still waiting for an automatch partner.");
+                setViewVisibility();
                 return;
             case TurnBasedMatch.MATCH_STATUS_COMPLETE:
                 //if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
                 showWarning("Complete!",
                         "This game is over; someone finished it, and so did you!  " +
                                 "There is nothing to be done.");
+                setViewVisibility();
                 return;
             //}
 
@@ -995,8 +1005,9 @@ public class StartActivity extends Activity implements
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int btn) {
                         try {
-                            isMusicOn = musicSwitch.isChecked();
-                            if (isMusicOn){
+                            isBackroundMusicOn = backroundMusicSwitch.isChecked();
+                            isEffectMusicOn = effectMusicSwitch.isChecked();
+                            if (isBackroundMusicOn){
                                 backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
                                 backroundMusicPlayer.start();
                             }
@@ -1011,8 +1022,9 @@ public class StartActivity extends Activity implements
                 .create();
 
         alertDialog.show();
-        musicSwitch = (Switch) alertDialog.findViewById(R.id.musicSwitch);
-        musicSwitch.setChecked(isMusicOn);
+        backroundMusicSwitch = (Switch) alertDialog.findViewById(R.id.backroundMusicSwitch);
+        backroundMusicSwitch.setChecked(isBackroundMusicOn);
+        effectMusicSwitch = (Switch) alertDialog.findViewById(R.id.effectMusicSwitch);
         winSwitch = (Switch) alertDialog.findViewById(R.id.winSwitch);
     }
     @Override
