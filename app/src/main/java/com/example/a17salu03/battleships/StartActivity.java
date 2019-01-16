@@ -147,9 +147,10 @@ public class StartActivity extends Activity implements
         super.onResume();
         Log.d(TAG, "onResume()");
 
-        backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
-        backroundMusicPlayer.start();
-
+        if(isMusicOn) {
+            backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
+            backroundMusicPlayer.start();
+        }
         // Since the state of the signed in user can change when the activity is not active
         // it is recommended to try and sign in silently from when the app resumes.
         signInSilently();
@@ -158,7 +159,8 @@ public class StartActivity extends Activity implements
     @Override
     protected void onPause() {
         super.onPause();
-        backroundMusicPlayer.stop();
+        if(isMusicOn)
+            backroundMusicPlayer.stop();
 
         prefs.edit().putBoolean("music", isMusicOn).apply();
         // Unregister the invitation callbacks; they will be re-registered via
@@ -448,12 +450,14 @@ public class StartActivity extends Activity implements
         //eftersom turnCounter fungerar borde inte helt skiten bli crap på startActivityForResult
         if(mTurnData.turnCounter < 2){
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
+            intent.putExtra("isMusicOn", isMusicOn);
             startActivityForResult(intent, PLACED_SHIPS);
 
         }else{
             Intent intent = new Intent(StartActivity.this, BoardActivity.class);
             intent.putExtra("opponentsShips", mTurnData.opponentsShips);
             intent.putExtra("myShips", mTurnData.myShips);
+            intent.putExtra("isMusicOn", isMusicOn);
             startActivityForResult(intent, SHOOTING);
         }
         setViewVisibility();
