@@ -26,9 +26,9 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
 /**
- * Basic turn data. It's just a blank data string and a turn number counter.
+ * Keeps the game data.
  *
- * @author wolff
+ * @author Mattias Melchior, Sanna Lundqvist
  */
 public class GameData {
 
@@ -39,11 +39,17 @@ public class GameData {
     public int firePosition;
     public int turnCounter ;
 
+    /**
+     * basic constructor
+     */
     public GameData() {
 
     }
 
-    // This is the byte array we will write out to the TBMP API.
+    /**
+     * converts the game data to a byte array
+     * @return the byte array
+     */
     public byte[] persist() {
         JSONObject retVal = new JSONObject();
 
@@ -91,7 +97,11 @@ public class GameData {
         return st.getBytes(Charset.forName("UTF-8"));
     }
 
-    // Creates a new instance of SkeletonTurn.
+    /**
+     * Fills the game data from the byte array
+     * @param byteArray the game data
+     * @return a new instance of GameData with the current data
+     */
     static public GameData unpersist(byte[] byteArray) {
 
         if (byteArray == null) {
@@ -150,7 +160,6 @@ public class GameData {
         } catch (JSONException e) {
             Log.e("SkeletonTurn", "There was an issue parsing JSON!", e);
         }
-
         return retVal;
     }
 }

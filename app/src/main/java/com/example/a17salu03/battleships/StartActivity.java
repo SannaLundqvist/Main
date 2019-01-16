@@ -744,7 +744,7 @@ public class StartActivity extends Activity implements
     }
 
     /**
-     * Get the next participant.
+     * Get the next participant. Works for multiple players
      *
      * @return participantId of next player, or null if automatching
      */
@@ -870,8 +870,8 @@ public class StartActivity extends Activity implements
     private InvitationCallback mInvitationCallback = new InvitationCallback() {
 
         /**
-         * 
-         * @param invitation
+         * Gives notice to the user that an invation was recived
+         * @param invitation the invatation
          */
         @Override
         public void onInvitationReceived(@NonNull Invitation invitation) {
@@ -884,7 +884,7 @@ public class StartActivity extends Activity implements
 
         /**
          * Confirmes to the user that an invitaion was removed
-         * @param invitationId
+         * @param invitationId the id of the invatation
          */
         @Override
         public void onInvitationRemoved(@NonNull String invitationId) {
@@ -894,23 +894,38 @@ public class StartActivity extends Activity implements
     };
 
     private TurnBasedMatchUpdateCallback mMatchUpdateCallback = new TurnBasedMatchUpdateCallback() {
+        /**
+         * Gives the user notice on a match was updated
+         * @param turnBasedMatch the match
+         */
         @Override
         public void onTurnBasedMatchReceived(@NonNull TurnBasedMatch turnBasedMatch) {
             Toast.makeText(StartActivity.this, "A match was updated.", Toast.LENGTH_LONG).show();
         }
 
+        /**
+         * Gives the user notice on a match was removed
+         * @param matchId the id of the match
+         */
         @Override
         public void onTurnBasedMatchRemoved(@NonNull String matchId) {
             Toast.makeText(StartActivity.this, "A match was removed.", Toast.LENGTH_SHORT).show();
         }
     };
 
+    /**
+     * Shows an error message
+     * @param stringId the string rescorce id
+     */
     public void showErrorMessage(int stringId) {
         showWarning("Warning", getResources().getString(stringId));
     }
 
-    // Returns false if something went wrong, probably. This should handle
-    // more cases, and probably report more accurate results.
+    /**
+     * Checks error status code
+     * @param statusCode the status code for the error
+     * @return true if no error false in case of error
+     */
     private boolean checkStatusCode(int statusCode) {
         switch (statusCode) {
             case GamesCallbackStatusCodes.OK:
@@ -942,6 +957,11 @@ public class StartActivity extends Activity implements
 
         return false;
     }
+
+    /**
+     * Opens an AlertDialog with settings
+     * @param view the current view
+     */
     public void onSettingsClicked(View view) {
 
         LayoutInflater factory = LayoutInflater.from(this);
@@ -974,6 +994,11 @@ public class StartActivity extends Activity implements
         effectMusicSwitch.setChecked(isEffectMusicOn);
         winSwitch = (Switch) alertDialog.findViewById(R.id.winSwitch);
     }
+
+    /**
+     * Checks what was clicked and thakes action
+     * @param v the view
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
