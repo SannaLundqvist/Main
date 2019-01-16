@@ -23,7 +23,7 @@
     <string name="error_get_inbox_intent">There was a problem getting the inbox intent!</string>
     <string name="error_get_select_opponents">There was a problem getting the select opponents intent!</string>
     <string name="turn_label">Turn %1$d</string>
-    <string name="win">yay, you won! (eg. felmeddelande)</string>
+    <string name="win">yay, you won!</string>
     <string name="settings">Settings</string>
     <string name="settingsHead">Change your settings </string>
     <string name="leaveHead">Are you sure that you want to leave this game? </string>

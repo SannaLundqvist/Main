@@ -66,6 +66,14 @@
         android:layout_gravity="center">
 
         <Button
+            android:id="@+id/leave"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_gravity="bottom"
+            android:text="@string/leave"/>
+
+        <Button
             android:id="@+id/fire"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -73,14 +81,6 @@
             android:text="@string/fire"
             android:onClick="onFireClick"
             android:layout_gravity="bottom"/>
-
-        <Button
-            android:id="@+id/leave"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:layout_gravity="bottom"
-            android:text="@string/leave"/>
 
     </LinearLayout>
 
