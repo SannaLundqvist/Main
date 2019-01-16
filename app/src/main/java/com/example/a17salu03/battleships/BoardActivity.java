@@ -31,13 +31,20 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
     private Button leaveBtn = null;
     private GridFragment opponentGrid;
     private GridFragment playerGrid;
-    private int position;
-    private boolean isBackroundMusicOn;
+    private boolean isBackgroundMusicOn;
     private boolean isEffectMusicOn;
-    private MediaPlayer backroundMusicPlayer;
+    private MediaPlayer backgroundMusicPlayer;
     private int musicDuration;
     private SharedPreferences prefs;
     public static final String SHIP_TILE_IS_HIT = "D";
+    public static final char SHIP_ID_1 = '1';
+    public static final char SHIP_ID_2 = '2';
+    public static final char SHIP_ID_3 = '3';
+    public static final char SHIP_ID_4 = '4';
+    public static final char SHIP_ID_5 = '5';
+    public static final char SHIP_ID_6 = '6';
+
+
 
     /**
      * Initializing almost everything. Creates two gridgfragments; one for the player and the other
@@ -53,7 +60,7 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
         Intent intent = getIntent();
         myShips = intent.getStringArrayExtra("myShips");
         opponentsShips = intent.getStringArrayExtra("opponentsShips");
-        isBackroundMusicOn = intent.getBooleanExtra("isBackroundMusicOn", true);
+        isBackgroundMusicOn = intent.getBooleanExtra("isBackgroundMusicOn", true);
         isEffectMusicOn = intent.getBooleanExtra("isEffectMusicOn", true);;
 
         shipsRemaining();
@@ -116,9 +123,9 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
     @Override
     protected void onPause(){
         super.onPause();
-        if(isBackroundMusicOn){
-            backroundMusicPlayer.stop();
-            musicDuration = backroundMusicPlayer.getCurrentPosition();
+        if(isBackgroundMusicOn){
+            backgroundMusicPlayer.stop();
+            musicDuration = backgroundMusicPlayer.getCurrentPosition();
             prefs.edit().putInt("musicDuration", musicDuration).apply();
         }
     }
@@ -129,11 +136,10 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
     @Override
     protected void onResume() {
         super.onResume();
-        if(isBackroundMusicOn){
-
-            backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
-            backroundMusicPlayer.setOnSeekCompleteListener(this);
-            backroundMusicPlayer.seekTo(musicDuration);
+        if(isBackgroundMusicOn){
+            backgroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
+            backgroundMusicPlayer.setOnSeekCompleteListener(this);
+            backgroundMusicPlayer.seekTo(musicDuration);
         }
     }
 
@@ -187,11 +193,11 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
         }
         if (friendlyShipIDs != null && !friendlyShipIDs.isEmpty()) {
             for (int i = 0; i < friendlyShipIDs.length(); i++) {
-                if (friendlyShipIDs.charAt(i) == '1' || friendlyShipIDs.charAt(i) == '2' || friendlyShipIDs.charAt(i) == '3') {
+                if (friendlyShipIDs.charAt(i) == SHIP_ID_1 || friendlyShipIDs.charAt(i) == SHIP_ID_2 || friendlyShipIDs.charAt(i) == SHIP_ID_3) {
                     friendlyShip_small_Remaining--;
-                } else if (friendlyShipIDs.charAt(i) == '4' || friendlyShipIDs.charAt(i) == '5') {
+                } else if (friendlyShipIDs.charAt(i) == SHIP_ID_4 || friendlyShipIDs.charAt(i) == SHIP_ID_5) {
                     friendlyShip_medium_Remaining--;
-                } else if (friendlyShipIDs.charAt(i) == '6') {
+                } else if (friendlyShipIDs.charAt(i) == SHIP_ID_6) {
                     friendlyShip_large_Remaining--;
                 }
             }
@@ -216,11 +222,11 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
         }
         if (opponentShipIDs != null && !opponentShipIDs.isEmpty()) {
             for (int i = 0; i < opponentShipIDs.length(); i++) {
-                if (opponentShipIDs.charAt(i) == '1' || opponentShipIDs.charAt(i) == '2' || opponentShipIDs.charAt(i) == '3') {
+                if (opponentShipIDs.charAt(i) == SHIP_ID_1 || opponentShipIDs.charAt(i) == SHIP_ID_2 || opponentShipIDs.charAt(i) == SHIP_ID_3) {
                     opponentShip_small_Remaining--;
-                } else if (opponentShipIDs.charAt(i) == '4' || opponentShipIDs.charAt(i) == '5') {
+                } else if (opponentShipIDs.charAt(i) == SHIP_ID_4 || opponentShipIDs.charAt(i) == SHIP_ID_5) {
                     opponentShip_medium_Remaining--;
-                } else if (opponentShipIDs.charAt(i) == '6') {
+                } else if (opponentShipIDs.charAt(i) == SHIP_ID_6) {
                     opponentShip_large_Remaining--;
                 }
             }
@@ -264,6 +270,6 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
 
     @Override
     public void onSeekComplete(MediaPlayer mp) {
-        backroundMusicPlayer.start();
+        backgroundMusicPlayer.start();
     }
 }

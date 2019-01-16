@@ -56,11 +56,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -69,7 +65,7 @@ import java.util.TimerTask;
  * @author Mattias Melchior, Sanna Lundqvist
  */
 public class StartActivity extends Activity implements
-        View.OnClickListener {
+        View.OnClickListener, MediaPlayer.OnSeekCompleteListener {
 
     public static final String TAG = "StartActivity";
     private GoogleSignInClient mGoogleSignInClient = null;
@@ -77,11 +73,12 @@ public class StartActivity extends Activity implements
     private InvitationsClient mInvitationsClient = null;
 
     private AlertDialog mAlertDialog;
-    private boolean isBackroundMusicOn;
+    private boolean isBackgroundMusicOn;
     private boolean isEffectMusicOn;
-    Switch backroundMusicSwitch = null;
+    Switch backgroundMusicSwitch = null;
     Switch effectMusicSwitch = null;
     Switch winSwitch = null;
+    private int musicDuration;
 
     private static final int RC_SIGN_IN = 9001;
     final static int RC_SELECT_PLAYERS = 10000;
@@ -96,7 +93,7 @@ public class StartActivity extends Activity implements
     public TurnBasedMatch mMatch;
     public GameData mTurnData;
 
-    private MediaPlayer backroundMusicPlayer;
+    private MediaPlayer backgroundMusicPlayer;
     private MediaPlayer effectMusicPlayer;
 
 
@@ -113,8 +110,9 @@ public class StartActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        isBackroundMusicOn = prefs.getBoolean("backroundMusic", true);
+        isBackgroundMusicOn = prefs.getBoolean("backgroundMusic", true);
         isEffectMusicOn = prefs.getBoolean("effectMusic", true);
+        musicDuration = prefs.getInt("musicDuration", 0);
 
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
@@ -136,9 +134,10 @@ public class StartActivity extends Activity implements
         super.onResume();
         Log.d(TAG, "onResume()");
 
-        if(isBackroundMusicOn) {
-            backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
-            backroundMusicPlayer.start();
+        if(isBackgroundMusicOn) {
+            backgroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
+            backgroundMusicPlayer.setOnSeekCompleteListener(this);
+            backgroundMusicPlayer.seekTo(musicDuration);
         }
         // Since the state of the signed in user can change when the activity is not active
         // it is recommended to try and sign in silently from when the app resumes.
@@ -151,10 +150,14 @@ public class StartActivity extends Activity implements
     @Override
     protected void onPause() {
         super.onPause();
-        if(isBackroundMusicOn)
-            backroundMusicPlayer.stop();
+        if(isBackgroundMusicOn){
+            backgroundMusicPlayer.stop();
+            musicDuration = backgroundMusicPlayer.getCurrentPosition();
+            prefs.edit().putInt("musicDuration", musicDuration).apply();
+        }
 
-        prefs.edit().putBoolean("backroundMusic", isBackroundMusicOn).apply();
+
+        prefs.edit().putBoolean("backgroundMusic", isBackgroundMusicOn).apply();
         prefs.edit().putBoolean("effectMusic", isEffectMusicOn).apply();
 
         if (mInvitationsClient != null) {
@@ -420,14 +423,14 @@ public class StartActivity extends Activity implements
 
         if(mTurnData.turnCounter < 2){
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
-            intent.putExtra("isBackroundMusicOn", isBackroundMusicOn);
+            intent.putExtra("isBackgroundMusicOn", isBackgroundMusicOn);
             startActivityForResult(intent, PLACED_SHIPS);
 
         }else{
             Intent intent = new Intent(StartActivity.this, BoardActivity.class);
             intent.putExtra("opponentsShips", mTurnData.opponentsShips);
             intent.putExtra("myShips", mTurnData.myShips);
-            intent.putExtra("isBackroundMusicOn", isBackroundMusicOn);
+            intent.putExtra("isBackgroundMusicOn", isBackgroundMusicOn);
             intent.putExtra("isEffectMusicOn", isEffectMusicOn);
             startActivityForResult(intent, SHOOTING);
         }
@@ -977,14 +980,14 @@ public class StartActivity extends Activity implements
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int btn) {
                         try {
-                            isBackroundMusicOn = backroundMusicSwitch.isChecked();
+                            isBackgroundMusicOn = backgroundMusicSwitch.isChecked();
                             isEffectMusicOn = effectMusicSwitch.isChecked();
-                            if (isBackroundMusicOn){
-                                backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
-                                backroundMusicPlayer.start();
+                            if (isBackgroundMusicOn){
+                                backgroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
+                                backgroundMusicPlayer.start();
                             }
                             else
-                                backroundMusicPlayer.stop();
+                                backgroundMusicPlayer.stop();
                             if(winSwitch.isChecked())
                                 Toast.makeText(getBaseContext(), "You fool, one can not win by cheating", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
@@ -994,8 +997,8 @@ public class StartActivity extends Activity implements
                 .create();
 
         alertDialog.show();
-        backroundMusicSwitch = (Switch) alertDialog.findViewById(R.id.backroundMusicSwitch);
-        backroundMusicSwitch.setChecked(isBackroundMusicOn);
+        backgroundMusicSwitch = (Switch) alertDialog.findViewById(R.id.backgroundMusicSwitch);
+        backgroundMusicSwitch.setChecked(isBackgroundMusicOn);
         effectMusicSwitch = (Switch) alertDialog.findViewById(R.id.effectMusicSwitch);
         effectMusicSwitch.setChecked(isEffectMusicOn);
         winSwitch = (Switch) alertDialog.findViewById(R.id.winSwitch);
@@ -1018,5 +1021,10 @@ public class StartActivity extends Activity implements
                 setViewVisibility();
                 break;
         }
+    }
+
+    @Override
+    public void onSeekComplete(MediaPlayer mp) {
+        backgroundMusicPlayer.start();
     }
 }

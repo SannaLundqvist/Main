@@ -2,7 +2,9 @@ package com.example.a17salu03.battleships;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +41,7 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
  * @author Mattias Melchior, Sanna Lundqvist
  */
 
-public class PlaceShipsActivity extends AppCompatActivity {
+public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer.OnSeekCompleteListener{
 
     private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
@@ -58,7 +60,9 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_3r = null;
     private ImageView lastClickedShip;
     private boolean isMusicOn;
-    private MediaPlayer backroundMusicPlayer;
+    private MediaPlayer backgroundMusicPlayer;
+    private int musicDuration;
+    private SharedPreferences prefs;
     public static final int NUMBER_OF_SHIP_TILES = 10;
     public static final int NUMBER_OF_SMALL_TILES = 3;
     public static final int NUMBER_OF_MEDIUM_TILES = 4;
@@ -73,7 +77,10 @@ public class PlaceShipsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
-        isMusicOn = getIntent().getBooleanExtra("isBackroundMusicOn", true);
+        isMusicOn = getIntent().getBooleanExtra("isBackgroundMusicOn", true);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        musicDuration = prefs.getInt("musicDuration", 0);
 
         playerGrid = new GridFragment();
         playerGrid.isClickableTiles(true);
@@ -150,7 +157,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 intent.putExtra("boardState", boardState);
                 setResult(RESULT_OK, intent);
                 if(isMusicOn)
-                    backroundMusicPlayer.stop();
+                    backgroundMusicPlayer.stop();
                 finish();
             }
 
@@ -173,7 +180,9 @@ public class PlaceShipsActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         if(isMusicOn)
-            backroundMusicPlayer.stop();
+            backgroundMusicPlayer.stop();
+        musicDuration = backgroundMusicPlayer.getCurrentPosition();
+        prefs.edit().putInt("musicDuration", musicDuration).apply();
     }
 
     /**
@@ -183,8 +192,9 @@ public class PlaceShipsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(isMusicOn) {
-            backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
-            backroundMusicPlayer.start();
+            backgroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
+            backgroundMusicPlayer.setOnSeekCompleteListener(this);
+            backgroundMusicPlayer.seekTo(musicDuration);
         }
     }
 
@@ -445,5 +455,10 @@ public class PlaceShipsActivity extends AppCompatActivity {
         usedTiles.add(startPosition);
         usedTiles.add(middlePosition);
         usedTiles.add(endPosition);
+    }
+
+    @Override
+    public void onSeekComplete(MediaPlayer mp) {
+        backgroundMusicPlayer.start();
     }
 }
