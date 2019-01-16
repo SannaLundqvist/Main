@@ -56,6 +56,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
     private ArrayList<Tile> tiles;
     private View view;
     private ImageView mImageView;
+    public static final String SHIP_TILE_IS_HIT = "D";
 
     /**
      * The constructor for the gridview adapter.
@@ -434,8 +435,8 @@ public class CustomGridViewAdapter extends BaseAdapter {
             isDestroyed = true;
         } else if (value.charAt(0) == '4' || value.charAt(0) == '5') {
             try {
-                if ((value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains("D")) || (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains("D")) ||
-                        (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains("D")) || (value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains("D")))
+                if ((value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains(SHIP_TILE_IS_HIT)) || (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains(SHIP_TILE_IS_HIT)) ||
+                        (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains(SHIP_TILE_IS_HIT)) || (value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains(SHIP_TILE_IS_HIT)))
                     isDestroyed = true;
             } catch (ArrayIndexOutOfBoundsException e) {
                 Log.d("CustomGridViewAdapter", "ArrayOutOfBounds");
@@ -443,31 +444,31 @@ public class CustomGridViewAdapter extends BaseAdapter {
         } else if (value.charAt(0) == '6') {
             try {
                 String matchingPosition = null;
-                if (!(position % 7 == 6) && (value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains("D")))
+                if (!(position % 7 == 6) && (value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains(SHIP_TILE_IS_HIT)))
                     matchingPosition = "east";
-                else if (!(position % 7 == 0) && (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains("D")))
+                else if (!(position % 7 == 0) && (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains(SHIP_TILE_IS_HIT)))
                     matchingPosition = "west";
-                else if (!(position > 41) && (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains("D")))
+                else if (!(position > 41) && (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains(SHIP_TILE_IS_HIT)))
                     matchingPosition = "south";
-                else if (!(position < 7) && (value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains("D")))
+                else if (!(position < 7) && (value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains(SHIP_TILE_IS_HIT)))
                     matchingPosition = "north";
 
                 if (matchingPosition != null) {
                     switch (matchingPosition) {
                         case "east":
-                            if (!(position % 7 == 5) && (value.charAt(0) == boardState[position + 2].charAt(0) && boardState[position + 2].contains("D")) || !(position % 7 == 1) && (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains("D")))
+                            if (!(position % 7 == 5) && (value.charAt(0) == boardState[position + 2].charAt(0) && boardState[position + 2].contains(SHIP_TILE_IS_HIT)) || !(position % 7 == 1) && (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains(SHIP_TILE_IS_HIT)))
                                 isDestroyed = true;
                             break;
                         case "west":
-                            if (!(position % 7 == 1) && (value.charAt(0) == boardState[position - 2].charAt(0) && boardState[position - 2].contains("D")) || !(position % 7 == 6) && (value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains("D")))
+                            if (!(position % 7 == 1) && (value.charAt(0) == boardState[position - 2].charAt(0) && boardState[position - 2].contains(SHIP_TILE_IS_HIT)) || !(position % 7 == 6) && (value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains(SHIP_TILE_IS_HIT)))
                                 isDestroyed = true;
                             break;
                         case "south":
-                            if (!(position > 34) && (value.charAt(0) == boardState[position + 14].charAt(0) && boardState[position + 14].contains("D")) || !(position < 7) &&(value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains("D")))
+                            if (!(position > 34) && (value.charAt(0) == boardState[position + 14].charAt(0) && boardState[position + 14].contains(SHIP_TILE_IS_HIT)) || !(position < 7) &&(value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains(SHIP_TILE_IS_HIT)))
                                 isDestroyed = true;
                             break;
                         case "north":
-                            if (!(position < 14) && (value.charAt(0) == boardState[position - 14].charAt(0) && boardState[position - 14].contains("D")) || !(position > 41) && (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains("D")))
+                            if (!(position < 14) && (value.charAt(0) == boardState[position - 14].charAt(0) && boardState[position - 14].contains(SHIP_TILE_IS_HIT)) || !(position > 41) && (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains(SHIP_TILE_IS_HIT)))
                                 isDestroyed = true;
                             break;
                     }
