@@ -20,7 +20,7 @@ public class GridFragment extends Fragment {
     private ArrayList<Tile> tiles = new ArrayList<>();
     private int clickedTile = -1;
     private String[] board;
-    private GridView gridView;
+    public static final int TOTAL_NBR_OF_TILES = 49;
     private boolean friendlyBoard = true;
     private boolean clickableTiles = false;
 
@@ -32,6 +32,7 @@ public class GridFragment extends Fragment {
      * @param savedInstanceState the saved instance state
      * @return the inflated view
      */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,18 +49,17 @@ public class GridFragment extends Fragment {
         super.onStart();
         View view = getView();
         if (view != null) {
-
-            gridView = view.findViewById(R.id.grid);
-            String[] gridArray = new String[49];
+            GridView gridView = view.findViewById(R.id.grid);
+            String[] gridArray = new String[TOTAL_NBR_OF_TILES];
             if (board != null) {
                 System.arraycopy(board, 0, gridArray, 0, board.length);
             } else {
-                for (int i = 0; i < 49; i++) {
+                for (int i = 0; i < TOTAL_NBR_OF_TILES; i++) {
                     gridArray[i] = TILE_TYPE_WATER;
                 }
             }
             Tile tile;
-            for (int position = 0; position < 49; position++) {
+            for (int position = 0; position < TOTAL_NBR_OF_TILES; position++) {
 
                 if (clickableTiles) {
                     tile = new ClickableTile(position, getView(), this);
@@ -68,7 +68,6 @@ public class GridFragment extends Fragment {
                 }
                 tiles.add(tile);
             }
-
             CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, friendlyBoard, tiles, view);
             gridView.setAdapter(gridAdapter);
 

@@ -24,15 +24,13 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Basic turn data. It's just a blank data string and a turn number counter.
  *
  * @author wolff
  */
-public class SkeletonTurn {
+public class GameData {
 
     public static final String TAG = "EBTurn";
 
@@ -41,7 +39,7 @@ public class SkeletonTurn {
     public int firePosition;
     public int turnCounter ;
 
-    public SkeletonTurn() {
+    public GameData() {
 
     }
 
@@ -94,11 +92,11 @@ public class SkeletonTurn {
     }
 
     // Creates a new instance of SkeletonTurn.
-    static public SkeletonTurn unpersist(byte[] byteArray) {
+    static public GameData unpersist(byte[] byteArray) {
 
         if (byteArray == null) {
             Log.d(TAG, "Empty array---possible bug.");
-            return new SkeletonTurn();
+            return new GameData();
         }
 
         String st = null;
@@ -111,7 +109,7 @@ public class SkeletonTurn {
 
         Log.d(TAG, "====UNPERSIST \n" + st);
 
-        SkeletonTurn retVal = new SkeletonTurn();
+        GameData retVal = new GameData();
 
         try {
             JSONObject obj = new JSONObject(st);

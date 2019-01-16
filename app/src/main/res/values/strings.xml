@@ -29,8 +29,8 @@
     <string name="leaveHead">Are you sure that you want to leave this game? </string>
     <string name="leaveText">All game data vill be lost.</string>
     <string name="music">Music</string>
-    <string name="backroundMusic">Backround music</string>
-    <string name="effectMusic">Effect music</string>
+    <string name="backroundMusic">Background music</string>
+    <string name="effectMusic">Sound effects</string>
     <string name="swichWin">Always win</string>
     <string name="reset">Reset</string>
     <string name="place">Place</string>
