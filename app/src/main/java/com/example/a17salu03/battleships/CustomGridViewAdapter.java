@@ -443,31 +443,31 @@ public class CustomGridViewAdapter extends BaseAdapter {
         } else if (value.charAt(0) == '6') {
             try {
                 String matchingPosition = null;
-                if (value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains("D"))
+                if (!(position % 7 == 6) && (value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains("D")))
                     matchingPosition = "east";
-                else if (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains("D"))
+                else if (!(position % 7 == 0) && (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains("D")))
                     matchingPosition = "west";
-                else if (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains("D"))
+                else if (!(position > 41) && (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains("D")))
                     matchingPosition = "south";
-                else if (value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains("D"))
+                else if (!(position < 7) && (value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains("D")))
                     matchingPosition = "north";
 
                 if (matchingPosition != null) {
                     switch (matchingPosition) {
                         case "east":
-                            if ((value.charAt(0) == boardState[position + 2].charAt(0) && boardState[position + 2].contains("D")) || (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains("D")))
+                            if (!(position % 7 == 5) && (value.charAt(0) == boardState[position + 2].charAt(0) && boardState[position + 2].contains("D")) || !(position % 7 == 1) && (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains("D")))
                                 isDestroyed = true;
                             break;
                         case "west":
-                            if ((value.charAt(0) == boardState[position - 2].charAt(0) && boardState[position - 2].contains("D")) || (value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains("D")))
+                            if (!(position % 7 == 1) && (value.charAt(0) == boardState[position - 2].charAt(0) && boardState[position - 2].contains("D")) || !(position % 7 == 6) && (value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains("D")))
                                 isDestroyed = true;
                             break;
                         case "south":
-                            if ((value.charAt(0) == boardState[position + 14].charAt(0) && boardState[position + 14].contains("D")) || (value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains("D")))
+                            if (!(position > 34) && (value.charAt(0) == boardState[position + 14].charAt(0) && boardState[position + 14].contains("D")) || !(position < 7) &&(value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains("D")))
                                 isDestroyed = true;
                             break;
                         case "north":
-                            if ((value.charAt(0) == boardState[position - 14].charAt(0) && boardState[position - 14].contains("D")) || (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains("D")))
+                            if (!(position < 14) && (value.charAt(0) == boardState[position - 14].charAt(0) && boardState[position - 14].contains("D")) || !(position > 41) && (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains("D")))
                                 isDestroyed = true;
                             break;
                     }
