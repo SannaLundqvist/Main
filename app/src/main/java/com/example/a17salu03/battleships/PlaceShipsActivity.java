@@ -2,7 +2,6 @@ package com.example.a17salu03.battleships;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_1_SHIPID_1;
@@ -34,6 +32,13 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_R;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
+/**
+ *  This is the first activity that starts when you start a new game. It creates a board and places
+ *  ships where selected.
+ *
+ * @author Mattias Melchior, Sanna Lundqvist
+ */
+
 public class PlaceShipsActivity extends AppCompatActivity {
 
     private GridFragment playerGrid;
@@ -51,17 +56,20 @@ public class PlaceShipsActivity extends AppCompatActivity {
     private TextView txt_1r = null;
     private TextView txt_2r = null;
     private TextView txt_3r = null;
-    private View view;
     private ImageView lastClickedShip;
     private MediaPlayer mediaPlayer;
 
+    /**
+     * Here most things get initialized.
+     *
+     * @param savedInstanceState the saved data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
         mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
         mediaPlayer.start();
-        view = this.getWindow().getDecorView().findViewById(android.R.id.content);
 
         playerGrid = new GridFragment();
         playerGrid.setClickableTiles(true);
@@ -105,7 +113,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int shipsLeft0 = Integer.parseInt(txt_1r.getText().toString());
                 if(shipsLeft0 > 0){
-                    generateShipID(1);
+                    selectedShipID = ship1ID;
                     highlightChosenShip(img_1r);
                 }
             }
@@ -115,7 +123,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int shipsLeft1 = Integer.parseInt(txt_2r.getText().toString());
                 if(shipsLeft1 > 0){
-                    generateShipID(2);
+                    selectedShipID = ship2ID;
                     highlightChosenShip(img_2r);
                 }
             }
@@ -125,7 +133,7 @@ public class PlaceShipsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int shipsLeft2 = Integer.parseInt(txt_3r.getText().toString());
                 if(shipsLeft2 > 0){
-                    generateShipID(3);
+                    selectedShipID = ship3ID;
                     highlightChosenShip(img_3r);
                 }
             }
@@ -133,12 +141,14 @@ public class PlaceShipsActivity extends AppCompatActivity {
         doneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            if (Integer.parseInt(txt_1r.getText().toString()) == 0 && Integer.parseInt(txt_2r.getText().toString()) == 0 && Integer.parseInt(txt_3r.getText().toString()) == 0){
                 Intent intent = new Intent();
                 intent.putExtra("boardState", boardState);
                 setResult(RESULT_OK, intent);
                 mediaPlayer.stop();
                 finish();
+            }
+
             }
         });
 
@@ -151,147 +161,182 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
     }
 
-    public void leaveGame(){
-        setResult(StartActivity.RESULT_LEAVE);
-        finish();
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
     }
 
+    /**
+     * The music stops when onPause is called.
+     */
     @Override
     protected void onPause(){
         super.onPause();
         mediaPlayer.stop();
     }
 
-    private void generateShipID(int shipSize){
-        switch (shipSize){
-            case 1:
-                selectedShipID = ship1ID;
-                break;
-            case 2:
-                selectedShipID = ship2ID;
-                break;
-            case 3:
-                selectedShipID = ship3ID;
-                break;
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
+    /**
+     * Recreates the activity.
+     */
+    @Override
+    public void recreate (){
+        super.recreate();
+    }
+
+    /**
+     * Forfeits the current game.
+     */
+    public void leaveGame(){
+        setResult(StartActivity.RESULT_LEAVE);
+        finish();
+    }
+
+    /**
+     * Toggles between a horizontal and a vertical layout for the ship placements.
+     *
+     * @param view the rotate button
+     */
     public void onRotateClicked(View view){
         isHorizontal = !isHorizontal;
         if (isHorizontal){
-            rotateBtn.setText("Horizontal");
+            rotateBtn.setText(R.string.horizontal);
         } else {
-            rotateBtn.setText("Vertical");
+            rotateBtn.setText(R.string.vertical);
         }
     }
 
-    private void highlightChosenShip(ImageView clickedShip){
-        if (lastClickedShip != null){
-            lastClickedShip.setBackgroundColor(0);
-        }
-        clickedShip.setBackgroundColor(Color.parseColor("#ff8000"));
-        lastClickedShip = clickedShip;
-    }
-
+    /**
+     * When the place button is clicked it checks if the tiles it wants to place a ship on is vacant.
+     * If it is, then the placement begins.
+     *
+     * @param view the placement button
+     */
     public void onPlaceClicked(View view){
        int clickedTile = playerGrid.getClickedTile();
 
-        if (!(clickedTile == 50) && selectedShipID != 0){
+        if (!(clickedTile == -1) && selectedShipID != 0){
             if (isVacant(clickedTile)){
-
+                int shipsLeft = -1;
                 if (selectedShipID >= 1 && selectedShipID <= 3 && checkShipsAtPosition(clickedTile, 1)){
-                    int shipsLeft = Integer.parseInt(txt_1r.getText().toString());
+                    shipsLeft = Integer.parseInt(txt_1r.getText().toString());
                     ship1ID++;
                     shipsLeft--;
-                    txt_1r.setText(shipsLeft + "");
+                    txt_1r.setText(String.valueOf(shipsLeft));
                 } else if (selectedShipID >= 4 && selectedShipID <= 5 && checkShipsAtPosition(clickedTile, 2)){
-                    int shipsLeft = Integer.parseInt(txt_2r.getText().toString());
+                    shipsLeft = Integer.parseInt(txt_2r.getText().toString());
                     ship2ID++;
                     shipsLeft--;
-                    txt_2r.setText(shipsLeft + "");
+                    txt_2r.setText(String.valueOf(shipsLeft));
                 } else if (selectedShipID >= 6 && checkShipsAtPosition(clickedTile, 3)){
-                    int shipsLeft = Integer.parseInt(txt_3r.getText().toString());
+                    shipsLeft = Integer.parseInt(txt_3r.getText().toString());
                     ship3ID++;
                     shipsLeft--;
-                    txt_3r.setText(shipsLeft + "");
+                    txt_3r.setText(String.valueOf(shipsLeft));
                 }
-                selectedShipID = 0;
+                if (shipsLeft == 0){
+                    selectedShipID = 0;
+                    highlightChosenShip(null);
+                }
             }
-
         }
-
     }
 
+    /**
+     * This toggles the highlighting feature on the ships you can still choose to place down.
+     *
+     * @param clickedShip
+     */
+    private void highlightChosenShip(ImageView clickedShip){
+        if (lastClickedShip != null)
+            lastClickedShip.setBackgroundColor(0);
+        if (clickedShip != null)
+            clickedShip.setBackgroundResource(R.color.Color_Selected);
+        lastClickedShip = clickedShip;
+    }
+
+    /**
+     * Calls the recreate method when clicked.
+     *
+     * @param view the reset button
+     */
+    public void onResetClicked(View view){
+        recreate();
+    }
+
+    /**
+     * Checks all the occupied tiles and returns false if the position matches one of them.
+     * Returns true otherwise.
+     *
+     * @param position the position on the board that wants to be checked
+     * @return tile is vacant if true; tile is occupied otherwise
+     */
     private boolean isVacant(int position){
-        boolean isTileVacant = true;
+        boolean tileVacancy = true;
         for (int tilePos : usedTiles){
             if (position == tilePos){
-                isTileVacant = false;
+                tileVacancy = false;
                 break;
             }
         }
-        return isTileVacant;
+        return tileVacancy;
     }
 
-    private boolean checkShipsAtPosition(int startPosition, int lenght){
-        if (lenght == 1) {                                           // skepp  1
-            if (selectedShipID == 1)
-                boardState[startPosition] = TILE_TYPE_SIZE_1_SHIPID_1;
-            else if (selectedShipID == 2)
-                boardState[startPosition] = TILE_TYPE_SIZE_1_SHIPID_2;
-            else if (selectedShipID == 3)
-                boardState[startPosition] = TILE_TYPE_SIZE_1_SHIPID_3;
-
-            Tile tile = playerGrid.getTileAtPosition(startPosition);
-            tile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, this.getWindow().getDecorView().findViewById(android.R.id.content), 0, false));
-            tile.setClickDisabled(true);
-            usedTiles.add(startPosition);
-            return true;
+    /**
+     * Checks if the ship can be placed near the selected position.
+     *
+     * @param selectedPosition the selected position
+     * @param length the tile size of selected ship
+     * @return ship placed if true; ship not place otherwise
+     */
+    private boolean checkShipsAtPosition(int selectedPosition, int length){
+        if (length == 1) {
+           placeShipAt(selectedPosition);
+           return true;
         } else if (isHorizontal) {
-            if (lenght == 2) {                                     // skepp 2
-                if (startPosition % 7 == 6 && isVacant(startPosition - 1)) {
-                    placeShipAt(startPosition - 1, startPosition);
+            if (length == 2) {                                     // skepp 2
+                if (selectedPosition % 7 == 6 && isVacant(selectedPosition - 1)) {
+                    placeShipAt(selectedPosition - 1, selectedPosition);
                     return true;
-                } else if (isVacant(startPosition + 1)) {
-                    placeShipAt(startPosition, startPosition + 1);
+                } else if (isVacant(selectedPosition + 1)) {
+                    placeShipAt(selectedPosition, selectedPosition + 1);
                     return true;
                 }
-            } else if (lenght == 3) {                                            // skepp 3
-                if (startPosition % 7 == 6 && isVacant(startPosition - 1) && isVacant(startPosition - 2)) {
-                    placeShipAt(startPosition - 2, startPosition - 1, startPosition);
+            } else if (length == 3) {                                            // skepp 3
+                if (selectedPosition % 7 == 6 && isVacant(selectedPosition - 1) && isVacant(selectedPosition - 2)) {
+                    placeShipAt(selectedPosition - 2, selectedPosition - 1, selectedPosition);
                     return true;
-                } else if (startPosition % 7 == 0 && isVacant(startPosition + 1) && isVacant(startPosition + 2)) {
-                    placeShipAt(startPosition, startPosition + 1, startPosition + 2);
+                } else if (selectedPosition % 7 == 0 && isVacant(selectedPosition + 1) && isVacant(selectedPosition + 2)) {
+                    placeShipAt(selectedPosition, selectedPosition + 1, selectedPosition + 2);
                     return true;
-                }else if (isVacant(startPosition - 1) && isVacant(startPosition + 1)) {
-                    placeShipAt(startPosition - 1, startPosition, startPosition + 1);
+                }else if (isVacant(selectedPosition - 1) && isVacant(selectedPosition + 1)) {
+                    placeShipAt(selectedPosition - 1, selectedPosition, selectedPosition + 1);
                     return true;
                 }
             }
         } else if (!isHorizontal){
-            if (lenght == 2){
-                if (startPosition > 41 && isVacant(startPosition - 7)){
-                    placeShipAt(startPosition - 7, startPosition);
+            if (length == 2){
+                if (selectedPosition > 41 && isVacant(selectedPosition - 7)){
+                    placeShipAt(selectedPosition - 7, selectedPosition);
                     return true;
-                } else if (isVacant(startPosition + 7)){
-                    placeShipAt(startPosition, startPosition + 7);
+                } else if (isVacant(selectedPosition + 7)){
+                    placeShipAt(selectedPosition, selectedPosition + 7);
                     return  true;
                 }
 
-            } else if (lenght == 3){
-                if (startPosition < 7 && isVacant(startPosition + 7) && isVacant(startPosition + 14)){
-                    placeShipAt(startPosition, startPosition + 7, startPosition + 14);
+            } else if (length == 3){
+                if (selectedPosition < 7 && isVacant(selectedPosition + 7) && isVacant(selectedPosition + 14)){
+                    placeShipAt(selectedPosition, selectedPosition + 7, selectedPosition + 14);
                     return true;
-                } else if (startPosition > 41 && isVacant(startPosition - 7) && isVacant(startPosition - 14)){
-                    placeShipAt(startPosition - 14, startPosition - 7, startPosition);
+                } else if (selectedPosition > 41 && isVacant(selectedPosition - 7) && isVacant(selectedPosition - 14)){
+                    placeShipAt(selectedPosition - 14, selectedPosition - 7, selectedPosition);
                     return true;
-                } else if (isVacant(startPosition - 7) && isVacant( startPosition + 7)){
-                    placeShipAt(startPosition - 7, startPosition, startPosition + 7);
+                } else if (isVacant(selectedPosition - 7) && isVacant( selectedPosition + 7)){
+                    placeShipAt(selectedPosition - 7, selectedPosition, selectedPosition + 7);
                     return true;
                 }
             }
@@ -299,6 +344,32 @@ public class PlaceShipsActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Places a small siezd ship of size 1 at the selected position.
+     *
+     * @param selectedPosition the selected position on the board
+     */
+    private void placeShipAt(int selectedPosition){
+        if (selectedShipID == 1)
+            boardState[selectedPosition] = TILE_TYPE_SIZE_1_SHIPID_1;
+        else if (selectedShipID == 2)
+            boardState[selectedPosition] = TILE_TYPE_SIZE_1_SHIPID_2;
+        else if (selectedShipID == 3)
+            boardState[selectedPosition] = TILE_TYPE_SIZE_1_SHIPID_3;
+
+        Tile tile = playerGrid.getTileAtPosition(selectedPosition);
+        tile.getTileImage().setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_1r_w, this.getWindow().getDecorView().findViewById(android.R.id.content), 0, false));
+        tile.setClickDisabled(true);
+        usedTiles.add(selectedPosition);
+    }
+
+    /**
+     * Places a medium sized ship of size 2 at the start and end position, with the right ship
+     * appearance.
+     *
+     * @param startPosition the left or top position
+     * @param endPosition the right or bottom position
+     */
     private void placeShipAt(int startPosition, int endPosition){
         Tile startTile = playerGrid.getTileAtPosition(startPosition);
         Tile endTile = playerGrid.getTileAtPosition(endPosition);
@@ -333,9 +404,16 @@ public class PlaceShipsActivity extends AppCompatActivity {
         endTile.setClickDisabled(true);
         usedTiles.add(startPosition);
         usedTiles.add(endPosition);
-
     }
 
+    /**
+     * Places a large sized ship of size 3 between the start and end position, with the right ship
+     * appearance.
+     *
+     * @param startPosition the left or top position
+     * @param middlePosition the middle position
+     * @param endPosition the right or bottom position
+     */
     private void placeShipAt(int startPosition, int middlePosition, int endPosition){
         Tile startTile = playerGrid.getTileAtPosition(startPosition);
         Tile middleTile = playerGrid.getTileAtPosition(middlePosition);
@@ -367,10 +445,5 @@ public class PlaceShipsActivity extends AppCompatActivity {
         usedTiles.add(startPosition);
         usedTiles.add(middlePosition);
         usedTiles.add(endPosition);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }

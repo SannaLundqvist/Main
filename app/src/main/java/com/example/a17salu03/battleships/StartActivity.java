@@ -715,7 +715,8 @@ public class StartActivity extends Activity implements
 
             super.onActivityResult(requestCode, resultCode, intent);
             if (resultCode == RESULT_OK) {
-                if(intent.getBooleanExtra("hasWon", false)){
+
+                if(intent.getBooleanExtra("hasWon", true)){
                     gameWon();
                 }
                 else{

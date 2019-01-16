@@ -13,21 +13,13 @@ import java.util.ArrayList;
 
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
-public class GridFragment extends Fragment{
+public class GridFragment extends Fragment {
 
     private ArrayList<Tile> tiles = new ArrayList<>();
-    private int tileID = 0;
-    private int clickedTile = 50;
-    private View thisView;
-    private String[] ships;
+    private int clickedTile = -1;
     private String[] board;
-    private String[] opponentsBoard;
-    public Integer layoutBorder = R.drawable.layout_border;
     private GridView gridView;
     private boolean isFriendlyBoard = true;
-    private String[] gridArray;
-
-
     private boolean isClickableTiles = false;
 
     @Override
@@ -46,14 +38,10 @@ public class GridFragment extends Fragment{
         super.onStart();
         View view = getView();
         if (view != null) {
-            thisView = view;
 
             gridView = view.findViewById(R.id.grid);
-
-            gridArray = new String[49];
-            if (opponentsBoard != null) {
-                System.arraycopy(opponentsBoard, 0, gridArray, 0, opponentsBoard.length);
-            } else if (board != null) {
+            String[] gridArray = new String[49];
+            if (board != null) {
                 System.arraycopy(board, 0, gridArray, 0, board.length);
             } else {
                 for (int i = 0; i < 49; i++) {
@@ -71,7 +59,7 @@ public class GridFragment extends Fragment{
                 tiles.add(tile);
             }
 
-            CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, isFriendlyBoard, isClickableTiles, tiles, view);
+            CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, isFriendlyBoard, tiles, view);
             gridView.setAdapter(gridAdapter);
 
         }
@@ -88,13 +76,6 @@ public class GridFragment extends Fragment{
         isFriendlyBoard = false;
     }
 
-    public String[] getGridArray(){
-        return gridArray;
-    }
-
-    private boolean between(int small, int large, int value) {
-        return (value >= small) && (value <= large);
-    }
 
     public Tile getTileAtPosition(int position) {
         return tiles.get(position);
@@ -112,18 +93,4 @@ public class GridFragment extends Fragment{
         isClickableTiles = answer;
     }
 
-    public String getTile(int tileID) {
-        return board[tileID];
-    }
-
-    public String[] getBoard() {
-        return board;
-    }
-
-    public interface OnItemClickedListener {
-        public void onItemClicked(int position);
-    }
-
-    public void setShipArray(String[] ships) {
-        this.ships = ships;
-    }}
+}

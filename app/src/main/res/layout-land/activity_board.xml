@@ -11,41 +11,47 @@
         android:orientation="horizontal"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-
         android:gravity="center">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/skepp_1r"/>
-
-        <TextView
-            android:id="@+id/ship_1_remaining"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"/>
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/skepp_2r"/>
+            android:src="@drawable/skepp_1r_w"
+            android:layout_weight="2"/>
 
         <TextView
-            android:id="@+id/ship_2_remaining"
+            android:id="@+id/ship_small_friendly_remaining"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"/>
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/skepp_3r"/>
+            android:src="@drawable/skepp_2r"
+            android:layout_weight="2"/>
 
         <TextView
-            android:id="@+id/ship_3_remaining"
+            android:id="@+id/ship_medium_friendly_remaining"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"/>
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_3r"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:id="@+id/ship_large_friendly_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
 
         <TextView
             android:id="@+id/time_view"
@@ -54,6 +60,45 @@
             android:gravity="center"
             android:text="@string/invite_friend" />
 
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_3r"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/ship_large_opponent_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_2r"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/ship_medium_opponent_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/skepp_1r_w"
+            android:layout_weight="2" />
+
+        <TextView
+            android:id="@+id/ship_small_opponent_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"/>
     </LinearLayout>
 
 

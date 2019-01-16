@@ -12,14 +12,10 @@ public class ClickableTile extends Tile{
     private static View lastClickedTile = null;
     private static int lastClickedTileCounter = 0;
     private boolean isClickDisabled = false;
-    private static boolean isLastChosen = false;
-
-
-    private View view;
 
     public ClickableTile(int ID, View view, final GridFragment gridFragment){
         super(ID, view);
-        this.view = view;
+
 
         tileImage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -69,9 +65,4 @@ public class ClickableTile extends Tile{
         lastClickedTile = null;
     }
 
-    public void setClickedImage(int image){
-        tileImage.setImageResource(image);
-
-        isClickDisabled = true;
-    }
 }

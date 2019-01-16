@@ -4,8 +4,8 @@
     <string name="invite_friend">Invite Friend</string>
     <string name="how_to_play">How To Play</string>
     <string name="fire">Fire!</string>
-
-
+    <string name="horizontal">Horizontal</string>
+    <string name="vertical">Vertical</string>
     <string name="hello_world">Hello world!</string>
     <string name="sign_out">Sign Out</string>
     <string name="match_instructions">Type in a new word for the data in this game, then hit done.</string>
