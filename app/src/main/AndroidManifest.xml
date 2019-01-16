@@ -24,8 +24,7 @@
 
 
         <activity
-            android:name=".StartActivity"
-            android:screenOrientation="landscape">
+            android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +34,7 @@
         </activity>
 
         <activity
-            android:name=".PlaceShipsActivity"
-            android:screenOrientation="landscape" />
+            android:name=".PlaceShipsActivity"/>
 
     </application>
 

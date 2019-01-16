@@ -56,7 +56,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -95,6 +99,7 @@ public class StartActivity extends Activity implements
     private MediaPlayer backroundMusicPlayer;
     private MediaPlayer effectMusicPlayer;
 
+
     private String mDisplayName;
     private String mPlayerId;
 
@@ -102,10 +107,11 @@ public class StartActivity extends Activity implements
      * Fetches the saved data  and set up sign-in
      * @param savedInstanceState the saved game data
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_start);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         isBackroundMusicOn = prefs.getBoolean("backroundMusic", true);
         isEffectMusicOn = prefs.getBoolean("effectMusic", true);

@@ -32,6 +32,8 @@
     <string name="backroundMusic">Background music</string>
     <string name="effectMusic">Sound effects</string>
     <string name="swichWin">Always win</string>
+    <string name="reset">Reset</string>
+    <string name="place">Place</string>
 
     <string name="place_your_ships">Place your ships</string>
 
