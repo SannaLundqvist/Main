@@ -122,8 +122,6 @@ public class StartActivity extends Activity implements
     public SkeletonTurn mTurnData;
     private MediaPlayer backroundMusicPlayer;
     private MediaPlayer effectMusicPlayer;
-    private Timer timer;
-    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,34 +153,6 @@ public class StartActivity extends Activity implements
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume()");
- /*       title = findViewById(R.id.title);
-        backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
-        if (backroundMusicPlayer != null) {
-            backroundMusicPlayer.start();
-            timer = new Timer();
-            timer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (backroundMusicPlayer != null && backroundMusicPlayer.isPlaying()) {
-                                title.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        title.setText(String.valueOf(backroundMusicPlayer.getCurrentPosition()));
-                                    }
-                                });
-                            } else {
-                                timer.cancel();
-                                timer.purge();
-                            }
-                        }
-                    });
-                }
-            }, 0, 1000);
-        }
-*/
 
         if(isBackroundMusicOn) {
             backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);

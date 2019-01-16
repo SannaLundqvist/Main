@@ -74,14 +74,6 @@
             android:onClick="onFireClick"
             android:layout_gravity="bottom"/>
 
-        <TextView
-            android:id="@+id/time_view"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Turn 1"/>
-
         <Button
             android:id="@+id/leave"
             android:layout_width="0dp"
