@@ -25,7 +25,6 @@ public class ClickableTile extends Tile{
     public ClickableTile(int ID, View view, final GridFragment gridFragment){
         super(ID, view);
 
-
         tileImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
