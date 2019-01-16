@@ -996,10 +996,12 @@ public class StartActivity extends Activity implements
                     public void onClick(DialogInterface dialog, int btn) {
                         try {
                             isMusicOn = musicSwitch.isChecked();
-                            if (isMusicOn)
-                                Toast.makeText(getBaseContext(), "Music on", Toast.LENGTH_SHORT);
+                            if (isMusicOn){
+                                backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
+                                backroundMusicPlayer.start();
+                            }
                             else
-                                Toast.makeText(getBaseContext(), "music of", Toast.LENGTH_SHORT);
+                                backroundMusicPlayer.stop();
                             if(winSwitch.isChecked())
                                 Toast.makeText(getBaseContext(), "You fool, one can not win by cheating", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
