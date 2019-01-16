@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/ship_start_img"
-    android:gravity="center">
+    android:background="@drawable/ship_start_img">
 
     <TextView
         android:id="@+id/title"
@@ -25,22 +24,22 @@
         android:id="@+id/login_layout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/title"
+        android:layout_below="@id/title"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:visibility="visible">
+        android:visibility="visible" >
 
         <!-- sign-in button -->
-
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="130dp"></com.google.android.gms.common.SignInButton>
+            android:paddingBottom="130dp"
+            android:layout_height="wrap_content" >
+        </com.google.android.gms.common.SignInButton>
     </LinearLayout>
 
     <RelativeLayout
@@ -51,7 +50,7 @@
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:context=".SkeletonActivity" >
+        tools:context=".StartActivity" >
 
         <LinearLayout
             android:id="@+id/secret_layout"
@@ -61,7 +60,7 @@
             android:layout_centerVertical="true"
             android:orientation="vertical"
             android:visibility="visible"
-            tools:context=".SkeletonActivity"
+            tools:context=".StartActivity"
             tools:ignore="UselessParent" >
 
             <TextView
@@ -97,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="onQuickMatchClicked"
                 android:text="@string/quick_match" />
+
             <Button
                 android:id="@+id/settingButton"
                 android:layout_width="200dp"
