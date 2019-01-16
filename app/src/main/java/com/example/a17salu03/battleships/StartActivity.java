@@ -442,10 +442,12 @@ public class StartActivity extends Activity implements
             }
             return;
         }
-        ((TextView) findViewById(R.id.name_field)).setText(mDisplayName);
-        findViewById(R.id.login_layout).setVisibility(View.GONE);
+            ((TextView) findViewById(R.id.name_field)).setText(mDisplayName);
+            findViewById(R.id.login_layout).setVisibility(View.GONE);
 
-        findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
+            findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
+
+
     }
 
     // Switch to gameplay view.
