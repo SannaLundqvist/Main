@@ -16,6 +16,11 @@ import android.widget.Toast;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_MISS;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
+/**
+ * This is the activity where the battling takes place.
+ *
+ * @author Mattias Melchior, Sanna Lundqvist
+ */
 public class BoardActivity extends AppCompatActivity {
     private String[] myShips;
     private String[] opponentsShips;
@@ -28,6 +33,12 @@ public class BoardActivity extends AppCompatActivity {
     private boolean isEffectMusicOn;
     private MediaPlayer backroundMusicPlayer;
 
+    /**
+     * Initializing almost everything. Creates two gridgfragments; one for the player and the other
+     * for the opponent.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +83,6 @@ public class BoardActivity extends AppCompatActivity {
             }
         });
 
-// Set other dialog properties
-
-// Create the AlertDialog
         final AlertDialog dialog = builder.create();
 
         leaveBtn.setOnClickListener(new View.OnClickListener() {
@@ -85,10 +93,18 @@ public class BoardActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Forfeits the current game.
+     */
     public void leaveGame(){
         setResult(StartActivity.RESULT_LEAVE);
         finish();
     }
+
+    /**
+     * Stops the background music when onPause is called.
+     */
     @Override
     protected void onPause(){
         super.onPause();
@@ -97,6 +113,9 @@ public class BoardActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Starts the background music unless it's turned off in the settings menu.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -106,6 +125,11 @@ public class BoardActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * If a tile is selected and the fire button is pressed a turn is taken.
+     *
+     * @param view the fire button
+     */
     public void onFireClick(View view) {
         MediaPlayer fireMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.shot);
         int clickedTile = opponentGrid.getClickedTile();
@@ -130,6 +154,10 @@ public class BoardActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Calculates how much "life" each player has by checking the number of tiles being occupied by
+     * ships that are not yet destroyed.
+     */
     private void shipsRemaining() {
         int friendlyShip_small_Remaining = 3;
         int friendlyShip_medium_Remaining = 4;
@@ -190,6 +218,11 @@ public class BoardActivity extends AppCompatActivity {
         ship_large_opponent_remaining.setText("x" + opponentShip_large_Remaining);
     }
 
+    /**
+     * Checks if the game is won.
+     *
+     * @return Game won if all ships are destroyed; game underway otherwise
+     */
     private boolean checkIfWon() {
         int shipRemaining = 10;
         for (int i = 0; i < opponentsShips.length; i++) {
@@ -200,6 +233,12 @@ public class BoardActivity extends AppCompatActivity {
         return (shipRemaining == 0);
     }
 
+    /**
+     * Checks if a ship was damaged by the shot.
+     *
+     * @param position the targeted position
+     * @return Hit if a ship was hit; miss otherwise
+     */
     private boolean isHit(int position) {
         boolean isHit = false;
         if (!opponentsShips[position].equals(TILE_TYPE_WATER)){

@@ -161,11 +161,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
     /**
      * The music stops when onPause is called.
      */
@@ -176,6 +171,9 @@ public class PlaceShipsActivity extends AppCompatActivity {
             backroundMusicPlayer.stop();
     }
 
+    /**
+     * Starts the music player unless turned off in the settings menu.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -183,19 +181,6 @@ public class PlaceShipsActivity extends AppCompatActivity {
             backroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
             backroundMusicPlayer.start();
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    /**
-     * Recreates the activity.
-     */
-    @Override
-    public void recreate (){
-        super.recreate();
     }
 
     /**

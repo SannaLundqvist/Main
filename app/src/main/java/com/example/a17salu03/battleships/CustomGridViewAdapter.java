@@ -45,14 +45,26 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED;
 import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 
+/**
+ * A gridview adapter that creates the images for the tiles.
+ *
+ * @author Mattias Melchior, Sanna Lundqvist
+ */
 public class CustomGridViewAdapter extends BaseAdapter {
-    private String[] boardState; //0 vatten, 1-3 skepp 1, 4-5 skepp 2, 6 skepp 3
+    private String[] boardState;
     private boolean friendlyBoard;
     private ArrayList<Tile> tiles;
     private View view;
     private ImageView mImageView;
 
-
+    /**
+     * The constructor for the gridview adapter.
+     *
+     * @param boardState the game board
+     * @param friendly the is friendly or foe board
+     * @param tiles the tiles to be given a imageView
+     * @param view the view
+     */
     public CustomGridViewAdapter(String[] boardState, boolean friendly, ArrayList<Tile> tiles, View view) {
         this.boardState = boardState;
         friendlyBoard = friendly;
@@ -61,18 +73,43 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
     }
 
+    /**
+     * Get number of elements.
+     *
+     * @return the size
+     */
     public int getCount() {
         return boardState.length;
     }
 
+    /**
+     * Is not used, but it gets the item when implemented.
+     *
+     * @param position the position
+     * @return null
+     */
     public Object getItem(int position) {
         return null;
     }
 
+    /**
+     * Is not used, but it gets the item ID when implemented.
+     *
+     * @param position the position
+     * @return 0
+     */
     public long getItemId(int position) {
         return 0;
     }
 
+    /**
+     * Gets the view at the position and returns it.
+     *
+     * @param position the position
+     * @param convertView the convert view
+     * @param parent the parents to the view
+     * @return the view
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
@@ -88,6 +125,11 @@ public class CustomGridViewAdapter extends BaseAdapter {
         return mImageView;
     }
 
+    /**
+     * Sets a new image on the imageView.
+     *
+     * @param position the position of the board
+     */
     private void setImage(int position) {
         if (friendlyBoard) {
             switch (boardState[position]) {
@@ -119,7 +161,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_L_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_H_R:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 0, false));
@@ -131,7 +173,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 90, true));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_V_L_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true)));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_4_V_R:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 90, true));
@@ -143,7 +185,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_H_L_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_H_R:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 0, false));
@@ -155,7 +197,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l, view, 90, true));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_V_L_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_l_broken, view, 90, true)));
                     break;
                 case TILE_TYPE_SIZE_2_SHIPID_5_V_R:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_2r_w_r, view, 90, true));
@@ -179,7 +221,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, view, 0, false));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_H_R_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 0, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 0, false)));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_L:
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_l, view, 90, false));
@@ -197,7 +239,7 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r, view, 90, false));
                     break;
                 case TILE_TYPE_SIZE_3_SHIPID_6_V_R_DAMAGED:
-                    mImageView.setImageBitmap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false));
+                    mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false)));
                     break;
             }
         } else if (!friendlyBoard) {
@@ -377,13 +419,21 @@ public class CustomGridViewAdapter extends BaseAdapter {
 
     }
 
+    /**
+     * Checks if the whole ship is destroyed or not.
+     *
+     * @param value the content of the board position
+     * @param position the position
+     * @return Whole ship destroyed if true; only part is destroyed otherwise
+     */
     private boolean isShipDestroyed(String value, int position) {
         boolean isDestroyed = false;
         if (value.charAt(0) <= '3') {
             isDestroyed = true;
         } else if (value.charAt(0) == '4' || value.charAt(0) == '5') {
             try {
-                if (value.charAt(0) == boardState[position + 1].charAt(0) || value.charAt(0) == boardState[position - 1].charAt(0) || value.charAt(0) == boardState[position + 7].charAt(0) || value.charAt(0) == boardState[position - 7].charAt(0))
+                if ((value.charAt(0) == boardState[position + 1].charAt(0) && boardState[position + 1].contains("D")) || (value.charAt(0) == boardState[position - 1].charAt(0) && boardState[position - 1].contains("D")) ||
+                        (value.charAt(0) == boardState[position + 7].charAt(0) && boardState[position + 7].contains("D")) || (value.charAt(0) == boardState[position - 7].charAt(0) && boardState[position - 7].contains("D")))
                     isDestroyed = true;
             } catch (ArrayIndexOutOfBoundsException e) {
                 Log.d("CustomGridViewAdapter", "ArrayOutOfBounds");
