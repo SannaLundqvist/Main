@@ -40,8 +40,7 @@
         </activity>
 
         <activity
-            android:name=".PlaceShipsActivity"
-            android:screenOrientation="landscape" />
+            android:name=".PlaceShipsActivity"/>
 
     </application>
 
