@@ -19,6 +19,7 @@ public class GridFragment extends Fragment {
     private int clickedTile = -1;
     private String[] board;
     private GridView gridView;
+    public static final int TOTAL_NBR_OF_TILES = 49;
     private boolean isFriendlyBoard = true;
     private boolean isClickableTiles = false;
 
@@ -40,16 +41,16 @@ public class GridFragment extends Fragment {
         if (view != null) {
 
             gridView = view.findViewById(R.id.grid);
-            String[] gridArray = new String[49];
+            String[] gridArray = new String[TOTAL_NBR_OF_TILES];
             if (board != null) {
                 System.arraycopy(board, 0, gridArray, 0, board.length);
             } else {
-                for (int i = 0; i < 49; i++) {
+                for (int i = 0; i < TOTAL_NBR_OF_TILES; i++) {
                     gridArray[i] = TILE_TYPE_WATER;
                 }
             }
             Tile tile;
-            for (int position = 0; position < 49; position++) {
+            for (int position = 0; position < TOTAL_NBR_OF_TILES; position++) {
 
                 if (isClickableTiles) {
                     tile = new ClickableTile(position, getView(), this);
