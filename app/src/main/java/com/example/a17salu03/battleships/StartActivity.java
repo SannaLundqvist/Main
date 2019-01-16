@@ -60,21 +60,16 @@ import java.util.ArrayList;
 
 
 /**
+ * Keeps track of the connection to Google and starts the game.
  *
- * @author Wolff (wolff@google.com), 2013
+ * @author Mattias Melchior, Sanna Lundqvist
  */
 public class StartActivity extends Activity implements
         View.OnClickListener {
 
     public static final String TAG = "StartActivity";
-
-    // Client used to sign in with Google APIs
     private GoogleSignInClient mGoogleSignInClient = null;
-
-    // Client used to interact with the TurnBasedMultiplayer system.
     private TurnBasedMultiplayerClient mTurnBasedMultiplayerClient = null;
-
-    // Client used to interact with the Invitation system.
     private InvitationsClient mInvitationsClient = null;
 
     private AlertDialog mAlertDialog;
@@ -84,7 +79,6 @@ public class StartActivity extends Activity implements
     Switch effectMusicSwitch = null;
     Switch winSwitch = null;
 
-    // For our intents
     private static final int RC_SIGN_IN = 9001;
     final static int RC_SELECT_PLAYERS = 10000;
     final static int RC_LOOK_AT_MATCHES = 10001;
@@ -93,20 +87,21 @@ public class StartActivity extends Activity implements
     public static final int RESULT_LEAVE = 999;
 
     private SharedPreferences prefs;
-    // Should I be showing the turn API?
     public boolean isDoingTurn = false;
 
-    // This is the current match we're in; null if not loaded
     public TurnBasedMatch mMatch;
-
-    // This is the current match data after being unpersisted.
-    // Do not retain references to match data once you have
-    // taken an action on the match, such as takeTurn()
     public GameData mTurnData;
+
     private MediaPlayer backroundMusicPlayer;
     private MediaPlayer effectMusicPlayer;
 
+    private String mDisplayName;
+    private String mPlayerId;
 
+    /**
+     * Fetches the saved data  and set up sign-in
+     * @param savedInstanceState the saved game data
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,9 +110,6 @@ public class StartActivity extends Activity implements
         isBackroundMusicOn = prefs.getBoolean("backroundMusic", true);
         isEffectMusicOn = prefs.getBoolean("effectMusic", true);
 
-        // Create the Google API Client with access to Games
-        // Create the client used to sign in.
-
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
                 .requestEmail()
@@ -125,14 +117,14 @@ public class StartActivity extends Activity implements
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
-
-        // Setup signin and signout buttons
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
 
     }
 
+    /**
+     * Keeps restarts the music and signs in
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -147,6 +139,9 @@ public class StartActivity extends Activity implements
         signInSilently();
     }
 
+    /**
+     * Saves the important data, turns off the music and unregister Google clients
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -155,20 +150,20 @@ public class StartActivity extends Activity implements
 
         prefs.edit().putBoolean("backroundMusic", isBackroundMusicOn).apply();
         prefs.edit().putBoolean("effectMusic", isEffectMusicOn).apply();
-        // Unregister the invitation callbacks; they will be re-registered via
-        // onResume->signInSilently->onConnected.
+
         if (mInvitationsClient != null) {
             mInvitationsClient.unregisterInvitationCallback(mInvitationCallback);
         }
-
         if (mTurnBasedMultiplayerClient != null) {
             mTurnBasedMultiplayerClient.unregisterTurnBasedMatchUpdateCallback(mMatchUpdateCallback);
         }
     }
 
-    private String mDisplayName;
-    private String mPlayerId;
-
+    /**
+     * Starts when you have connected to Google. Sets the Google driven
+     * components and updates the View
+     * @param googleSignInAccount the signed in account
+     */
     private void onConnected(GoogleSignInAccount googleSignInAccount) {
         Log.d(TAG, "onConnected(): connected to Google APIs");
 
@@ -192,7 +187,6 @@ public class StartActivity extends Activity implements
 
         Log.d(TAG, "onConnected(): Connection successful");
 
-        // Retrieve the TurnBasedMatch from the connectionHint
         GamesClient gamesClient = Games.getGamesClient(this, googleSignInAccount);
         gamesClient.getActivationHint()
                 .addOnSuccessListener(new OnSuccessListener<Bundle>() {
@@ -212,20 +206,14 @@ public class StartActivity extends Activity implements
 
         setViewVisibility();
 
-        // As a demonstration, we are registering this activity as a handler for
-        // invitation and match events.
-
-        // This is *NOT* required; if you do not register a handler for
-        // invitation events, you will get standard notifications instead.
-        // Standard notifications may be preferable behavior in many cases.
         mInvitationsClient.registerInvitationCallback(mInvitationCallback);
-
-        // Likewise, we are registering the optional MatchUpdateListener, which
-        // will replace notifications you would get otherwise. You do *NOT* have
-        // to register a MatchUpdateListener.
         mTurnBasedMultiplayerClient.registerTurnBasedMatchUpdateCallback(mMatchUpdateCallback);
     }
 
+    /**
+     * Sets the new visibility and drops the components dependent
+     * on logged in
+     */
     private void onDisconnected() {
 
         Log.d(TAG, "onDisconnected()");
@@ -236,9 +224,11 @@ public class StartActivity extends Activity implements
         setViewVisibility();
     }
 
-    // This is a helper function that will do all the setup to create a simple failure message.
-    // Add it to any task and in the case of an failure, it will report the string in an alert
-    // dialog.
+    /**
+     * Reports failure to the user by an AlertDialog
+     * @param string the text for the dialog
+     * @return a FailureListener prepared with the text
+     */
     private OnFailureListener createFailureListener(final String string) {
         return new OnFailureListener() {
             @Override
@@ -248,8 +238,10 @@ public class StartActivity extends Activity implements
         };
     }
 
-    // Displays your inbox. You will get back onActivityResult where
-    // you will need to figure out what you clicked on.
+    /**
+     * Starts an ActivityForResult for looking at matches
+     * @param view the current view
+     */
     public void onCheckGamesClicked(View view) {
         mTurnBasedMultiplayerClient.getInboxIntent()
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
@@ -262,8 +254,10 @@ public class StartActivity extends Activity implements
                 .addOnFailureListener(createFailureListener(getString(R.string.error_get_inbox_intent)));
     }
 
-    // Open the create-game UI. You will get back an onActivityResult
-    // and figure out what to do.
+    /**
+     * Starts an ActivityForResult for choosing the players to the game
+     * @param view the current view
+     */
     public void onStartMatchClicked(View view) {
         mTurnBasedMultiplayerClient.getSelectOpponentsIntent(1, 1, true)
                 .addOnSuccessListener(new OnSuccessListener<Intent>() {
@@ -276,7 +270,10 @@ public class StartActivity extends Activity implements
                         getString(R.string.error_get_select_opponents)));
     }
 
-    // Create a one-on-one automatch game.
+    /**
+     * Starts an ActivityForResult for a game against random player
+     * @param view the current view
+     */
     public void onQuickMatchClicked(View view) {
 
         Bundle autoMatchCriteria = RoomConfig.createAutoMatchCriteria(1, 1, 0);
@@ -286,7 +283,6 @@ public class StartActivity extends Activity implements
 
         showSpinner();
 
-        // Start the match
         mTurnBasedMultiplayerClient.createMatch(turnBasedMatchConfig)
                 .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
                     @Override
@@ -297,27 +293,9 @@ public class StartActivity extends Activity implements
                 .addOnFailureListener(createFailureListener("There was a problem creating a match!"));
     }
 
-    // In-game controls
-
-    // Cancel the game. Should possibly wait until the game is canceled before
-    // giving up on the view.
-    public void onCancelClicked(View view) {
-        showSpinner();
-
-        mTurnBasedMultiplayerClient.cancelMatch(mMatch.getMatchId())
-                .addOnSuccessListener(new OnSuccessListener<String>() {
-                    @Override
-                    public void onSuccess(String matchId) {
-                        onCancelMatch(matchId);
-                    }
-                })
-                .addOnFailureListener(createFailureListener("There was a problem cancelling the match!"));
-
-        isDoingTurn = false;
-        setViewVisibility();
-    }
-
-
+    /**
+     * Let you leave the game during your turn
+     */
     private void leaveGame(){
         showSpinner();
         String nextParticipantId = getNextParticipantId();
@@ -335,9 +313,11 @@ public class StartActivity extends Activity implements
 
     }
 
+    /**
+     * Finishes the game - with current player as a winner.
+     */
     public void gameWon() {
         showSpinner();
-        String id = mMatch.getMatchId();
 
         mTurnBasedMultiplayerClient.finishMatch(mMatch.getMatchId())
                 .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
@@ -352,11 +332,13 @@ public class StartActivity extends Activity implements
         setViewVisibility();
     }
 
+    /**
+     * Sends your updated game data to the opponent.
+     */
     public void takeTurn() {
         showSpinner();
 
         String nextParticipantId = getNextParticipantId();
-        // Create the next turn
         mTurnData.turnCounter += 1;
 
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
@@ -371,16 +353,18 @@ public class StartActivity extends Activity implements
 
         mTurnData = null;
     }
+
+    /**
+     * Sends your placed ships to the opponent
+     * @param ships the ships placed at the board
+     */
     public void takeTurnPlaceShips(String[] ships) {
         showSpinner();
 
         String nextParticipantId = getNextParticipantId();
 
-        // Create the next turn
         mTurnData.turnCounter += 1;
         Toast.makeText(this, "turnCOunt" + mTurnData.turnCounter, Toast.LENGTH_LONG).show();
-        //här lägger man till sitt data som skickas mellan spelare
-        //borttaget
         mTurnData.myShips = ships;
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId)
@@ -392,13 +376,14 @@ public class StartActivity extends Activity implements
                 })
                 .addOnFailureListener(createFailureListener("There was a problem taking a turn!"));
 
-        //mTurnData = null;
+        mTurnData = null;
 
     }
 
-    // Sign-in, Sign out behavior
-
-    // Update the visibility based on what state we're in.
+    /**
+     * If you are signed in the layout for start game etc. shows up
+     * If not signed in the layout for signing in shows up
+     */
     public void setViewVisibility() {
         boolean isSignedIn = mTurnBasedMultiplayerClient != null;
 
@@ -420,11 +405,13 @@ public class StartActivity extends Activity implements
 
     }
 
-    // Switch to gameplay view.
+    /**
+     * Sends the player to the right Activity dependent on
+     * what turnCount is at
+     */
     public void setGameplayUI() {
         isDoingTurn = true;
 
-        //eftersom turnCounter fungerar borde inte helt skiten bli crap på startActivityForResult
         if(mTurnData.turnCounter < 2){
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
             intent.putExtra("isBackroundMusicOn", isBackroundMusicOn);
@@ -442,41 +429,45 @@ public class StartActivity extends Activity implements
         dismissSpinner();
     }
 
-    // Helpful dialogs
-
+    /**
+     * Shows a loading circle on the screen
+     */
     public void showSpinner() {
         findViewById(R.id.progressLayout).setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Takes away the loading circle
+     */
     public void dismissSpinner() {
         findViewById(R.id.progressLayout).setVisibility(View.GONE);
     }
 
-    // Generic warning/info dialog
+    /**
+     * Shows the warning
+     * @param title the title for the warning
+     * @param message the message for the warning
+     */
     public void showWarning(String title, String message) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        // set title
         alertDialogBuilder.setTitle(title).setMessage(message);
 
-        // set dialog message
         alertDialogBuilder.setCancelable(false).setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, close
-                        // current activity
                     }
                 });
 
-        // create alert dialog
         mAlertDialog = alertDialogBuilder.create();
-
-        // show it
         mAlertDialog.show();
     }
 
-    // Rematch dialog
+    /**
+     * Asks the player for a rematch.
+     * If yes - rematch
+     * If no - nothing
+     */
     public void askForRematch() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -502,8 +493,7 @@ public class StartActivity extends Activity implements
     }
 
     /**
-     * Start a sign in activity.  To properly handle the result, call tryHandleSignInResult from
-     * your Activity's onActivityResult function
+     * Start a sign in activity.
      */
     public void startSignInIntent() {
 
@@ -512,8 +502,6 @@ public class StartActivity extends Activity implements
 
     /**
      * Try to sign in without displaying dialogs to the user.
-     * <p>
-     * If the user has already signed in previously, it will not show dialog.
      */
     public void signInSilently() {
         Log.d(TAG, "signInSilently()");
@@ -533,6 +521,9 @@ public class StartActivity extends Activity implements
                 });
     }
 
+    /**
+     * Signs the user out
+     */
     public void signOut() {
         Log.d(TAG, "signOut()");
 
@@ -553,7 +544,7 @@ public class StartActivity extends Activity implements
     }
 
     /**
-     * Since a lot of the operations use tasks, we can use a common handler for whenever one fails.
+     * Handles exceptions
      *
      * @param exception The exception to evaluate.  Will try to display a more descriptive reason for
      *                  the exception.
@@ -600,8 +591,13 @@ public class StartActivity extends Activity implements
                 + message);
     }
 
-    // This function is what gets called when you return from either the Play
-    // Games built-in inbox, or else the create game built-in interface.
+
+    /**
+     * The function is called if a startActivityForResult is successful
+     * @param requestCode the action that has been done
+     * @param resultCode what was the result of the request
+     * @param intent might contain data from the action
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
@@ -627,7 +623,6 @@ public class StartActivity extends Activity implements
                         .show();
             }
         } else if (requestCode == RC_LOOK_AT_MATCHES) {
-            // Returning from the 'Select Match' dialog
 
             if (resultCode != Activity.RESULT_OK) {
                 logBadActivityResult(requestCode, resultCode,
@@ -644,20 +639,15 @@ public class StartActivity extends Activity implements
 
             Log.d(TAG, "Match = " + match);
         } else if (requestCode == RC_SELECT_PLAYERS) {
-            // Returning from 'Select players to Invite' dialog
-
             if (resultCode != Activity.RESULT_OK) {
-                // user canceled
                 logBadActivityResult(requestCode, resultCode,
                         "User cancelled returning from 'Select players to Invite' dialog");
                 return;
             }
 
-            // get the invitee list
             ArrayList<String> invitees = intent
                     .getStringArrayListExtra(Games.EXTRA_PLAYER_IDS);
 
-            // get automatch criteria
             Bundle autoMatchCriteria;
 
             int minAutoMatchPlayers = intent.getIntExtra(Multiplayer.EXTRA_MIN_AUTOMATCH_PLAYERS, 0);
@@ -674,7 +664,6 @@ public class StartActivity extends Activity implements
                     .addInvitedPlayers(invitees)
                     .setAutoMatchCriteria(autoMatchCriteria).build();
 
-            // Start the match
             mTurnBasedMultiplayerClient.createMatch(tbmc)
                     .addOnSuccessListener(new OnSuccessListener<TurnBasedMatch>() {
                         @Override
@@ -695,10 +684,6 @@ public class StartActivity extends Activity implements
                 leaveGame();
             }else
                 Toast.makeText(getBaseContext(), "There was a problem placing your ships", Toast.LENGTH_SHORT).show();
-            //intent.getIntArrayExtra()
-            //takeTurn();
-            //Intent i = new Intent(this, BoardActivity.class);
-            //startActivity(i);
         }else if (requestCode == SHOOTING) {
 
             super.onActivityResult(requestCode, resultCode, intent);
@@ -720,12 +705,10 @@ public class StartActivity extends Activity implements
         }
     }
 
-    // startMatch() happens in response to the createTurnBasedMatch()
-    // above. This is only called on success, so we should have a
-    // valid match object. We're taking this opportunity to setup the
-    // game, saving our initial state. Calling takeTurn() will
-    // callback to OnTurnBasedMatchUpdated(), which will show the game
-    // UI.
+    /**
+     * Initializes the match
+     * @param match a valid match object
+     */
     public void startMatch(TurnBasedMatch match) {
         mTurnData = new GameData();
 
@@ -746,7 +729,6 @@ public class StartActivity extends Activity implements
                 .addOnFailureListener(createFailureListener("There was a problem taking a turn!"));
     }
 
-    // If you choose to rematch, then call it and wait for a response.
     public void rematch() {
         showSpinner();
         mTurnBasedMultiplayerClient.rematch(mMatch.getMatchId())
@@ -762,13 +744,11 @@ public class StartActivity extends Activity implements
     }
 
     /**
-     * Get the next participant. In this function, we assume that we are
-     * round-robin, with all known players going before all automatch players.
-     * This is not a requirement; players can go in any order. However, you can
-     * take turns in any order.
+     * Get the next participant.
      *
      * @return participantId of next player, or null if automatching
      */
+
     public String getNextParticipantId() {
 
         String myParticipantId = mMatch.getParticipantId(mPlayerId);
@@ -788,17 +768,16 @@ public class StartActivity extends Activity implements
         }
 
         if (mMatch.getAvailableAutoMatchSlots() <= 0) {
-            // You've run out of automatch slots, so we start over.
             return participantIds.get(0);
         } else {
-            // You have not yet fully automatched, so null will find a new
-            // person to play against.
             return null;
         }
     }
 
-    // This is the main function that gets called when players choose a match
-    // from the inbox, or else create a match and want to start it.
+    /**
+     * Updates the game dependent on the state
+     * @param match the match for update
+     */
     public void updateMatch(TurnBasedMatch match) {
         mMatch = match;
 
@@ -820,28 +799,19 @@ public class StartActivity extends Activity implements
                 setViewVisibility();
                 return;
             case TurnBasedMatch.MATCH_STATUS_COMPLETE:
-                //if (turnStatus == TurnBasedMatch.MATCH_TURN_STATUS_COMPLETE) {
                 showWarning("Complete!",
                         "This game is over; someone finished it, and so did you!  " +
                                 "There is nothing to be done.");
                 setViewVisibility();
                 return;
-            //}
-
-            // Note that in this state, you must still call "Finish" yourself,
-            // so we allow this to continue.
-            //showWarning("Complete!",
-            //        "This game is over; someone finished it!  You can only finish it now.");
         }
 
-        // OK, it's active. Check on turn status.
         switch (turnStatus) {
             case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
                 mTurnData = GameData.unpersist(mMatch.getData());
                 setGameplayUI();
                 return;
             case TurnBasedMatch.MATCH_TURN_STATUS_THEIR_TURN:
-                // Should return results.
                 showWarning("Alas...", "It's not your turn.");
                 break;
             case TurnBasedMatch.MATCH_TURN_STATUS_INVITED:
@@ -850,32 +820,26 @@ public class StartActivity extends Activity implements
         }
 
         mTurnData = null;
-
         setViewVisibility();
     }
 
-    private void onCancelMatch(String matchId) {
-        dismissSpinner();
-
-        isDoingTurn = false;
-
-        showWarning("Match", "This match (" + matchId + ") was canceled.  " +
-                "All other players will have their game ended.");
-    }
-
+    /**
+     * If the game is active it updates the match and starts it
+     * @param match the match
+     */
     private void onInitiateMatch(TurnBasedMatch match) {
         dismissSpinner();
 
         if (match.getData() != null) {
-            // This is a game that has already started, so I'll just start
             updateMatch(match);
             return;
         }
-
-
         startMatch(match);
     }
 
+    /**
+     * shows dialog confirming Leave
+     */
     private void onLeaveMatch() {
         dismissSpinner();
 
@@ -883,26 +847,32 @@ public class StartActivity extends Activity implements
         showWarning("Left", "You've left this match.");
     }
 
-
+    /**
+     * Updates the match
+     * @param match the match for update
+     */
     public void onUpdateMatch(TurnBasedMatch match) {
         dismissSpinner();
 
         if (match.canRematch()) {
             askForRematch();
         }
-
         isDoingTurn = (match.getTurnStatus() == TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN);
 
         if (isDoingTurn) {
             updateMatch(match);
             return;
         }
-
         setViewVisibility();
     }
 
+
     private InvitationCallback mInvitationCallback = new InvitationCallback() {
-        // Handle notification events.
+
+        /**
+         * 
+         * @param invitation
+         */
         @Override
         public void onInvitationReceived(@NonNull Invitation invitation) {
             Toast.makeText(
@@ -912,6 +882,10 @@ public class StartActivity extends Activity implements
                     .show();
         }
 
+        /**
+         * Confirmes to the user that an invitaion was removed
+         * @param invitationId
+         */
         @Override
         public void onInvitationRemoved(@NonNull String invitationId) {
             Toast.makeText(StartActivity.this, "An invitation was removed.", Toast.LENGTH_SHORT)
