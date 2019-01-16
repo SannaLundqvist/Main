@@ -101,12 +101,9 @@ public class StartActivity extends Activity implements
     final static int RC_LOOK_AT_MATCHES = 10001;
     public static final int PLACED_SHIPS = 2001;
     public static final int SHOOTING = 2002;
-
     public static final int RESULT_LEAVE = 999;
 
     private SharedPreferences prefs;
-
-
     // Should I be showing the turn API?
     public boolean isDoingTurn = false;
 
@@ -125,7 +122,7 @@ public class StartActivity extends Activity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        isMusicOn = prefs.getBoolean("music", false);
+        isMusicOn = prefs.getBoolean("music", true);
         mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
         mediaPlayer.start();
         // Create the Google API Client with access to Games
@@ -1007,6 +1004,7 @@ public class StartActivity extends Activity implements
 
         alertDialog.show();
         musicSwitch = (Switch) alertDialog.findViewById(R.id.musicSwitch);
+        musicSwitch.setChecked(isMusicOn);
         winSwitch = (Switch) alertDialog.findViewById(R.id.winSwitch);
     }
     @Override
