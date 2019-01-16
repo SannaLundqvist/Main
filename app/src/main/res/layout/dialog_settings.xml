@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:switchPadding="80dp"
+        android:switchPadding="78dp"
         android:text="@string/backroundMusic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:switchPadding="108dp"
+        android:switchPadding="110dp"
         android:text="@string/effectMusic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backroundMusicSwitch" />
@@ -59,7 +59,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:checked="false"
-        android:switchPadding="118dp"
+        android:switchPadding="120dp"
         android:text="@string/swichWin"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/effectMusicSwitch" />

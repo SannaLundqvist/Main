@@ -1027,6 +1027,7 @@ public class StartActivity extends Activity implements
         backroundMusicSwitch = (Switch) alertDialog.findViewById(R.id.backroundMusicSwitch);
         backroundMusicSwitch.setChecked(isBackroundMusicOn);
         effectMusicSwitch = (Switch) alertDialog.findViewById(R.id.effectMusicSwitch);
+        effectMusicSwitch.setChecked(isEffectMusicOn);
         winSwitch = (Switch) alertDialog.findViewById(R.id.winSwitch);
     }
     @Override
