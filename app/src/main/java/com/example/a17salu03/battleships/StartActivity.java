@@ -20,8 +20,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,7 +47,6 @@ import com.google.android.gms.games.TurnBasedMultiplayerClient;
 import com.google.android.gms.games.multiplayer.Invitation;
 import com.google.android.gms.games.multiplayer.InvitationCallback;
 import com.google.android.gms.games.multiplayer.Multiplayer;
-import com.google.android.gms.games.multiplayer.ParticipantResult;
 import com.google.android.gms.games.multiplayer.realtime.RoomConfig;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch;
 import com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchConfig;
@@ -56,7 +57,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -92,7 +92,8 @@ public class StartActivity extends Activity implements
 
     private AlertDialog mAlertDialog;
     private boolean isMusicOn;
-    Switch aSwitch = null;
+    Switch musicSwitch = null;
+    Switch winSwitch = null;
 
     // For our intents
     private static final int RC_SIGN_IN = 9001;
@@ -102,6 +103,8 @@ public class StartActivity extends Activity implements
     public static final int SHOOTING = 2002;
 
     public static final int RESULT_LEAVE = 999;
+
+    private SharedPreferences prefs;
 
 
     // Should I be showing the turn API?
@@ -121,6 +124,8 @@ public class StartActivity extends Activity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        isMusicOn = prefs.getBoolean("music", false);
         mediaPlayer = MediaPlayer.create(getBaseContext(), R.raw.relaxing);
         mediaPlayer.start();
         // Create the Google API Client with access to Games
@@ -155,6 +160,8 @@ public class StartActivity extends Activity implements
     protected void onPause() {
         super.onPause();
         mediaPlayer.stop();
+
+        prefs.edit().putBoolean("music", isMusicOn).apply();
         // Unregister the invitation callbacks; they will be re-registered via
         // onResume->signInSilently->onConnected.
         if (mInvitationsClient != null) {
@@ -981,16 +988,17 @@ public class StartActivity extends Activity implements
         LayoutInflater factory = LayoutInflater.from(this);
         final View textEntryView = factory.inflate(R.layout.dialog_settings, null);
         final AlertDialog alertDialog = new AlertDialog.Builder(this)
-                //.setIconAttribute(android.R.attr.alertDialogIcon)
                 .setView(textEntryView)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int btn) {
                         try {
-                            isMusicOn = aSwitch.isChecked();
+                            isMusicOn = musicSwitch.isChecked();
                             if (isMusicOn)
-                                Toast.makeText(getBaseContext(), "Music on", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(), "Music on", Toast.LENGTH_SHORT);
                             else
-                                Toast.makeText(getBaseContext(), "music of", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(), "music of", Toast.LENGTH_SHORT);
+                            if(winSwitch.isChecked())
+                                Toast.makeText(getBaseContext(), "You fool, one can not win by cheating", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                         }
                     }
@@ -998,7 +1006,8 @@ public class StartActivity extends Activity implements
                 .create();
 
         alertDialog.show();
-        aSwitch = (Switch) alertDialog.findViewById(R.id.musicSwitch);
+        musicSwitch = (Switch) alertDialog.findViewById(R.id.musicSwitch);
+        winSwitch = (Switch) alertDialog.findViewById(R.id.winSwitch);
     }
     @Override
     public void onClick(View v) {
