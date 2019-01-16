@@ -145,7 +145,8 @@ public class PlaceShipsActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.putExtra("boardState", boardState);
                 setResult(RESULT_OK, intent);
-                backroundMusicPlayer.stop();
+                if(isMusicOn)
+                    backroundMusicPlayer.stop();
                 finish();
             }
 
