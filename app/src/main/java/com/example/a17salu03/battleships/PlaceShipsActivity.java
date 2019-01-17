@@ -182,8 +182,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     @Override
     protected void onDestroy(){
+        prefs.edit().clear().commit();
         super.onDestroy();
-        getApplicationContext().getSharedPreferences("boardState", 0).edit().clear().commit();
+
     }
 
     @Override
