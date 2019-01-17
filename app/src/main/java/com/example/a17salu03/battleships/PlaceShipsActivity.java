@@ -84,13 +84,15 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
             isMusicOn = savedInstanceState.getBoolean("isMusicOn");
             boardState = savedInstanceState.getStringArray("boardState");
             musicDuration = savedInstanceState.getInt("musicDuration");
-            }
-
-
-
+        }else{
             for (int i = 0; i < boardState.length; i++){
                 boardState[i] = TILE_TYPE_WATER;
-           }
+            }
+        }
+
+
+
+
 
 
 
