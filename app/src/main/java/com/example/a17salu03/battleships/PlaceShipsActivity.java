@@ -81,7 +81,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         isMusicOn = getIntent().getBooleanExtra("isBackgroundMusicOn", true);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        musicDuration = prefs.getInt("musicDuration", 0);
+        musicDuration = prefs.getInt("musicDuration", 1);
 
         playerGrid = new GridFragment();
         playerGrid.isClickableTiles(true);
@@ -176,9 +176,15 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     @Override
     protected void onDestroy() {
-        getApplicationContext().getSharedPreferences("musicDuration", 0).edit().clear().commit();
+
         super.onDestroy();
 
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        prefs.edit().clear().commit();
     }
 
     /**
@@ -202,8 +208,12 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         super.onResume();
         if(isMusicOn) {
             backgroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
-            backgroundMusicPlayer.setOnSeekCompleteListener(this);
-            backgroundMusicPlayer.seekTo(musicDuration);
+            if(musicDuration == 0)
+                backgroundMusicPlayer.start();
+            else {
+                backgroundMusicPlayer.setOnSeekCompleteListener(this);
+                backgroundMusicPlayer.seekTo(musicDuration);
+            }
         }
     }
 
