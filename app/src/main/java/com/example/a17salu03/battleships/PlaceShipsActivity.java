@@ -92,6 +92,15 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
             ship1 = savedInstanceState.getInt("shipsLeft0");
             ship2 = savedInstanceState.getInt("shipsLeft1");
             ship3 = savedInstanceState.getInt("shipsLeft2");
+            if(isMusicOn){
+                backgroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
+                if(musicDuration == 0)
+                    backgroundMusicPlayer.start();
+                else {
+                    backgroundMusicPlayer.setOnSeekCompleteListener(this);
+                    backgroundMusicPlayer.seekTo(musicDuration);
+                }
+            }
         }else{
             for (int i = 0; i < boardState.length; i++){
                 boardState[i] = TILE_TYPE_WATER;
