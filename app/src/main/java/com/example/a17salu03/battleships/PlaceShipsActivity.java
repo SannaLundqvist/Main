@@ -65,7 +65,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     private boolean isMusicOn;
     private MediaPlayer backgroundMusicPlayer;
     private int musicDuration = 0;
-//    private SharedPreferences prefs;
     public static final int NUMBER_OF_SHIP_TILES = 10;
     public static final int NUMBER_OF_SMALL_TILES = 3;
     public static final int NUMBER_OF_MEDIUM_TILES = 4;
@@ -81,7 +80,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
         isMusicOn = getIntent().getBooleanExtra("isBackgroundMusicOn", true);
-    //    prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if(savedInstanceState != null){
             isMusicOn = savedInstanceState.getBoolean("isMusicOn");
             boardState = savedInstanceState.getStringArray("boardState");
@@ -183,7 +181,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
                     backgroundMusicPlayer.stop();
                 finish();
             }
-
             }
         });
 
@@ -193,7 +190,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
                 leaveDialog.show();
             }
         });
-
     }
 
     /**
@@ -212,7 +208,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         currentState.putInt("shipsLeft2", Integer.parseInt(txt_2r.getText().toString()));
         currentState.putInt("shipsLeft3", Integer.parseInt(txt_3r.getText().toString()));
     }
-
     /**
      * The music stops when onPause is called.
      */
@@ -222,7 +217,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         if(isMusicOn) {
             backgroundMusicPlayer.stop();
             musicDuration = backgroundMusicPlayer.getCurrentPosition();
-         //   prefs.edit().putInt("musicDuration", musicDuration).apply();
         }
     }
 
@@ -385,7 +379,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
                     placeShipAt(selectedPosition, selectedPosition + 7);
                     return  true;
                 }
-
             } else if (length == 3){
                 if (selectedPosition < 7 && isVacant(selectedPosition + 7) && isVacant(selectedPosition + 14)){
                     placeShipAt(selectedPosition, selectedPosition + 7, selectedPosition + 14);
