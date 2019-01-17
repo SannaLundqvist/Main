@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -62,8 +63,8 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     private ImageView lastClickedShip;
     private boolean isMusicOn;
     private MediaPlayer backgroundMusicPlayer;
-    private int musicDuration;
-    private SharedPreferences prefs;
+    private int musicDuration = 0;
+    //private SharedPreferences prefs;
     public static final int NUMBER_OF_SHIP_TILES = 10;
     public static final int NUMBER_OF_SMALL_TILES = 3;
     public static final int NUMBER_OF_MEDIUM_TILES = 4;
@@ -79,18 +80,19 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
         isMusicOn = getIntent().getBooleanExtra("isBackgroundMusicOn", true);
+        if(savedInstanceState != null){
+            isMusicOn = savedInstanceState.getBoolean("isMusicOn");
+            boardState = savedInstanceState.getStringArray("boardState");
+            musicDuration = savedInstanceState.getInt("musicDuration");
+            }
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        musicDuration = prefs.getInt("musicDuration", 0);
-        String temp = prefs.getString("boardState", "");
-        if (!temp.isEmpty()){
-            boardState = temp.split(",");
-        } else {
+
+
             for (int i = 0; i < boardState.length; i++){
                 boardState[i] = TILE_TYPE_WATER;
-            }
-        }
-        
+           }
+
+
 
         playerGrid = new GridFragment();
         playerGrid.setMyBoard(boardState);
@@ -179,6 +181,12 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putStringArray("boardState", boardState);
+        outState.putBoolean("isMusicOn", isMusicOn);
+    }
 
     protected void onDestroy(){
 
@@ -190,21 +198,18 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     public void finish() {
         super.finish();
-        prefs.edit().clear().commit();
+        //prefs.edit().clear().commit();
     }
 
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
         outState.putStringArray("boardState", boardState);
+        outState.putBoolean("isMusicOn", isMusicOn);
+        outState.putInt("musicDuration", musicDuration);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
 
-        boardState = savedInstanceState.getStringArray("boardState");
-    }
 
     /**
      * The music stops when onPause is called.
@@ -215,16 +220,17 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         if(isMusicOn) {
             backgroundMusicPlayer.stop();
             musicDuration = backgroundMusicPlayer.getCurrentPosition();
-            prefs.edit().putInt("musicDuration", musicDuration).apply();
+            //prefs.edit().putInt("musicDuration", musicDuration).apply();
         }
 
         musicDuration = backgroundMusicPlayer.getCurrentPosition();
-        prefs.edit().putInt("musicDuration", musicDuration).apply();
+        //prefs.edit().putInt("musicDuration", musicDuration).apply();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < boardState.length; i++) {
             sb.append(boardState[i]).append(",");
         }
-        prefs.edit().putString("boardState", sb.toString()).apply();
+
+       // prefs.edit().putString("boardState", sb.toString()).apply();
     }
 
     /**
