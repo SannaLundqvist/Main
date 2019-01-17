@@ -4,13 +4,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -53,6 +51,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     private int ship1ID = 1;
     private int ship2ID = 4;
     private int ship3ID = 6;
+    private int remainingShip1;
+    private int remainingShip2;
+    private int remainingShip3;
     private Button rotateBtn;
     private ImageView img_1r = null;
     private ImageView img_2r = null;
@@ -64,16 +65,11 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     private boolean isMusicOn;
     private MediaPlayer backgroundMusicPlayer;
     private int musicDuration = 0;
-    //private SharedPreferences prefs;
+//    private SharedPreferences prefs;
     public static final int NUMBER_OF_SHIP_TILES = 10;
     public static final int NUMBER_OF_SMALL_TILES = 3;
     public static final int NUMBER_OF_MEDIUM_TILES = 4;
     public static final int NUMBER_OF_LARGE_TILES = 3;
-
-
-    int ship1;
-    int ship2;
-    int ship3;
 
     /**
      * Here most things get initialized.
@@ -85,13 +81,14 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_ships);
         isMusicOn = getIntent().getBooleanExtra("isBackgroundMusicOn", true);
+    //    prefs = PreferenceManager.getDefaultSharedPreferences(this);
         if(savedInstanceState != null){
             isMusicOn = savedInstanceState.getBoolean("isMusicOn");
             boardState = savedInstanceState.getStringArray("boardState");
             musicDuration = savedInstanceState.getInt("musicDuration");
-            ship1 = savedInstanceState.getInt("shipsLeft0");
-            ship2 = savedInstanceState.getInt("shipsLeft1");
-            ship3 = savedInstanceState.getInt("shipsLeft2");
+            remainingShip1 = savedInstanceState.getInt("shipsLeft1");
+            remainingShip2 = savedInstanceState.getInt("shipsLeft2");
+            remainingShip3 = savedInstanceState.getInt("shipsLeft3");
             if(isMusicOn){
                 backgroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
                 if(musicDuration == 0)
@@ -105,9 +102,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
             for (int i = 0; i < boardState.length; i++){
                 boardState[i] = TILE_TYPE_WATER;
             }
-            ship1 = 3;
-            ship2 = 2;
-            ship3 = 1;
+            remainingShip1 = 3;
+            remainingShip2 = 2;
+            remainingShip3 = 1;
         }
         playerGrid = new GridFragment();
         playerGrid.setMyBoard(boardState);
@@ -124,11 +121,11 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         img_2r = findViewById(R.id.ship_2r_draw);
         img_3r = findViewById(R.id.ship_3r_draw);
         txt_1r = findViewById(R.id.ship_1r_text);
-        txt_1r.setText(ship1 +"");
+        txt_1r.setText(String.valueOf(remainingShip1));
         txt_2r = findViewById(R.id.ship_2r_text);
-        txt_2r.setText(ship2 +"");
+        txt_2r.setText(String.valueOf(remainingShip2));
         txt_3r = findViewById(R.id.ship_3r_text);
-        txt_3r.setText(ship3 +"");
+        txt_3r.setText(String.valueOf(remainingShip3));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(R.layout.dialog_leave);
@@ -199,31 +196,22 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     }
 
-    protected void onDestroy(){
-
-        super.onDestroy();
-
-    }
-
+    /**
+     * Saves the current game state.
+     *
+     * @param currentState the current game state
+     */
     @Override
+    protected void onSaveInstanceState(Bundle currentState) {
+        super.onSaveInstanceState(currentState);
 
-    public void finish() {
-        super.finish();
-        //prefs.edit().clear().commit();
+        currentState.putStringArray("boardState", boardState);
+        currentState.putBoolean("isMusicOn", isMusicOn);
+        currentState.putInt("musicDuration", musicDuration);
+        currentState.putInt("shipsLeft1", Integer.parseInt(txt_1r.getText().toString()));
+        currentState.putInt("shipsLeft2", Integer.parseInt(txt_2r.getText().toString()));
+        currentState.putInt("shipsLeft3", Integer.parseInt(txt_3r.getText().toString()));
     }
-
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putStringArray("boardState", boardState);
-        outState.putBoolean("isMusicOn", isMusicOn);
-        outState.putInt("musicDuration", musicDuration);
-        outState.putInt("shipsLeft0", Integer.parseInt(txt_1r.getText().toString()));
-        outState.putInt("shipsLeft1", Integer.parseInt(txt_2r.getText().toString()));
-        outState.putInt("shipsLeft2", Integer.parseInt(txt_3r.getText().toString()));
-    }
-
-
 
     /**
      * The music stops when onPause is called.
@@ -234,17 +222,8 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         if(isMusicOn) {
             backgroundMusicPlayer.stop();
             musicDuration = backgroundMusicPlayer.getCurrentPosition();
-            //prefs.edit().putInt("musicDuration", musicDuration).apply();
+         //   prefs.edit().putInt("musicDuration", musicDuration).apply();
         }
-
-        musicDuration = backgroundMusicPlayer.getCurrentPosition();
-        //prefs.edit().putInt("musicDuration", musicDuration).apply();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < boardState.length; i++) {
-            sb.append(boardState[i]).append(",");
-        }
-
-       // prefs.edit().putString("boardState", sb.toString()).apply();
     }
 
     /**
@@ -530,13 +509,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
      * Starts the music player when the seek is completed.
      *
      */
-    @Override
-    public void onBackPressed() {
-        setResult(StartActivity.RESULT_LEAVE);
-        super.onBackPressed();
-    }
-
-    @Override
+     @Override
     public void onSeekComplete(MediaPlayer mp) {
         backgroundMusicPlayer.start();
     }
