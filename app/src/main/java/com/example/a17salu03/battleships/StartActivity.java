@@ -306,6 +306,7 @@ public class StartActivity extends Activity implements
      * Let you leave the game during your turn
      */
     private void leaveGame(){
+
         showSpinner();
         String nextParticipantId = getNextParticipantId();
 
@@ -317,6 +318,8 @@ public class StartActivity extends Activity implements
                     }
                 })
                 .addOnFailureListener(createFailureListener("There was a problem leaving the match!"));
+                
+        Toast.makeText(this, "you left the game", Toast.LENGTH_SHORT).show();
 
         setViewVisibility();
 
@@ -687,7 +690,6 @@ public class StartActivity extends Activity implements
             super.onActivityResult(requestCode, requestCode, intent);
             if(resultCode == RESULT_OK){
                 takeTurnPlaceShips (intent.getStringArrayExtra("boardState"));
-
             }
             else if(resultCode == RESULT_LEAVE){
                 leaveGame();

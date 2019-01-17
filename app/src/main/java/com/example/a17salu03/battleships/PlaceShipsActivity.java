@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -179,10 +180,11 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     @Override
     protected void onPause(){
         super.onPause();
-        if(isMusicOn)
+        if(isMusicOn) {
             backgroundMusicPlayer.stop();
-        musicDuration = backgroundMusicPlayer.getCurrentPosition();
-        prefs.edit().putInt("musicDuration", musicDuration).apply();
+            musicDuration = backgroundMusicPlayer.getCurrentPosition();
+            prefs.edit().putInt("musicDuration", musicDuration).apply();
+        }
     }
 
     /**
@@ -202,7 +204,10 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
      * Forfeits the current game.
      */
     public void leaveGame(){
-        setResult(StartActivity.RESULT_LEAVE);
+        Intent intent = new Intent();
+        setResult(StartActivity.RESULT_LEAVE, intent);
+        if(isMusicOn)
+            backgroundMusicPlayer.stop();
         finish();
     }
 
@@ -455,6 +460,12 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         usedTiles.add(startPosition);
         usedTiles.add(middlePosition);
         usedTiles.add(endPosition);
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(StartActivity.RESULT_LEAVE);
+        super.onBackPressed();
     }
 
     @Override
