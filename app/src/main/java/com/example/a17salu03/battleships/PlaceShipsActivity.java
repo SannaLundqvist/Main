@@ -45,7 +45,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     private GridFragment playerGrid;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
-    private String[] boardState = new String[49];
+    private String[]  boardState = new String[49];
     private int selectedShipID;
     private boolean isHorizontal = true;
     private int ship1ID = 1;
@@ -81,18 +81,25 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         musicDuration = prefs.getInt("musicDuration", 0);
+        String temp = prefs.getString("boardState", "");
+        if (!temp.isEmpty()){
+            boardState = temp.split(",");
+        } else {
+            for (int i = 0; i < boardState.length; i++){
+                boardState[i] = TILE_TYPE_WATER;
+            }
+        }
+
+
+
 
         playerGrid = new GridFragment();
+        playerGrid.setMyBoard(boardState);
         playerGrid.isClickableTiles(true);
         FragmentTransaction playerft = getSupportFragmentManager().beginTransaction();
         playerft.replace(R.id.fragment_container_player, playerGrid);
         playerft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         playerft.commit();
-
-
-        for (int i = 0; i < boardState.length; i++){
-            boardState[i] = TILE_TYPE_WATER;
-        }
 
         rotateBtn = findViewById(R.id.rotate);
         Button doneBtn = findViewById(R.id.done);
@@ -173,6 +180,26 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     }
 
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        getApplicationContext().getSharedPreferences("boardState", 0).edit().clear().commit();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putStringArray("boardState", boardState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        boardState = savedInstanceState.getStringArray("boardState");
+    }
+
     /**
      * The music stops when onPause is called.
      */
@@ -183,6 +210,11 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
             backgroundMusicPlayer.stop();
         musicDuration = backgroundMusicPlayer.getCurrentPosition();
         prefs.edit().putInt("musicDuration", musicDuration).apply();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < boardState.length; i++) {
+            sb.append(boardState[i]).append(",");
+        }
+        prefs.edit().putString("boardState", sb.toString()).apply();
     }
 
     /**
