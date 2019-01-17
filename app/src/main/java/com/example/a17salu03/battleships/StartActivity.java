@@ -1010,7 +1010,7 @@ public class StartActivity extends Activity implements
     }
 
     /**
-     * Checks what was clicked and thakes action
+     * Checks what was clicked and takes action
      * @param v the view
      */
     @Override
@@ -1028,6 +1028,11 @@ public class StartActivity extends Activity implements
         }
     }
 
+    /**
+     * Starts the music player when the seek is completed.
+     *
+     * @param mp the media player
+     */
     @Override
     public void onSeekComplete(MediaPlayer mp) {
         backgroundMusicPlayer.start();

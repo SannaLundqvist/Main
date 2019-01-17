@@ -268,6 +268,11 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
         return isHit;
     }
 
+    /**
+     * Starts the music player when the seek is completed.
+     *
+     * @param mp the media player
+     */
     @Override
     public void onSeekComplete(MediaPlayer mp) {
         backgroundMusicPlayer.start();

@@ -245,6 +245,9 @@ public class CustomGridViewAdapter extends BaseAdapter {
                     mImageView.setImageBitmap(BitMapEdit.darkenBitMap(BitMapEdit.combineImages(R.drawable.skepp_3r_w_r_broken, view, 90, false)));
                     break;
             }
+            if (!boardState[position].equals(TILE_TYPE_WATER)){
+                tiles.get(position).setClickDisabled(true);
+            }
         } else if (!friendlyBoard) {
             switch (boardState[position]) {
                 case TILE_TYPE_WATER:
