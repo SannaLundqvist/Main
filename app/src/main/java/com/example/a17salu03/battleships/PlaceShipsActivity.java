@@ -70,6 +70,11 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     public static final int NUMBER_OF_MEDIUM_TILES = 4;
     public static final int NUMBER_OF_LARGE_TILES = 3;
 
+
+    int ship1;
+    int ship2;
+    int ship3;
+
     /**
      * Here most things get initialized.
      *
@@ -84,18 +89,17 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
             isMusicOn = savedInstanceState.getBoolean("isMusicOn");
             boardState = savedInstanceState.getStringArray("boardState");
             musicDuration = savedInstanceState.getInt("musicDuration");
+            ship1 = savedInstanceState.getInt("shipsLeft0");
+            ship2 = savedInstanceState.getInt("shipsLeft1");
+            ship3 = savedInstanceState.getInt("shipsLeft2");
         }else{
             for (int i = 0; i < boardState.length; i++){
                 boardState[i] = TILE_TYPE_WATER;
             }
+            ship1 = 3;
+            ship2 = 2;
+            ship3 = 1;
         }
-
-
-
-
-
-
-
         playerGrid = new GridFragment();
         playerGrid.setMyBoard(boardState);
         playerGrid.isClickableTiles(true);
@@ -111,8 +115,11 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         img_2r = findViewById(R.id.ship_2r_draw);
         img_3r = findViewById(R.id.ship_3r_draw);
         txt_1r = findViewById(R.id.ship_1r_text);
+        txt_1r.setText(ship1 +"");
         txt_2r = findViewById(R.id.ship_2r_text);
+        txt_2r.setText(ship2 +"");
         txt_3r = findViewById(R.id.ship_3r_text);
+        txt_3r.setText(ship3 +"");
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(R.layout.dialog_leave);
@@ -183,13 +190,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        outState.putStringArray("boardState", boardState);
-        outState.putBoolean("isMusicOn", isMusicOn);
-    }
-
     protected void onDestroy(){
 
         super.onDestroy();
@@ -209,6 +209,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         outState.putStringArray("boardState", boardState);
         outState.putBoolean("isMusicOn", isMusicOn);
         outState.putInt("musicDuration", musicDuration);
+        outState.putInt("shipsLeft0", Integer.parseInt(txt_1r.getText().toString()));
+        outState.putInt("shipsLeft1", Integer.parseInt(txt_2r.getText().toString()));
+        outState.putInt("shipsLeft2", Integer.parseInt(txt_3r.getText().toString()));
     }
 
 
@@ -517,7 +520,6 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     /**
      * Starts the music player when the seek is completed.
      *
-     * @param mp the media player
      */
     @Override
     public void onBackPressed() {
