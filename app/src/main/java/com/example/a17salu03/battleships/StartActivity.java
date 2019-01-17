@@ -318,11 +318,10 @@ public class StartActivity extends Activity implements
                     }
                 })
                 .addOnFailureListener(createFailureListener("There was a problem leaving the match!"));
-                
+
         Toast.makeText(this, "you left the game", Toast.LENGTH_SHORT).show();
 
         setViewVisibility();
-
     }
 
     /**
@@ -425,11 +424,15 @@ public class StartActivity extends Activity implements
         isDoingTurn = true;
 
         if(mTurnData.turnCounter < 2){
+            if(isBackgroundMusicOn)
+                backgroundMusicPlayer.stop();
             Intent intent = new Intent(StartActivity.this, PlaceShipsActivity.class);
             intent.putExtra("isBackgroundMusicOn", isBackgroundMusicOn);
             startActivityForResult(intent, PLACED_SHIPS);
 
         }else{
+            if (isBackgroundMusicOn)
+                backgroundMusicPlayer.stop();
             Intent intent = new Intent(StartActivity.this, BoardActivity.class);
             intent.putExtra("opponentsShips", mTurnData.opponentsShips);
             intent.putExtra("myShips", mTurnData.myShips);
