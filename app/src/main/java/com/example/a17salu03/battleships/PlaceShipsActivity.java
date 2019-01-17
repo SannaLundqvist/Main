@@ -174,6 +174,12 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        getApplicationContext().getSharedPreferences("musicDuration", 0).edit().clear().commit();
+    }
+
     /**
      * The music stops when onPause is called.
      */
