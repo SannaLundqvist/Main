@@ -317,6 +317,15 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
      * @param view the reset button
      */
     public void onResetClicked(View view){
+        remainingShip1 = 3;
+        txt_1r.setText(String.valueOf(remainingShip1));
+        remainingShip2 = 2;
+        txt_2r.setText(String.valueOf(remainingShip2));
+        remainingShip3 = 1;
+        txt_3r.setText(String.valueOf(remainingShip3));
+        for(int i = 0; i < boardState.length ; i++){
+            boardState[i] = TILE_TYPE_WATER;
+        }
         recreate();
     }
 
