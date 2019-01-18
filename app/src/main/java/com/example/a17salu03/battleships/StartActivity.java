@@ -351,7 +351,6 @@ public class StartActivity extends Activity implements
         String nextParticipantId = getNextParticipantId();
 
         mTurnData.turnCounter += 1;
-        Toast.makeText(this, "turnCOunt" + mTurnData.turnCounter, Toast.LENGTH_LONG).show();
         mTurnData.myShips = ships;
         mTurnBasedMultiplayerClient.takeTurn(mMatch.getMatchId(),
                 mTurnData.persist(), nextParticipantId)
