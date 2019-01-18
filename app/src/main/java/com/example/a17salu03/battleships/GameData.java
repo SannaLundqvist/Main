@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2013 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.a17salu03.battleships;
 
 import android.util.Log;
@@ -82,10 +66,8 @@ public class GameData {
                 Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
             }
         }
-
         try {
             retVal.put("turnCounter", turnCounter);
-
         } catch (JSONException e) {
             Log.e("SkeletonTurn", "There was an issue writing JSON!", e);
         }
@@ -108,7 +90,6 @@ public class GameData {
             Log.d(TAG, "Empty array---possible bug.");
             return new GameData();
         }
-
         String st = null;
         try {
             st = new String(byteArray, "UTF-8");
@@ -116,7 +97,6 @@ public class GameData {
             e1.printStackTrace();
             return null;
         }
-
         Log.d(TAG, "====UNPERSIST \n" + st);
 
         GameData retVal = new GameData();
@@ -156,7 +136,6 @@ public class GameData {
             if(obj.has("firePosition")){
                 retVal.firePosition = obj.getInt("firePosition");
             }
-
         } catch (JSONException e) {
             Log.e("SkeletonTurn", "There was an issue parsing JSON!", e);
         }

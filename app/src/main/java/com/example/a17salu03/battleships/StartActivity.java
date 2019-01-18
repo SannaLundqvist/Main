@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2013 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.example.a17salu03.battleships;
 
 import android.app.Activity;
@@ -96,15 +80,13 @@ public class StartActivity extends Activity implements
     private MediaPlayer backgroundMusicPlayer;
     private MediaPlayer effectMusicPlayer;
 
-
     private String mDisplayName;
     private String mPlayerId;
 
     /**
-     * Fetches the saved data  and set up sign-in
-     * @param savedInstanceState the saved game data
+     * Gets the saved instance state if one exists
+     * @param savedInstanceState
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +105,6 @@ public class StartActivity extends Activity implements
 
         findViewById(R.id.sign_out_button).setOnClickListener(this);
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-
     }
 
     /**
@@ -139,8 +120,6 @@ public class StartActivity extends Activity implements
             backgroundMusicPlayer.setOnSeekCompleteListener(this);
             backgroundMusicPlayer.seekTo(musicDuration);
         }
-        // Since the state of the signed in user can change when the activity is not active
-        // it is recommended to try and sign in silently from when the app resumes.
         signInSilently();
     }
 
@@ -155,8 +134,6 @@ public class StartActivity extends Activity implements
             musicDuration = backgroundMusicPlayer.getCurrentPosition();
             prefs.edit().putInt("musicDuration", musicDuration).apply();
         }
-
-
         prefs.edit().putBoolean("backgroundMusic", isBackgroundMusicOn).apply();
         prefs.edit().putBoolean("effectMusic", isEffectMusicOn).apply();
 
@@ -257,7 +234,6 @@ public class StartActivity extends Activity implements
                     @Override
                     public void onSuccess(Intent intent) {
                         startActivityForResult(intent, RC_LOOK_AT_MATCHES);
-
                     }
                 })
                 .addOnFailureListener(createFailureListener(getString(R.string.error_get_inbox_intent)));
@@ -388,7 +364,6 @@ public class StartActivity extends Activity implements
                 .addOnFailureListener(createFailureListener("There was a problem taking a turn!"));
 
         mTurnData = null;
-
     }
 
     /**
@@ -412,8 +387,6 @@ public class StartActivity extends Activity implements
             findViewById(R.id.login_layout).setVisibility(View.GONE);
 
             findViewById(R.id.matchup_layout).setVisibility(View.VISIBLE);
-
-
     }
 
     /**
@@ -473,7 +446,6 @@ public class StartActivity extends Activity implements
                     public void onClick(DialogInterface dialog, int id) {
                     }
                 });
-
         mAlertDialog = alertDialogBuilder.create();
         mAlertDialog.show();
     }
@@ -503,7 +475,6 @@ public class StartActivity extends Activity implements
                             public void onClick(DialogInterface dialog, int id) {
                             }
                         });
-
         alertDialogBuilder.show();
     }
 
@@ -511,7 +482,6 @@ public class StartActivity extends Activity implements
      * Start a sign in activity.
      */
     public void startSignInIntent() {
-
         startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
     }
 
@@ -546,13 +516,11 @@ public class StartActivity extends Activity implements
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signOut(): success");
                         } else {
                             handleException(task.getException(), "signOut() failed!");
                         }
-
                         onDisconnected();
                     }
                 });
@@ -583,16 +551,13 @@ public class StartActivity extends Activity implements
 
             return;
         }
-
         if (exception instanceof ApiException) {
             ApiException apiException = (ApiException) exception;
             status = apiException.getStatusCode();
         }
-
         if (!checkStatusCode(status)) {
             return;
         }
-
         String message = getString(R.string.status_exception_error, details, status, exception);
 
         new AlertDialog.Builder(this)
@@ -600,12 +565,10 @@ public class StartActivity extends Activity implements
                 .setNeutralButton(android.R.string.ok, null)
                 .show();
     }
-
     private void logBadActivityResult(int requestCode, int resultCode, String message) {
         Log.i(TAG, "Bad activity result(" + resultCode + ") for request (" + requestCode + "): "
                 + message);
     }
-
 
     /**
      * The function is called if a startActivityForResult is successful
@@ -620,7 +583,6 @@ public class StartActivity extends Activity implements
 
             Task<GoogleSignInAccount> task =
                     GoogleSignIn.getSignedInAccountFromIntent(intent);
-
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 onConnected(account);
@@ -644,14 +606,12 @@ public class StartActivity extends Activity implements
                         "User cancelled returning from the 'Select Match' dialog.");
                 return;
             }
-
             TurnBasedMatch match = intent
                     .getParcelableExtra(Multiplayer.EXTRA_TURN_BASED_MATCH);
 
             if (match != null) {
                 updateMatch(match);
             }
-
             Log.d(TAG, "Match = " + match);
         } else if (requestCode == RC_SELECT_PLAYERS) {
             if (resultCode != Activity.RESULT_OK) {
@@ -659,7 +619,6 @@ public class StartActivity extends Activity implements
                         "User cancelled returning from 'Select players to Invite' dialog");
                 return;
             }
-
             ArrayList<String> invitees = intent
                     .getStringArrayListExtra(Games.EXTRA_PLAYER_IDS);
 
@@ -674,7 +633,6 @@ public class StartActivity extends Activity implements
             } else {
                 autoMatchCriteria = null;
             }
-
             TurnBasedMatchConfig tbmc = TurnBasedMatchConfig.builder()
                     .addInvitedPlayers(invitees)
                     .setAutoMatchCriteria(autoMatchCriteria).build();
@@ -725,9 +683,7 @@ public class StartActivity extends Activity implements
      */
     public void startMatch(TurnBasedMatch match) {
         mTurnData = new GameData();
-
         mMatch = match;
-
         String myParticipantId = mMatch.getParticipantId(mPlayerId);
 
         showSpinner();
@@ -742,7 +698,6 @@ public class StartActivity extends Activity implements
                 })
                 .addOnFailureListener(createFailureListener("There was a problem taking a turn!"));
     }
-
     public void rematch() {
         showSpinner();
         mTurnBasedMultiplayerClient.rematch(mMatch.getMatchId())
@@ -762,11 +717,9 @@ public class StartActivity extends Activity implements
      *
      * @return participantId of next player, or null if automatching
      */
-
     public String getNextParticipantId() {
 
         String myParticipantId = mMatch.getParticipantId(mPlayerId);
-
         ArrayList<String> participantIds = mMatch.getParticipantIds();
 
         int desiredIndex = -1;
@@ -776,11 +729,9 @@ public class StartActivity extends Activity implements
                 desiredIndex = i + 1;
             }
         }
-
         if (desiredIndex < participantIds.size()) {
             return participantIds.get(desiredIndex);
         }
-
         if (mMatch.getAvailableAutoMatchSlots() <= 0) {
             return participantIds.get(0);
         } else {
@@ -819,7 +770,6 @@ public class StartActivity extends Activity implements
                 setViewVisibility();
                 return;
         }
-
         switch (turnStatus) {
             case TurnBasedMatch.MATCH_TURN_STATUS_MY_TURN:
                 mTurnData = GameData.unpersist(mMatch.getData());
@@ -968,7 +918,6 @@ public class StartActivity extends Activity implements
                 Log.d(TAG, "Did not have warning or string to deal with: "
                         + statusCode);
         }
-
         return false;
     }
 
@@ -996,6 +945,7 @@ public class StartActivity extends Activity implements
                             if(winSwitch.isChecked())
                                 Toast.makeText(getBaseContext(), "You fool, one can not win by cheating", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
+                            Log.d("StartActivityAlert", "Error while getting music settings");
                         }
                     }
                 })
