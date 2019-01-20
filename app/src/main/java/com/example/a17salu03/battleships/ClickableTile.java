@@ -65,5 +65,4 @@ public class ClickableTile extends Tile{
         clickDisabled = answer;
         lastClickedTile = null;
     }
-
 }

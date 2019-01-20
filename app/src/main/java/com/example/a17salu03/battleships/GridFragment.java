@@ -18,7 +18,8 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 public class GridFragment extends Fragment {
 
     private ArrayList<Tile> tiles = new ArrayList<>();
-    private int clickedTile = -1;
+    private final int INVALID = -1;
+    private int clickedTile = INVALID;
     private String[] board;
     public static final int TOTAL_NBR_OF_TILES = 49;
     private boolean friendlyBoard = true;
@@ -50,14 +51,13 @@ public class GridFragment extends Fragment {
         View view = getView();
         if (view != null) {
             GridView gridView = view.findViewById(R.id.grid);
-            String[] gridArray = new String[TOTAL_NBR_OF_TILES];
-            if (board != null) {
-                System.arraycopy(board, 0, gridArray, 0, board.length);
-            } else {
+            if (board == null) {
+                board = new String[TOTAL_NBR_OF_TILES];
                 for (int i = 0; i < TOTAL_NBR_OF_TILES; i++) {
-                    gridArray[i] = TILE_TYPE_WATER;
+                    board[i] = TILE_TYPE_WATER;
                 }
             }
+
             Tile tile;
             for (int position = 0; position < TOTAL_NBR_OF_TILES; position++) {
 
@@ -68,11 +68,13 @@ public class GridFragment extends Fragment {
                 }
                 tiles.add(tile);
             }
-            CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(gridArray, friendlyBoard, tiles, view);
+
+            CustomGridViewAdapter gridAdapter = new CustomGridViewAdapter(board, friendlyBoard, tiles, view);
             gridView.setAdapter(gridAdapter);
 
         }
     }
+
 
     /**
      * Sets the players board and sets that the board is friendly.

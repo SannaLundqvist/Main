@@ -2,9 +2,7 @@ package com.example.a17salu03.battleships;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +42,7 @@ import static com.example.a17salu03.battleships.Tile.TILE_TYPE_WATER;
 public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer.OnSeekCompleteListener{
 
     private GridFragment playerGrid;
+    private final int INVALID = -1;
     private ArrayList<Integer> usedTiles = new ArrayList<>();
     private String[]  boardState = new String[49];
     private int selectedShipID;
@@ -69,6 +68,19 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     public static final int NUMBER_OF_SMALL_TILES = 3;
     public static final int NUMBER_OF_MEDIUM_TILES = 4;
     public static final int NUMBER_OF_LARGE_TILES = 3;
+    private final int RIGHT_SIDE = 6;
+    private final int LEFT_SIDE = 0;
+    private final int TOP_ROW = 7;
+    private final int BOTTOM_ROW = 41;
+    private final int ONE_TILE_UP = -7;
+    private final int ONE_TILE_DOWN = 7;
+    private final int ONE_TILE_RIGHT = 1;
+    private final int ONE_TILE_LEFT = -1;
+    private final int TWO_TILES_UP = -14;
+    private final int TWO_TILES_DOWN = 14;
+    private final int TWO_TILES_RIGHT = 2;
+    private final int TWO_TILES_LEFT = -2;
+    private final int COL_COUNT = 7;
 
     /**
      * Here most things get initialized.
@@ -87,6 +99,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
             remainingShip1 = savedInstanceState.getInt("shipsLeft1");
             remainingShip2 = savedInstanceState.getInt("shipsLeft2");
             remainingShip3 = savedInstanceState.getInt("shipsLeft3");
+            usedTiles = savedInstanceState.getIntegerArrayList("usedTiles");
             if(isMusicOn){
                 backgroundMusicPlayer = MediaPlayer.create(getBaseContext(), R.raw.battle_music);
                 if(musicDuration == 0)
@@ -207,6 +220,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
         currentState.putInt("shipsLeft1", Integer.parseInt(txt_1r.getText().toString()));
         currentState.putInt("shipsLeft2", Integer.parseInt(txt_2r.getText().toString()));
         currentState.putInt("shipsLeft3", Integer.parseInt(txt_3r.getText().toString()));
+        currentState.putIntegerArrayList("usedTiles", usedTiles);
     }
     /**
      * The music stops when onPause is called.
@@ -235,6 +249,7 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
                 backgroundMusicPlayer.seekTo(musicDuration);
             }
         }
+
     }
 
     /**
@@ -271,9 +286,9 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
     public void onPlaceClicked(View view){
        int clickedTile = playerGrid.getClickedTile();
 
-        if (!(clickedTile == -1) && selectedShipID != 0){
+        if (!(clickedTile == INVALID) && selectedShipID != 0){
             if (isVacant(clickedTile)){
-                int shipsLeft = -1;
+                int shipsLeft = INVALID;
                 if (selectedShipID >= 1 && selectedShipID <= 3 && checkShipsAtPosition(clickedTile, 1)){
                     shipsLeft = Integer.parseInt(txt_1r.getText().toString());
                     ship1ID++;
@@ -360,43 +375,43 @@ public class PlaceShipsActivity extends AppCompatActivity implements MediaPlayer
            return true;
         } else if (isHorizontal) {
             if (length == 2) {
-                if (selectedPosition % 7 == 6 && isVacant(selectedPosition - 1)) {
-                    placeShipAt(selectedPosition - 1, selectedPosition);
+                if (selectedPosition % COL_COUNT == RIGHT_SIDE && isVacant(selectedPosition + ONE_TILE_LEFT)) {
+                    placeShipAt(selectedPosition + ONE_TILE_LEFT, selectedPosition);
                     return true;
-                } else if (isVacant(selectedPosition + 1)) {
-                    placeShipAt(selectedPosition, selectedPosition + 1);
+                } else if (isVacant(selectedPosition + ONE_TILE_RIGHT)) {
+                    placeShipAt(selectedPosition, selectedPosition + ONE_TILE_RIGHT);
                     return true;
                 }
             } else if (length == 3) {
-                if (selectedPosition % 7 == 6 && isVacant(selectedPosition - 1) && isVacant(selectedPosition - 2)) {
-                    placeShipAt(selectedPosition - 2, selectedPosition - 1, selectedPosition);
+                if (selectedPosition % COL_COUNT == RIGHT_SIDE && isVacant(selectedPosition + ONE_TILE_LEFT) && isVacant(selectedPosition + TWO_TILES_LEFT)) {
+                    placeShipAt(selectedPosition + TWO_TILES_LEFT, selectedPosition + ONE_TILE_LEFT, selectedPosition);
                     return true;
-                } else if (selectedPosition % 7 == 0 && isVacant(selectedPosition + 1) && isVacant(selectedPosition + 2)) {
-                    placeShipAt(selectedPosition, selectedPosition + 1, selectedPosition + 2);
+                } else if (selectedPosition % COL_COUNT == LEFT_SIDE && isVacant(selectedPosition + ONE_TILE_RIGHT) && isVacant(selectedPosition + TWO_TILES_RIGHT)) {
+                    placeShipAt(selectedPosition, selectedPosition + ONE_TILE_RIGHT, selectedPosition + TWO_TILES_RIGHT);
                     return true;
-                }else if (isVacant(selectedPosition - 1) && isVacant(selectedPosition + 1)) {
-                    placeShipAt(selectedPosition - 1, selectedPosition, selectedPosition + 1);
+                }else if (isVacant(selectedPosition + ONE_TILE_LEFT) && isVacant(selectedPosition + ONE_TILE_RIGHT)) {
+                    placeShipAt(selectedPosition + ONE_TILE_LEFT, selectedPosition, selectedPosition + ONE_TILE_RIGHT);
                     return true;
                 }
             }
         } else if (!isHorizontal){
             if (length == 2){
-                if (selectedPosition > 41 && isVacant(selectedPosition - 7)){
-                    placeShipAt(selectedPosition - 7, selectedPosition);
+                if (selectedPosition > BOTTOM_ROW && isVacant(selectedPosition + ONE_TILE_UP)){
+                    placeShipAt(selectedPosition + ONE_TILE_UP, selectedPosition);
                     return true;
-                } else if (isVacant(selectedPosition + 7)){
-                    placeShipAt(selectedPosition, selectedPosition + 7);
+                } else if (isVacant(selectedPosition + ONE_TILE_DOWN)){
+                    placeShipAt(selectedPosition, selectedPosition + ONE_TILE_DOWN);
                     return  true;
                 }
             } else if (length == 3){
-                if (selectedPosition < 7 && isVacant(selectedPosition + 7) && isVacant(selectedPosition + 14)){
-                    placeShipAt(selectedPosition, selectedPosition + 7, selectedPosition + 14);
+                if (selectedPosition < TOP_ROW && isVacant(selectedPosition + ONE_TILE_DOWN) && isVacant(selectedPosition + TWO_TILES_DOWN)){
+                    placeShipAt(selectedPosition, selectedPosition + ONE_TILE_DOWN, selectedPosition + TWO_TILES_DOWN);
                     return true;
-                } else if (selectedPosition > 41 && isVacant(selectedPosition - 7) && isVacant(selectedPosition - 14)){
-                    placeShipAt(selectedPosition - 14, selectedPosition - 7, selectedPosition);
+                } else if (selectedPosition > BOTTOM_ROW && isVacant(selectedPosition + ONE_TILE_UP) && isVacant(selectedPosition + TWO_TILES_UP)){
+                    placeShipAt(selectedPosition + TWO_TILES_UP, selectedPosition + ONE_TILE_UP, selectedPosition);
                     return true;
-                } else if (isVacant(selectedPosition - 7) && isVacant( selectedPosition + 7)){
-                    placeShipAt(selectedPosition - 7, selectedPosition, selectedPosition + 7);
+                } else if (isVacant(selectedPosition + ONE_TILE_UP) && isVacant( selectedPosition + ONE_TILE_DOWN)){
+                    placeShipAt(selectedPosition + ONE_TILE_UP, selectedPosition, selectedPosition + ONE_TILE_DOWN);
                     return true;
                 }
             }

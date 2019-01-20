@@ -57,13 +57,11 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-
         Intent intent = getIntent();
         myShips = intent.getStringArrayExtra("myShips");
         opponentsShips = intent.getStringArrayExtra("opponentsShips");
         isBackgroundMusicOn = intent.getBooleanExtra("isBackgroundMusicOn", true);
-        isEffectMusicOn = intent.getBooleanExtra("isEffectMusicOn", true);;
-
+        isEffectMusicOn = intent.getBooleanExtra("isEffectMusicOn", true);
 
         shipsRemaining();
         leaveBtn = findViewById(R.id.leave);
@@ -110,6 +108,7 @@ public class BoardActivity extends AppCompatActivity implements MediaPlayer.OnSe
             }
         });
     }
+
 
     /**
      * Forfeits the current game.
